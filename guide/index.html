@@ -187,6 +187,9 @@ pre code { padding: 0; background: none; }
 .tools a { font-weight: 700; }
 .tools p { font-size: 14px; color: var(--ink-soft); line-height: 1.7; }
 h3.sub { font-size: 16px; }
+.trial { padding: 10px 14px; border-radius: 8px; background: var(--lv2-soft); font-size: 14px; }
+.badge { display: inline-block; margin-right: 10px; padding: 0 10px; border-radius: 999px; background: var(--surface); color: var(--lv2); font-size: 12px; font-weight: 700; line-height: 1.8; }
+.how { margin: 0; padding-left: 1.4em; display: grid; gap: 6px; color: var(--ink-soft); }
 
 /* AI に相談する */
 .ask { padding: 28px; border-radius: 16px; background: var(--accent-soft); display: grid; gap: 14px; }
@@ -252,7 +255,7 @@ footer a { color: var(--ink-soft); }
     <h1>はじめてのセキュリティ点検<span class="for">個人開発・シビックテック向け</span></h1>
     <p class="question">そのプロジェクト、<br>点検したことはありますか？</p>
     <p class="lead">むずかしい知識がなくても始められます。プロジェクトに当てはまるものを選んで、出てきた項目を上から順に確かめていきます。</p>
-    <p class="cta"><a class="btn" href="#sheet">点検をはじめる</a><a href="#auto">毎週の自動点検について（準備中）</a></p>
+    <p class="cta"><a class="btn" href="#sheet">点検をはじめる</a><a href="#auto">毎週の自動点検（試験運用中）</a></p>
     <p class="note">すべてチェックしても、安全を保証するものではありません。よくある穴を減らすための目安として使ってください。</p>
     <ol class="flow" aria-label="点検の流れ">
       <li><span class="num">1</span>当てはまるものを選ぶ</li>
@@ -308,9 +311,16 @@ footer a { color: var(--ink-soft); }
   <section class="auto" id="auto" aria-labelledby="auto-title">
     <h2 class="sec-h" id="auto-title"><span class="num">3</span>毎週、自動で点検し続ける</h2>
     <div class="auto-body card">
-    <p>点検表のうち次のものを、GitHub Actions で毎週自動で調べられるようにする予定です。依存パッケージの脆弱性、漏れたキー、ワークフローの危ない書き方、そしてそれらを見つける機能が無効になっていないかです。結果は非公開のリポジトリに、プロジェクトごとの Issue として集まります。同じ指摘は二重に立たず、直ると自動で閉じます。</p>
-    <p>いまは公開の準備中です。公開したら、非公開のリポジトリに次のファイルを 1 つ置き、読み取り専用のトークンを <code>SCAN_TOKEN</code> として登録するだけで動くようにする予定です。</p>
-    <div id="yaml"></div>
+      <p class="trial"><span class="badge">試験運用中</span>動かしてみた感想や、うまく動かなかったことを <a href="https://github.com/yokinist/weekly-security-checker/issues">Issue</a> で教えてください。</p>
+      <p>危ないのは、いま触っているリポジトリより、動いたまま誰も見なくなったリポジトリです。そこで、アカウントや organization のリポジトリをまとめて毎週調べ、見つかった指摘を非公開のリポジトリの Issue にまとめる GitHub Action「<a href="https://github.com/yokinist/weekly-security-checker">weekly-security-checker</a>」を用意しました。同じ指摘は二重に立たず、直ると自動で閉じます。</p>
+      <p>調べるのは、依存パッケージの脆弱性、漏れたキー（コミット履歴も含む）、ワークフローの危ない書き方、そしてそれらを見つける機能が無効になっていないかです。</p>
+      <h3 class="sub">使い方</h3>
+      <ol class="how">
+        <li>Issue を集める<b>非公開</b>のリポジトリを作ります。Issue に脆弱性の情報が載るためです</li>
+        <li>読み取り専用の fine-grained トークンを作り、そのリポジトリに <code>SCAN_TOKEN</code> として登録します。必要な権限は <a href="https://github.com/yokinist/weekly-security-checker#使い方">README</a> にあります</li>
+        <li>次のファイルを <code>.github/workflows/</code> に置きます</li>
+      </ol>
+      <div id="yaml"></div>
     <h3 class="sub">ほかに、自動化に使えるもの</h3>
     <ul class="tools">
       <li><a href="https://github.com/ossf/allstar" target="_blank" rel="noopener">OpenSSF Allstar</a><p>org の設定違反（ブランチ保護がない、外部コラボレーターがいる、危ないワークフローなど）を見つけて Issue を立てる GitHub App です。</p></li>
@@ -341,6 +351,10 @@ footer a { color: var(--ink-soft); }
       <details class="point">
         <summary><h3>脆弱性は非公開の場所で扱う</h3></summary>
         <p>公開リポジトリの Issue に脆弱性を書くと、直す前に攻撃の手順を公開することになります。Security Advisory の下書きか、非公開のリポジトリで扱います。漏れたキーの値はどこにも貼りません。</p>
+      </details>
+      <details class="point">
+        <summary><h3>放置されたプロジェクトほど危ない</h3></summary>
+        <p>動いたまま誰も見なくなったリポジトリには、古い依存パッケージや消し忘れたキーが残っていても、気づく人がいません。1 つずつではなく、アカウントや organization のリポジトリをまとめて見るようにします。</p>
       </details>
       <details class="point">
         <summary><h3>スキャンより先に棚卸し</h3></summary>
@@ -381,7 +395,7 @@ footer a { color: var(--ink-soft); }
 <script src="data.js"></script>
 <script>
 document.documentElement.lang = "ja";
-const YAML = `name: weekly security scan
+const YAML = `name: weekly security check
 on:
   schedule:
     - cron: "0 0 * * 1" # 毎週月曜 9:00 JST
@@ -390,10 +404,11 @@ permissions:
   contents: read
   issues: write
 jobs:
-  scan:
+  check:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
-      - uses: <公開後のリポジトリ>@<コミットの SHA> # v1
+      - uses: yokinist/weekly-security-checker@f477553ae055b47a488c10a8f6fa0d37203e19e5 # v0.1.0
         with:
           scan-token: \${{ secrets.SCAN_TOKEN }}`;
 

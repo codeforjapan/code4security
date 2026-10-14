@@ -9,3 +9,4 @@
 - [点検表（Markdown）](https://yokinist.github.io/first-security-checkup/checklist.md): すべての項目のリスク・必要な理由・使えるツール・関連資料
 - [点検表（JSON）](https://yokinist.github.io/first-security-checkup/checklist.json): 条件と項目の対応。使い方と各フィールドの意味も含む
 - [点検表のページ](https://yokinist.github.io/first-security-checkup/): 条件を選んで点検し、AI への相談文も作れる
+- [weekly-security-checker](https://github.com/yokinist/weekly-security-checker): アカウントや organization のリポジトリを毎週まとめて調べ、指摘を非公開リポジトリの Issue にまとめる GitHub Action（試験運用中）

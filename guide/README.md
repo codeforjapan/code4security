@@ -14,6 +14,12 @@
 > [!NOTE]
 > すべての項目を満たしても、安全を保証するものではありません。よくある穴を減らすための目安です。個人情報を多く扱うときや、自治体などと契約して運用するときは、専門家による診断も検討してください。
 
+## 毎週、自動で点検し続ける（試験運用中）
+
+点検表のうち、自動で調べられる部分（依存パッケージの脆弱性、漏れたキー、ワークフローの危ない書き方、それらを見つける機能が無効になっていないか）は、GitHub Action [weekly-security-checker](https://github.com/yokinist/weekly-security-checker) で毎週見張れます。アカウントや organization のリポジトリをまとめて調べ、指摘を非公開のリポジトリの Issue にまとめます。放置されたリポジトリほど危ないからです。
+
+試験運用中なので、動かしてみた感想や、うまく動かなかったことを [weekly-security-checker の Issue](https://github.com/yokinist/weekly-security-checker/issues) で教えてください。
+
 ## 文章だけで読む・ほかのツールで使う
 
 | ファイル | 中身 |
