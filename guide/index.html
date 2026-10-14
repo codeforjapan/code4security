@@ -318,6 +318,7 @@ footer a { color: var(--soft); }
   .point[open] summary::after { content: "−"; }
   .source-kind { padding: 18px; }
 }
+@media (pointer: coarse) { .btn kbd { display: none; } }  /* キーボードのない端末では ↵ を出さない */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0s !important; animation-delay: 0s !important; transition: none !important; }
   .caret { animation: none !important; }
@@ -925,6 +926,13 @@ typed.append(el("span", "caret"));
 q.replaceChildren(el("span", "sr", said), typed);
 requestAnimationFrame(() => q.classList.add("typed"));
 setTimeout(() => grid.classList.add("ready"), 1700);
+
+// 表紙が見えているあいだは、どこも選んでいなくても Enter で点検をはじめる（ボタンの ↵ のとおり）
+const start = document.querySelector(".cta .btn");
+addEventListener("keydown", e => {
+  if (e.key !== "Enter" || e.isComposing || document.activeElement !== document.body || start.getBoundingClientRect().bottom < 0) return;
+  start.click();
+});
 </script>
 </body>
 </html>
