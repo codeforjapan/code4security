@@ -873,7 +873,7 @@ function checklistJson() {
   return {
     schema_version: 1,
     name: "はじめてのセキュリティ点検",
-    description: "個人開発やシビックテックなど、専任のセキュリティ担当がいないプロジェクト向けのセキュリティ点検。プロジェクトで使っているもの（conditions）を選ぶと、関係する点検項目（items）が決まる。各項目は、対策が済んだ状態を表す一文と、放っておいたときのリスク、対策が必要な理由、使えるツールやコマンドを持つ。",
+    description: "専任のセキュリティ担当がいないプロジェクト向けのセキュリティ点検。プロジェクトで使っているもの（conditions）を選ぶと、関係する点検項目（items）が決まる。各項目は、対策が済んだ状態を表す一文と、放っておいたときのリスク、対策が必要な理由、使えるツールやコマンドを持つ。",
     language: "ja",
     url: "https://yokinist.github.io/first-security-checkup/",
     license: { content: "CC BY 4.0（https://creativecommons.org/licenses/by/4.0/deed.ja）", code: "MIT" },
