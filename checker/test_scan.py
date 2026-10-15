@@ -1,4 +1,5 @@
 """python3 test_scan.py で実行する。"""
+import scan
 from scan import plan
 
 
@@ -29,6 +30,21 @@ def test_plan():
     ], got
 
 
+def test_alerts_hide_secret():
+    urls = []
+    real = scan.api_list
+    scan.api_list = lambda url, token=None: urls.append(url) or []
+    try:
+        for kind in scan.KINDS:
+            scan.alerts("o/r", kind)
+    finally:
+        scan.api_list = real
+    secret = [u for u in urls if "/secret-scanning/" in u]
+    assert secret and all("hide_secret=true" in u for u in secret), urls
+    assert not any("hide_secret" in u for u in urls if "/secret-scanning/" not in u), urls
+
+
 if __name__ == "__main__":
     test_plan()
+    test_alerts_hide_secret()
     print("ok")

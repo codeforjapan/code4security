@@ -72,7 +72,7 @@
        runs-on: ubuntu-latest
        timeout-minutes: 15
        steps:
-         - uses: yokinist/weekly-security-checker@v0.1.0
+         - uses: yokinist/weekly-security-checker@v0.1.1
            with:
              scan-token: ${{ secrets.SCAN_TOKEN }}
    ```

@@ -64,8 +64,10 @@ def api_list(path, token=None):
 
 def alerts(repo, kind):
     """open なアラート一覧。機能がオフなら None。"""
+    # secret scanning は既定で秘密の値そのものを返す。使わないので、ランナーに届かないようにする
+    hide = "&hide_secret=true" if kind == "secret-scanning" else ""
     try:
-        return api_list(f"repos/{repo}/{kind}/alerts?state=open&per_page=100", SCAN_TOKEN)
+        return api_list(f"repos/{repo}/{kind}/alerts?state=open&per_page=100{hide}", SCAN_TOKEN)
     except GhError as e:
         if any(h in str(e) for h in OFF_HINTS):
             return None
