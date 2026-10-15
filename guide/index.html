@@ -101,7 +101,7 @@ section { min-width: 0; }
 .map-row .label { font-size: 12.5px; color: var(--soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: color .3s; }
 .map-row.na .label { color: var(--muted); opacity: .55; }
 .map-row.complete .label { color: var(--green); }
-.cells { display: grid; grid-template-columns: repeat(5, 26px); gap: 6px; }
+.cells { display: grid; grid-template-columns: repeat(var(--cols, 5), 26px); gap: 6px; }
 .cell { width: 26px; height: 26px; padding: 0; border: 1px solid var(--c); border-radius: 5px; background: color-mix(in srgb, var(--c) 14%, transparent); cursor: pointer; transition: background .35s, box-shadow .35s, border-color .35s, opacity .3s, transform .2s; opacity: 0; animation: boot .3s calc(var(--i) * 18ms + 500ms) forwards; }
 .cell[data-lv="1"] { --c: var(--red); }
 .cell[data-lv="2"] { --c: var(--amber); }
@@ -299,7 +299,7 @@ footer a { color: var(--soft); }
   .map-grid { padding: 14px 12px; gap: 6px; }
   .map-row { gap: 10px; }
   .map-row .label { font-size: 11.5px; }
-  .cells { grid-template-columns: repeat(5, 22px); gap: 5px; }
+  .cells { grid-template-columns: repeat(var(--cols, 5), 22px); gap: 5px; }
   .cell { width: 22px; height: 22px; border-radius: 4px; }
   .flow { grid-template-columns: minmax(0, 1fr); }
   .profile, .ask, .auto-body { padding: 20px; }
@@ -607,6 +607,7 @@ document.getElementById("yaml").replaceWith(cmdBlock(YAML));
 
 // 点検マップ：カテゴリ 1 行、項目 1 マス。マスを押すと、その項目へ移動する
 const grid = document.getElementById("map-grid");
+grid.style.setProperty("--cols", Math.max(...CATEGORIES.map(g => g.items.length)));  // 列の数は、項目のいちばん多いカテゴリに合わせる
 const cells = {};
 let k = 0;
 for (const g of CATEGORIES) {
