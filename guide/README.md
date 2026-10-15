@@ -46,7 +46,7 @@
 
 ## ライセンス
 
-- 文章とデータ（`data.js`、公開している `checklist.md`・`checklist.json`・`llms.txt`、`ogp.png`）：[CC BY 4.0](LICENSE-CONTENT.md)
+- 文章とデータ（`data.js`、公開している `checklist.md`・`checklist.json`・`llms.txt`、`ogp.png`）：[CC0 1.0](LICENSE-CONTENT.md)（パブリック・ドメイン）
 - コード（`index.html`、`export.js`、`ogp.html`、`.github/` のワークフロー）：[MIT](LICENSE)
 
-出典を示せば、自由に使ったり変えたりできます。出典の示し方の例：「はじめてのセキュリティ点検（https://yokinist.github.io/first-security-checkup/）、CC BY 4.0」
+文章とデータは、許可を求めたり出典を示したりせずに、自由に使ったり、変えたり、ほかのプロジェクトに取り込んだりできます。出典を示していただけると、読んだ人が最新の版にたどり着けて助かります。

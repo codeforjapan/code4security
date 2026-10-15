@@ -46,7 +46,7 @@ const data = {
   description: ABOUT.description,
   language: "ja",
   url: ABOUT.url,
-  license: { content: "CC BY 4.0（https://creativecommons.org/licenses/by/4.0/deed.ja）", code: "MIT" },
+  license: { content: "CC0 1.0（https://creativecommons.org/publicdomain/zero/1.0/deed.ja）", code: "MIT" },
   updated: ABOUT.updated,
   disclaimer: ABOUT.disclaimer,
   how_to_use: [

@@ -106,7 +106,7 @@ node export.js
 
 ## ライセンス
 
-送っていただいた変更は、文章とデータは [CC BY 4.0](LICENSE-CONTENT.md)、コードは [MIT](LICENSE) で公開します。
+送っていただいた変更は、文章とデータは [CC0 1.0](LICENSE-CONTENT.md)（パブリック・ドメイン）、コードは [MIT](LICENSE) で公開します。PR を送ることで、この条件で公開することに同意したものとします。
 
 ## 脆弱性の報告
 
