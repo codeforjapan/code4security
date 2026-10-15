@@ -36,11 +36,13 @@
 - `checklist.json`・`checklist.md`・`llms.txt` は、main に入ったときに GitHub Actions が `export.js` で作り、ページと一緒に公開します。リポジトリには置きません
 - PR では、同じ `export.js` が `data.js` の書き方を確かめます。手元では `node export.js` で確かめられます
 
+項目の足し方や文章の決まりは、[CONTRIBUTING.md](CONTRIBUTING.md) にまとめています。
+
 共有用の画像 `ogp.png` は、`ogp.html` をブラウザで 1200×630 にして撮ったものです。名前や見出しを変えたら撮り直します。
 
 ## ご意見・誤りの報告
 
-点検項目の誤りや、足したほうがよい項目は [Issue](https://github.com/yokinist/first-security-checkup/issues) で教えてください。このページ自体のセキュリティ上の問題は、[SECURITY.md](SECURITY.md) の手順で、公開せずに知らせてください。
+点検項目の誤りや、足したほうがよい項目は [Issue](https://github.com/yokinist/first-security-checkup/issues) で教えてください。直す PR も歓迎します（[CONTRIBUTING.md](CONTRIBUTING.md)）。このページ自体のセキュリティ上の問題は、[SECURITY.md](SECURITY.md) の手順で、公開せずに知らせてください。
 
 ## ライセンス
 
