@@ -45,9 +45,15 @@
 
 点検項目の誤りや、足したほうがよい項目は [Issue](https://github.com/yokinist/first-security-checkup/issues) で教えてください。直す PR も歓迎します（[CONTRIBUTING.md](CONTRIBUTING.md)）。このページ自体のセキュリティ上の問題は、[SECURITY.md](SECURITY.md) の手順で、公開せずに知らせてください。
 
+## 作り方と免責
+
+調査と執筆、コードづくりに、Anthropic の AI「Claude」を使っています。事実（設定の名前、プラン、既定の値など）は資料を開いて確かめ、確かめた日を各項目の `evidence` に残していますが、誤りが含まれることがあります。
+
+この点検表は、情報の提供を目的としたものです。内容の正確さや完全さは保証しません。この点検表を使ったことで生じた損害について、作者は責任を負いません。使うときは、公式の資料でも確かめてください。誤りに気づいたら [Issue](https://github.com/yokinist/first-security-checkup/issues) で教えてください。
+
 ## ライセンス
 
-- 文章とデータ（`data/` の YAML、公開している `checklist.md`・`checklist.json`・`llms.txt`、`ogp.png`）：[CC0 1.0](LICENSE-CONTENT.md)（パブリック・ドメイン）
+- 文章とデータ（`data/` の YAML、公開している `checklist.md`・`checklist.json`・`llms.txt`、`ogp.png`）：[CC BY 4.0](LICENSE-CONTENT.md)
 - コード（`index.html`、`export.js`、`ogp.html`、`.github/` のワークフロー）：[MIT](LICENSE)
 
-文章とデータは、許可を求めたり出典を示したりせずに、自由に使ったり、変えたり、ほかのプロジェクトに取り込んだりできます。出典を示していただけると、読んだ人が最新の版にたどり着けて助かります。
+出典を示せば、自由に使ったり変えたりできます。出典の示し方の例：「はじめてのセキュリティ点検（https://yokinist.github.io/first-security-checkup/）、CC BY 4.0」

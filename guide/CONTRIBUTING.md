@@ -118,11 +118,15 @@ pnpm build
 
 pnpm の版は `package.json` で決めています（corepack を使うと、その版が自動で使われます）。`pnpm build` は `data/` の書き方を確かめ、`data.js`・`checklist.json`・`checklist.md`・`llms.txt` を手元に作ります（これらはコミットしません）。`index.html` をブラウザで開けば、直したページを見られます。
 
+### AI を使うとき
+
+AI を使ってもかまいません。本文に書く事実は、AI の答えをそのまま使わず、資料を開いて確かめてから送ってください。この点検表自体も、AI（Claude）を使って作り、事実は資料で確かめています。
+
 コミットメッセージは `fix: 〜の説明を直す`、`feat: 〜の項目を足す` のような [Conventional Commits](https://www.conventionalcommits.org/ja/v1.0.0/) の形で、日本語で書けます。
 
 ## ライセンス
 
-送っていただいた変更は、文章とデータは [CC0 1.0](LICENSE-CONTENT.md)（パブリック・ドメイン）、コードは [MIT](LICENSE) で公開します。PR を送ることで、この条件で公開することに同意したものとします。
+送っていただいた変更は、文章とデータは [CC BY 4.0](LICENSE-CONTENT.md)、コードは [MIT](LICENSE) で公開します。PR を送ることで、この条件で公開することに同意したものとします。
 
 ## 脆弱性の報告
 
