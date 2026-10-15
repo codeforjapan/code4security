@@ -6,7 +6,7 @@
 
 ![はじめてのセキュリティ点検](ogp.png)
 
-- プロジェクトに当てはまるもの（Firebase、ログイン機能、個人情報など 22 の条件）を選ぶと、確かめるべき 44 の項目が「まずやる」「次にやる」「余裕ができたら」の優先度つきで出てきます
+- プロジェクトに当てはまるもの（Firebase、ログイン機能、個人情報など）を選ぶと、確かめるべき項目が「まずやる」「次にやる」「余裕ができたら」の優先度つきで出てきます
 - 各項目に、放っておくと何が起きるか、なぜ必要か、使えるツールやコマンド、関連資料を載せています
 - 選んだものと進み具合をまとめた相談文を作り、ChatGPT や Claude などの AI に相談できます
 - チェックの状態はブラウザにだけ保存され、どこにも送られません
@@ -24,17 +24,17 @@
 
 | ファイル | 中身 |
 |---|---|
-| [checklist.md](checklist.md) | すべての項目を文章で並べた版 |
-| [checklist.json](checklist.json) | 条件と項目の対応のデータ。使い方と各フィールドの意味も中に書いてあります |
-| [llms.txt](llms.txt) | AI 向けの案内 |
+| [checklist.md](https://yokinist.github.io/first-security-checkup/checklist.md) | すべての項目を文章で並べた版 |
+| [checklist.json](https://yokinist.github.io/first-security-checkup/checklist.json) | 条件と項目の対応のデータ。使い方と各フィールドの意味も中に書いてあります |
+| [llms.txt](https://yokinist.github.io/first-security-checkup/llms.txt) | AI 向けの案内 |
 
 ## 直し方
 
-ビルドは不要で、外部のライブラリも使っていません（フォントだけ Google Fonts から読み込みます）。
+点検項目・条件・優先度・資料は、すべて `data.js` にあります。直すのはこのファイルだけです。
 
-1. 項目・条件・優先度・資料を直すときは `data.js` を編集します
-2. `node export.js` で `checklist.json`・`checklist.md`・`llms.txt` を作り直します
-3. `index.html` をブラウザで開いて確かめます
+- ページ（`index.html`）は `data.js` をそのまま読み込みます。ビルドは不要で、外部のライブラリも使っていません（フォントだけ Google Fonts から読み込みます）
+- `checklist.json`・`checklist.md`・`llms.txt` は、main に入ったときに GitHub Actions が `export.js` で作り、ページと一緒に公開します。リポジトリには置きません
+- PR では、同じ `export.js` が `data.js` の書き方を確かめます。手元では `node export.js` で確かめられます
 
 共有用の画像 `ogp.png` は、`ogp.html` をブラウザで 1200×630 にして撮ったものです。名前や見出しを変えたら撮り直します。
 
@@ -44,7 +44,7 @@
 
 ## ライセンス
 
-- 文章とデータ（`data.js` の項目・条件・資料、`checklist.md`、`checklist.json`、`llms.txt`、`ogp.png`）：[CC BY 4.0](LICENSE-CONTENT.md)
-- コード（`index.html`、`data.js` の処理、`export.js`、`ogp.html`）：[MIT](LICENSE)
+- 文章とデータ（`data.js`、公開している `checklist.md`・`checklist.json`・`llms.txt`、`ogp.png`）：[CC BY 4.0](LICENSE-CONTENT.md)
+- コード（`index.html`、`export.js`、`ogp.html`、`.github/` のワークフロー）：[MIT](LICENSE)
 
 出典を示せば、自由に使ったり変えたりできます。出典の示し方の例：「はじめてのセキュリティ点検（https://yokinist.github.io/first-security-checkup/）、CC BY 4.0」

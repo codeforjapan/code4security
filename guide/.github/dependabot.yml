@@ -1,0 +1,10 @@
+# ワークフローの action は SHA で固定しているので、新しい版は Dependabot の PR で受け取る
+# 公開されたばかりの版は避けるため、7 日待ってから PR を出す
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 7

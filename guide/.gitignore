@@ -1,0 +1,4 @@
+# data.js から export.js が作り、公開のときに GitHub Actions が作り直すので、コミットしない
+checklist.json
+checklist.md
+llms.txt

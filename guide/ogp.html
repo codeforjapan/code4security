@@ -31,12 +31,12 @@
 <script>
 // 点検マップ（1 マス = 1 項目）。前半のカテゴリの「まずやる」を済みにして、進んでいる様子を見せる
 const COLOR = { 1: "#ff6b6b", 2: "#ffbd52", 3: "#8f9cab" };
-GROUPS.forEach((g, gi) => {
+CATEGORIES.forEach((g, gi) => {
   const row = document.createElement("div");
   for (const it of g.items) {
     const c = document.createElement("i");
-    c.style.setProperty("--c", COLOR[it.lv]);
-    if (gi < 5 && it.lv === 1) c.className = "done";
+    c.style.setProperty("--c", COLOR[it.level]);
+    if (gi < 5 && it.level === 1) c.className = "done";
     row.append(c);
   }
   document.getElementById("map").append(row);

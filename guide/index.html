@@ -338,7 +338,7 @@ footer a { color: var(--soft); }
       <p class="note">すべてチェックしても、安全を保証するものではありません。よくある穴を減らすための目安として使ってください。</p>
     </div>
     <figure class="map" style="margin:0" aria-label="点検マップ。1 マスが 1 項目で、チェックすると緑に点きます">
-      <div class="map-bar"><span class="lights" aria-hidden="true"><i></i><i></i><i></i></span><span>check-map · <b id="map-count">44</b> items</span></div>
+      <div class="map-bar"><span class="lights" aria-hidden="true"><i></i><i></i><i></i></span><span>check-map · <b id="map-count"></b> items</span></div>
       <div class="map-grid" id="map-grid"><div class="scan" aria-hidden="true"></div></div>
       <div class="map-foot">
         <span class="legend" aria-hidden="true"><span style="--c:var(--red)"><i></i>まずやる</span><span style="--c:var(--amber)"><i></i>次にやる</span><span style="--c:var(--grey)"><i></i>余裕ができたら</span><span style="--c:var(--green)"><i style="background:var(--green)"></i>済み</span></span>
@@ -510,7 +510,7 @@ let state = {};
 try { state = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { state = {}; }
 state.checked = state.checked || {};
 state.level = state.level || 1;  // 1・2・3。最初は「まずやる」だけ見せる
-const LEVEL_LABEL = Object.fromEntries(LEVELS.map(([lv, label]) => [lv, label]));
+const LEVEL_LABEL = Object.fromEntries(LEVELS.map(l => [l.level, l.label]));
 state.todo = !!state.todo;
 const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} };
 
@@ -539,14 +539,14 @@ function link(label, href) { const a = el("a", null, label); a.href = href; a.ta
 
 const ITEMS = {};
 const groupsEl = document.getElementById("groups");
-for (const g of GROUPS) {
+for (const g of CATEGORIES) {
   const sec = el("section", "group card");
   sec.id = g.id;
   sec.setAttribute("aria-labelledby", "g-" + g.id);
   const head = el("div", "group-head");
   const h = el("h3", null, g.title);
   h.id = "g-" + g.id;
-  head.dataset.n = String(GROUPS.indexOf(g) + 1).padStart(2, "0");
+  head.dataset.n = String(CATEGORIES.indexOf(g) + 1).padStart(2, "0");
   const meta = el("span", "group-meta");
   const gbar = el("span", "gbar");
   gbar.append(el("span"));
@@ -569,9 +569,9 @@ for (const g of GROUPS) {
 
     const item = el("div", "item");
     const head2 = el("div", "item-head");
-    const t = el("label", "t", it.t);
+    const t = el("label", "t", it.title);
     t.htmlFor = cb.id;
-    head2.append(el("span", "lv lv" + it.lv, LEVEL_LABEL[it.lv]), t);
+    head2.append(el("span", "lv lv" + it.level, LEVEL_LABEL[it.level]), t);
     item.append(head2);
     const para = text => el("p", null, text);
     const blk = (cls, label, nodes) => {
@@ -580,23 +580,22 @@ for (const g of GROUPS) {
       item.append(b);
       return b;
     };
-    const useNodes = it.use.map(u => {
-      if (u.cmd) return cmdBlock(u.cmd);
-      if (u.link) { const p = el("p"); p.append(link(u.label, u.link)); return p; }
+    const useNodes = it.how.map(u => {
+      if (u.command) return cmdBlock(u.command);
+      if (u.url) { const p = el("p"); p.append(link(u.title, u.url)); return p; }
       return para(u.text);
     });
-    if (it.cost) useNodes.push(para(`※ ${COST[it.cost]}`));
     blk("risk", "放っておくと", [para(it.risk)]);
     blk("why", "なぜ必要か", [para(it.why)]);
-    if (it.alt) {
+    if (it.how_for_private_repos) {
       blk("use", "使えるもの（公開リポジトリ）", useNodes).dataset.repo = "public";
-      blk("use", "使えるもの（非公開リポジトリ）", [para(it.alt.text), ...(it.alt.cmd ? [cmdBlock(it.alt.cmd)] : [])]).dataset.repo = "private";
+      blk("use", "使えるもの（非公開リポジトリ）", [para(it.how_for_private_repos.text), ...(it.how_for_private_repos.command ? [cmdBlock(it.how_for_private_repos.command)] : [])]).dataset.repo = "private";
     } else {
       blk("use", "使えるもの", useNodes);
     }
-    if (REFS[it.id]) {
+    if (it.related.length) {
       const refs = el("p", "refs", "関連：");
-      REFS[it.id].forEach((k, i) => { if (i) refs.append("、"); refs.append(link(SOURCES[k][0], SOURCES[k][1])); });
+      it.related.forEach((k, i) => { if (i) refs.append("、"); refs.append(link(SOURCES[k].title, SOURCES[k].url)); });
       item.append(refs);
     }
     row.append(judge, item);
@@ -610,7 +609,7 @@ document.getElementById("yaml").replaceWith(cmdBlock(YAML));
 const grid = document.getElementById("map-grid");
 const cells = {};
 let k = 0;
-for (const g of GROUPS) {
+for (const g of CATEGORIES) {
   const row = el("div", "map-row");
   row.dataset.g = g.id;
   const box = el("span", "cells");
@@ -618,10 +617,10 @@ for (const g of GROUPS) {
     const c = el("button", "cell");
     c.type = "button";
     c.tabIndex = -1;  // 同じ移動は点検表のほうでできるので、Tab では止めない
-    c.dataset.lv = it.lv;
+    c.dataset.lv = it.level;
     c.dataset.id = it.id;
     c.style.setProperty("--i", k++);
-    c.setAttribute("aria-label", `${LEVEL_LABEL[it.lv]}：${it.t}`);
+    c.setAttribute("aria-label", `${LEVEL_LABEL[it.level]}：${it.title}`);
     box.append(c);
     cells[it.id] = c;
   }
@@ -633,7 +632,7 @@ grid.addEventListener("pointerover", e => {
   const c = e.target.closest(".cell");
   if (!c) return;
   const it = ITEMS[c.dataset.id];
-  tip.replaceChildren(el("small", null, `${LEVEL_LABEL[it.lv]} · ${state.checked[it.id] ? "済み" : "まだ"}`), it.t);
+  tip.replaceChildren(el("small", null, `${LEVEL_LABEL[it.level]} · ${state.checked[it.id] ? "済み" : "まだ"}`), it.title);
   tip.hidden = false;
   const r = c.getBoundingClientRect();
   tip.style.left = Math.min(r.left, innerWidth - 296) + "px";
@@ -645,7 +644,7 @@ grid.addEventListener("click", e => {
   const c = e.target.closest(".cell");
   if (!c) return;
   const it = ITEMS[c.dataset.id];
-  if (it.lv > state.level) setLevel(it.lv);
+  if (it.level > state.level) setLevel(it.level);
   if (state.todo && state.checked[it.id]) { state.todo = false; save(); update(); }
   const row = document.querySelector(`.row[data-id="${it.id}"]`);
   if (row.hidden) return;
@@ -655,7 +654,7 @@ grid.addEventListener("click", e => {
 
 function paintMap(all, done, l1Done, l1Total) {
   const rel = new Set(all.map(i => i.id));
-  for (const g of GROUPS) {
+  for (const g of CATEGORIES) {
     const items = g.items.filter(i => rel.has(i.id));
     const row = grid.querySelector(`[data-g="${g.id}"]`);
     row.classList.toggle("na", !items.length);
@@ -663,14 +662,14 @@ function paintMap(all, done, l1Done, l1Total) {
   }
   for (const [id, c] of Object.entries(cells)) {
     c.classList.toggle("na", !rel.has(id));
-    c.classList.toggle("out", rel.has(id) && ITEMS[id].lv > state.level);
+    c.classList.toggle("out", rel.has(id) && ITEMS[id].level > state.level);
     c.classList.toggle("done", rel.has(id) && !!state.checked[id]);
   }
   document.getElementById("map-count").textContent = all.length;
   document.getElementById("map-stat").replaceChildren(el("b", null, done), ` / ${all.length} 済み · まずやる ${l1Done}/${l1Total}`);
   document.getElementById("segs").replaceChildren(...all.map(i => el("i", state.checked[i.id] ? "on" : "")));
   // 1 で選んだものを、設定ファイルのように 1 行で見せる
-  const count = Object.values(ITEMS).filter(i => !WHEN[i.id] || WHEN[i.id].some(t => state.traits.includes(t))).length;
+  const count = Object.values(ITEMS).filter(i => !i.when.length || i.when.some(t => state.traits.includes(t))).length;
   document.getElementById("query").replaceChildren(el("span", "k", "selected"), " = [", el("span", "v", state.traits.join(", ")), "]  ", el("span", "r", `→ ${count} / ${Object.keys(ITEMS).length} 項目`));
 }
 
@@ -678,7 +677,7 @@ function paintMap(all, done, l1Done, l1Total) {
 const log = document.getElementById("log");
 function logCheck(id, checked) {
   const p = el("p", checked ? "" : "undo");
-  p.append(el("b", null, checked ? "✓ done " : "↺ undo "), ` ${LEVEL_LABEL[ITEMS[id].lv]}  ${ITEMS[id].t}`);
+  p.append(el("b", null, checked ? "✓ done " : "↺ undo "), ` ${LEVEL_LABEL[ITEMS[id].level]}  ${ITEMS[id].title}`);
   log.append(p);
   while (log.children.length > 4) log.firstChild.remove();
   setTimeout(() => p.remove(), 3500);
@@ -696,19 +695,19 @@ wide.addEventListener("change", syncPoints);
 points.forEach(d => d.querySelector("summary").addEventListener("click", e => { if (wide.matches) e.preventDefault(); }));
 
 const sourceList = document.getElementById("source-list");
-for (const [title, picks] of RECOMMENDED) {
+for (const { title, picks } of RECOMMENDED) {
   const box = el("div", "source-kind card");
   const ul = el("ul");
-  for (const [k, reason] of picks) {
+  for (const { source, reason } of picks) {
     const li = el("li");
-    li.append(link(SOURCES[k][0], SOURCES[k][1]), el("span", "reason", reason));
+    li.append(link(SOURCES[source].title, SOURCES[source].url), el("span", "reason", reason));
     ul.append(li);
   }
   box.append(el("h3", null, title), ul);
   sourceList.append(box);
 }
 
-document.getElementById("levels").append(...LEVELS.map(([lv, label, text]) => {
+document.getElementById("levels").append(...LEVELS.map(({ level: lv, label, description: text }) => {
   const li = el("li");
   li.append(el("span", "lv lv" + lv, label), text);
   return li;
@@ -720,17 +719,17 @@ const todoOnly = document.getElementById("todo-only");
 todoOnly.addEventListener("change", () => { state.todo = todoOnly.checked; save(); update(); });
 document.getElementById("more-btn").addEventListener("click", () => setLevel(state.level + 1));
 
-const TRAIT_LABEL = Object.fromEntries(TRAITS.flatMap(([, list]) => list));
+const TRAIT_LABEL = Object.fromEntries(CONDITIONS.map(c => [c.id, c.label]));
 state.traits = state.traits || [];
 // profile: null はまだ選んでいない（すべて表示）、"all" はすべて表示を選んだ、"filtered" は絞り込み中
 state.profile = state.profile || null;
 let editing = false;
 
 const traitsEl = document.getElementById("traits");
-for (const [title, list] of TRAITS) {
+for (const title of new Set(CONDITIONS.map(c => c.group))) {
   const fs = el("fieldset", "trait-group");
   const wrap = el("div", "trait-list");
-  for (const [id, label] of list) {
+  for (const { id, label } of CONDITIONS.filter(c => c.group === title)) {
     const lab = el("label", "trait");
     const cb = el("input");
     cb.type = "checkbox";
@@ -754,12 +753,12 @@ document.getElementById("show-all").addEventListener("click", () => { state.prof
 document.getElementById("edit-profile").addEventListener("click", () => { editing = true; update(); document.getElementById("profile").scrollIntoView(); });
 
 function relevant(it) {
-  if (state.profile !== "filtered" || !WHEN[it.id]) return true;
-  return WHEN[it.id].some(t => state.traits.includes(t));
+  if (state.profile !== "filtered" || !it.when.length) return true;
+  return it.when.some(t => state.traits.includes(t));
 }
 
 function visible(it) {
-  return relevant(it) && it.lv <= state.level && !(state.todo && state.checked[it.id]);
+  return relevant(it) && it.level <= state.level && !(state.todo && state.checked[it.id]);
 }
 
 let currentGroup = null;
@@ -768,7 +767,7 @@ function update() {
   const total = Object.values(ITEMS);
   const all = total.filter(relevant);
   const done = all.filter(i => state.checked[i.id]).length;
-  const l1 = all.filter(i => i.lv === 1);
+  const l1 = all.filter(i => i.level === 1);
   const l1Done = l1.filter(i => state.checked[i.id]).length;
   const text = document.getElementById("progress-text");
   text.replaceChildren(el("b", null, `${done} / ${all.length}`), ` 項目が済み（まずやるは ${l1Done} / ${l1.length}）`);
@@ -787,9 +786,9 @@ function update() {
   let anyVisible = false;
   const chips = document.getElementById("chips");
   chips.replaceChildren();
-  for (const g of GROUPS) {
+  for (const g of CATEGORIES) {
     const sec = document.getElementById(g.id);
-    const items = g.items.filter(i => relevant(i) && i.lv <= state.level);
+    const items = g.items.filter(i => relevant(i) && i.level <= state.level);
     if (!items.length) { sec.hidden = true; continue; }
     const n = items.filter(i => state.checked[i.id]).length;
     const li = el("li");
@@ -816,7 +815,7 @@ function update() {
   document.querySelectorAll("[data-repo]").forEach(c => (c.hidden = filtered && !state.traits.includes(c.dataset.repo)));
   document.querySelectorAll(".n-all").forEach(n => (n.textContent = total.length));
   // 次の優先度へ進むボタン
-  const next = all.filter(i => i.lv === state.level + 1).length;
+  const next = all.filter(i => i.level === state.level + 1).length;
   document.getElementById("more").hidden = !next;
   document.getElementById("more-btn").textContent = `「${LEVEL_LABEL[state.level + 1]}」の項目も見る（あと ${next} 項目）`;
   paintMap(all, done, l1Done, l1.length);
@@ -838,7 +837,7 @@ function buildPrompt() {
   const items = Object.values(ITEMS).filter(relevant);
   const todo = items.filter(i => !state.checked[i.id]);
   const done = items.filter(i => state.checked[i.id]);
-  const category = id => GROUPS.find(g => g.items.some(i => i.id === id)).title;
+  const category = id => CATEGORIES.find(g => g.items.some(i => i.id === id)).title;
   const picked = state.profile === "filtered"
     ? state.traits.map(t => TRAIT_LABEL[t]).join("、") || "（選んでいない）"
     : "（まだ選んでいない。すべての項目を対象にしている）";
@@ -860,18 +859,18 @@ function buildPrompt() {
     "",
     `## まだ済んでいない項目（${todo.length} 項目）`,
   ];
-  for (const [lv, label, desc] of LEVELS) {
-    const list = todo.filter(i => i.lv === lv);
+  for (const { level: lv, label, description: desc } of LEVELS) {
+    const list = todo.filter(i => i.level === lv);
     if (!list.length) continue;
     lines.push("", `### ${label}（${desc}）`);
     for (const it of list) {
-      const how = it.use.map(u => u.cmd ? "`" + u.cmd.replace(/\s*\\\n\s*/g, " ") + "`" : u.link ? `${u.label}（${u.link}）` : u.text);
-      lines.push(`- [ ] ${it.t}（${category(it.id)}）`, `  - 放っておくと: ${it.risk}`);
-      if (!it.alt || showPublic) lines.push(`  - ${it.alt ? "公開リポジトリなら" : "使えるもの"}: ${how.join(" / ")}`);
-      if (it.alt && showPrivate) lines.push(`  - 非公開リポジトリなら: ${it.alt.text}`);
+      const how = it.how.map(u => u.command ? "`" + u.command.replace(/\s*\\\n\s*/g, " ") + "`" : u.url ? `${u.title}（${u.url}）` : u.text);
+      lines.push(`- [ ] ${it.title}（${category(it.id)}）`, `  - 放っておくと: ${it.risk}`);
+      if (!it.how_for_private_repos || showPublic) lines.push(`  - ${it.how_for_private_repos ? "公開リポジトリなら" : "使えるもの"}: ${how.join(" / ")}`);
+      if (it.how_for_private_repos && showPrivate) lines.push(`  - 非公開リポジトリなら: ${it.how_for_private_repos.text}`);
     }
   }
-  if (done.length) lines.push("", `## 済んだ項目（${done.length} 項目）`, ...done.map(i => `- [x] ${i.t}`));
+  if (done.length) lines.push("", `## 済んだ項目（${done.length} 項目）`, ...done.map(i => `- [x] ${i.title}`));
   return lines.join("\n");
 }
 const promptPre = document.getElementById("prompt-preview");
