@@ -1,41 +1,78 @@
-// data.js の書き方を確かめてから、checklist.json・checklist.md・llms.txt を書き出す: node export.js
+// data/ の YAML を読み、書き方を確かめてから、ページが読む data.js と checklist.json・checklist.md・llms.txt を書き出す: pnpm build
 // 公開のときは GitHub Actions（.github/workflows/pages.yml）が実行する。誤りがあればここで止まり、公開されない
 const fs = require("fs");
 const path = require("path");
-const vm = require("vm");
+const yaml = require("js-yaml");
 
-const ctx = {};
-vm.runInNewContext(fs.readFileSync(path.join(__dirname, "data.js"), "utf8") + "\nthis.d = { ABOUT, LEVELS, CONDITIONS, CATEGORIES, SOURCES, RECOMMENDED };", ctx);
-const { ABOUT, LEVELS, CONDITIONS, CATEGORIES, SOURCES, RECOMMENDED } = ctx.d;
+// ---- data/ を読む ----
+const errors = [];
+const DATA = path.join(__dirname, "data");
+const load = rel => {
+  try {
+    return yaml.load(fs.readFileSync(path.join(DATA, rel), "utf8"), { schema: yaml.CORE_SCHEMA });  // 日付などを勝手に型変換しない
+  } catch (e) {
+    errors.push(`data/${rel}: 読めません（${String(e.message).split("\n")[0]}）`);
+    return null;
+  }
+};
+const ABOUT = load("about.yml") || {};
+const LEVELS = load("levels.yml") || [];
+const CONDITIONS = load("conditions.yml") || [];
+const SOURCES = load("sources.yml") || {};
+const RECOMMENDED = load("recommended.yml") || [];
+const order = load("categories.yml") || [];
+const ymlFiles = dir => (fs.existsSync(dir) ? fs.readdirSync(dir).filter(f => f.endsWith(".yml") && f !== "_category.yml") : []);
+for (const name of fs.readdirSync(path.join(DATA, "items"))) {
+  if (fs.statSync(path.join(DATA, "items", name)).isDirectory() && !order.includes(name)) errors.push(`data/items/${name}/ が categories.yml にありません`);
+}
+const CATEGORIES = order.map(id => {
+  const c = load(`items/${id}/_category.yml`) || {};
+  const listed = Array.isArray(c.items) ? c.items : [];
+  for (const f of ymlFiles(path.join(DATA, "items", id))) {
+    if (!listed.includes(f.replace(/\.yml$/, ""))) errors.push(`data/items/${id}/${f} が、同じフォルダの _category.yml の items にありません`);
+  }
+  return {
+    id, title: c.title, ...(c.lead ? { lead: c.lead } : {}),
+    items: listed.map(name => {
+      const it = load(`items/${id}/${name}.yml`) || {};
+      if (it.id !== name) errors.push(`data/items/${id}/${name}.yml: id（${it.id}）をファイル名と同じ ${name} にします`);
+      return it;
+    }),
+  };
+});
 
 // ---- 書き方の確認 ----
-const errors = [];
 const items = CATEGORIES.flatMap(c => c.items);
 const levels = new Set(LEVELS.map(l => l.level));
 const conditions = new Set(CONDITIONS.map(c => c.id));
-const ITEM_KEYS = new Set(["id", "level", "title", "when", "risk", "why", "how", "how_for_private_repos", "related"]);
+const ITEM_KEYS = new Set(["id", "level", "title", "when", "risk", "why", "how", "how_for_private_repos", "related", "evidence", "mappings"]);
 const dup = list => list.filter((x, i) => list.indexOf(x) !== i);
 for (const id of dup(items.map(i => i.id))) errors.push(`項目の id が重複しています: ${id}`);
 for (const id of dup(CONDITIONS.map(c => c.id))) errors.push(`条件の id が重複しています: ${id}`);
-for (const id of dup(CATEGORIES.map(c => c.id))) errors.push(`カテゴリの id が重複しています: ${id}`);
 for (const it of items) {
   const at = `項目 ${it.id}`;
   for (const k of Object.keys(it)) if (!ITEM_KEYS.has(k)) errors.push(`${at}: ${k} という欄はありません（書ける欄: ${[...ITEM_KEYS].join(", ")}）`);
   for (const f of ["id", "title", "risk", "why"]) if (typeof it[f] !== "string" || !it[f].trim()) errors.push(`${at}: ${f} がありません`);
-  if (!levels.has(it.level)) errors.push(`${at}: level の ${it.level} は LEVELS にありません`);
+  if (!levels.has(it.level)) errors.push(`${at}: level の ${it.level} は levels.yml にありません`);
   if (!Array.isArray(it.when)) errors.push(`${at}: when は配列にします（すべてのプロジェクトに出すなら []）`);
-  for (const t of it.when || []) if (!conditions.has(t)) errors.push(`${at}: when の ${t} は CONDITIONS にありません`);
+  for (const t of it.when || []) if (!conditions.has(t)) errors.push(`${at}: when の ${t} は conditions.yml にありません`);
   if (!Array.isArray(it.related)) errors.push(`${at}: related は配列にします（なければ []）`);
-  for (const k of it.related || []) if (!SOURCES[k]) errors.push(`${at}: related の ${k} は SOURCES にありません`);
+  for (const k of it.related || []) if (!SOURCES[k]) errors.push(`${at}: related の ${k} は sources.yml にありません`);
   if (!Array.isArray(it.how) || !it.how.length) errors.push(`${at}: how がありません`);
-  for (const h of it.how || []) if (!(h.text || h.command || (h.title && h.url))) errors.push(`${at}: how には { text } か { command } か { title, url } を書きます`);
+  for (const h of it.how || []) if (!(h.text || h.command || (h.title && h.url))) errors.push(`${at}: how には text か command か、title と url を書きます`);
+  if (it.evidence !== undefined && !Array.isArray(it.evidence)) errors.push(`${at}: evidence は配列にします`);
+  for (const e of Array.isArray(it.evidence) ? it.evidence : []) {
+    if (!SOURCES[e.source]) errors.push(`${at}: evidence の ${e.source} は sources.yml にありません`);
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(String(e.checked))) errors.push(`${at}: evidence の checked は 2026-10-15 のように、確かめた日を書きます`);
+  }
+  if (it.mappings !== undefined && (!Array.isArray(it.mappings) || it.mappings.some(m => typeof m !== "string" || !m.trim()))) errors.push(`${at}: mappings は文字列の配列にします`);
 }
-for (const r of RECOMMENDED) for (const p of r.picks) if (!SOURCES[p.source]) errors.push(`RECOMMENDED の ${p.source} は SOURCES にありません`);
+for (const r of RECOMMENDED) for (const p of r.picks) if (!SOURCES[p.source]) errors.push(`recommended.yml の ${p.source} は sources.yml にありません`);
 if (errors.length) {
   console.error(errors.join("\n"));
   process.exit(1);
 }
-const used = new Set([...items.flatMap(i => i.related), ...RECOMMENDED.flatMap(r => r.picks.map(p => p.source))]);
+const used = new Set([...items.flatMap(i => [...i.related, ...(i.evidence || []).map(e => e.source)]), ...RECOMMENDED.flatMap(r => r.picks.map(p => p.source))]);
 const unused = Object.keys(SOURCES).filter(k => !used.has(k));
 if (unused.length) console.warn(`どこからも使われていない資料（消してよいか確かめる）: ${unused.join(", ")}`);
 
@@ -78,9 +115,15 @@ const data = {
     how: it.how,
     ...(it.how_for_private_repos ? { how_for_private_repos: it.how_for_private_repos } : {}),
     related: it.related.map(k => ({ title: SOURCES[k].title, url: SOURCES[k].url })),
+    ...(it.evidence ? { evidence: it.evidence.map(e => ({ title: SOURCES[e.source].title, url: SOURCES[e.source].url, checked: e.checked, ...(e.note ? { note: e.note } : {}) })) } : {}),
+    ...(it.mappings ? { mappings: it.mappings } : {}),
   }))),
 };
 const write = (name, text) => fs.writeFileSync(path.join(__dirname, name), text);
+
+// ---- data.js（ページが読み込む。コミットしない） ----
+write("data.js", "// export.js が data/ の YAML から作る。直すときは data/ を直す\n"
+  + Object.entries({ ABOUT, LEVELS, CONDITIONS, CATEGORIES, SOURCES, RECOMMENDED }).map(([k, v]) => `const ${k} = ${JSON.stringify(v)};`).join("\n") + "\n");
 write("checklist.json", JSON.stringify(data, null, 2) + "\n");
 
 // ---- checklist.md（GitHub でそのまま読める。AI にも渡しやすい） ----
@@ -122,6 +165,8 @@ for (const cat of data.categories) {
       if (it.how_for_private_repos.command) md.push("", "  ```", ...it.how_for_private_repos.command.split("\n").map(l => "  " + l), "  ```", "");
     }
     if (it.related.length) md.push(`- 関連資料: ${it.related.map(r => `[${r.title}](${r.url})`).join("、")}`);
+    if (it.evidence) md.push(`- 根拠: ${it.evidence.map(e => `[${e.title}](${e.url})（${e.checked} に確認${e.note ? `：${e.note}` : ""}）`).join("、")}`);
+    if (it.mappings) md.push(`- 対応する規格: ${it.mappings.join("、")}`);
   }
 }
 write("checklist.md", md.join("\n").replace(/\n{3,}/g, "\n\n") + "\n");
@@ -143,4 +188,4 @@ write("llms.txt", [
   "",
 ].join("\n"));
 
-console.log(`checklist.json・checklist.md・llms.txt: ${data.items.length} 項目`);
+console.log(`data.js・checklist.json・checklist.md・llms.txt: ${data.items.length} 項目`);

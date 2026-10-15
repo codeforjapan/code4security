@@ -1,0 +1,13 @@
+id: ugc
+level: 2
+title: 利用者の投稿や生成 AI の出力を、HTML として解釈させずに表示している
+when: [ugc, ai]
+risk: 投稿にスクリプトを紛れ込ませられると、それを見たほかの利用者のブラウザで実行され、ログイン中のアカウントを乗っ取られたり、偽の画面を出されたりします（クロスサイトスクリプティング）。生成 AI の出力も、利用者の入力や読み込んだ文書に操られることがあるので、同じように扱います。
+why: 表示するときに必ずエスケープすれば、投稿はただの文字として表示されます。React や Vue は標準でエスケープしますが、HTML をそのまま差し込む書き方をしている箇所は要注意です。
+how:
+  - text: HTML をそのまま差し込んでいる箇所を探します。
+  - command: |-
+      grep -rnE 'dangerouslySetInnerHTML|v-html|innerHTML' \
+        --exclude-dir=node_modules .
+  - text: 生成 AI の答えを Markdown から HTML にして表示しているなら、その変換で HTML やスクリプトがそのまま通らないかを確かめます。
+related: [owaspXss, ipaWeb, owaspLlm05]

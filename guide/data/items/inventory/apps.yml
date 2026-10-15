@@ -1,0 +1,14 @@
+id: apps
+level: 2
+title: 連携している GitHub Apps・OAuth Apps・デプロイキーを見直した
+when: []
+risk: 試しに入れたアプリが全リポジトリへの書き込み権限を持ったまま残っていたり、古いデプロイキーに書き込み権限が付いたままだったりします。その提供元が侵害されると、自分たちのリポジトリまで書き換えられます。
+why: 使っていない連携を外せば、よそで起きた事故に巻き込まれる経路が減ります。
+how:
+  - title: 連携している GitHub Apps
+    url: https://github.com/settings/installations
+  - title: 許可した OAuth Apps
+    url: https://github.com/settings/applications
+  - command: gh api repos/<owner>/<repo>/keys
+  - text: Webhook を使っているなら、シークレットを設定し、受け取る側で署名を確かめます。シークレットがないと、誰でも偽の通知を送れます。
+related: [ghApps, ghDeployKeys, scorecardChecks]

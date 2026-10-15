@@ -1,0 +1,256 @@
+# 資料。項目の related や evidence、recommended.yml から key で指す
+ghArchive:
+  title: GitHub Docs「リポジトリのアーカイブ」
+  url: https://docs.github.com/ja/repositories/archiving-a-github-repository/archiving-repositories
+ghApps:
+  title: GitHub Docs「インストールされている GitHub App の確認と変更」
+  url: https://docs.github.com/ja/apps/using-github-apps/reviewing-and-modifying-installed-github-apps
+ghDeployKeys:
+  title: GitHub Docs「デプロイキーの管理」
+  url: https://docs.github.com/ja/authentication/connecting-to-github-with-ssh/managing-deploy-keys
+ghPersonal2fa:
+  title: GitHub Docs「2 要素認証を設定する」
+  url: https://docs.github.com/ja/authentication/securing-your-account-with-two-factor-authentication-2fa/configuring-two-factor-authentication
+gh2fa:
+  title: GitHub Docs「Organization で 2 要素認証を必須にする」
+  url: https://docs.github.com/ja/organizations/keeping-your-organization-secure/managing-two-factor-authentication-for-your-organization/requiring-two-factor-authentication-in-your-organization
+ghOutside:
+  title: GitHub Docs「Organization のリポジトリから外部コラボレーターを削除する」
+  url: https://docs.github.com/ja/organizations/managing-user-access-to-your-organizations-repositories/managing-outside-collaborators/removing-an-outside-collaborator-from-an-organization-repository
+ghDataLeaks:
+  title: GitHub Docs「組織でのデータ漏洩を防ぐためのベスト プラクティス」
+  url: https://docs.github.com/ja/code-security/tutorials/secure-your-organization/prevent-data-leaks
+ghPat:
+  title: GitHub Docs「個人用アクセストークンを管理する」
+  url: https://docs.github.com/ja/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens
+ghDependabot:
+  title: GitHub Docs「Dependabot アラート」
+  url: https://docs.github.com/ja/code-security/concepts/supply-chain-security/dependabot-alerts
+ghSecUpdates:
+  title: GitHub Docs「Dependabot セキュリティ アップデート」
+  url: https://docs.github.com/ja/code-security/concepts/supply-chain-security/dependabot-security-updates
+ghSecretScanning:
+  title: GitHub Docs「シークレット スキャン」
+  url: https://docs.github.com/ja/code-security/concepts/secret-security/secret-scanning
+ghPushProtection:
+  title: GitHub Docs「プッシュプロテクション」
+  url: https://docs.github.com/ja/code-security/concepts/secret-security/push-protection
+ghCodeql:
+  title: GitHub Docs「コード スキャンの既定セットアップの構成」
+  url: https://docs.github.com/ja/code-security/how-tos/find-and-fix-code-vulnerabilities/configure-code-scanning/configure-code-scanning
+ghPricing:
+  title: GitHub Changelog「Introducing GitHub Secret Protection and GitHub Code Security」（2025-03-04）
+  url: https://github.blog/changelog/2025-03-04-introducing-github-secret-protection-and-github-code-security/
+ghToken:
+  title: GitHub Docs「ワークフローでの認証に GITHUB_TOKEN を使用する」
+  url: https://docs.github.com/ja/actions/tutorials/authenticate-with-github_token
+ghRulesets:
+  title: GitHub Docs「ルールセットについて」
+  url: https://docs.github.com/ja/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/about-rulesets
+ghPvr:
+  title: GitHub Docs「リポジトリのプライベート脆弱性レポートの構成」
+  url: https://docs.github.com/ja/code-security/how-tos/report-and-fix-vulnerabilities/configure-vulnerability-reporting/configure-for-a-repository
+ghPolicy:
+  title: GitHub Docs「リポジトリへのセキュリティ ポリシーの追加」
+  url: https://docs.github.com/ja/code-security/how-tos/report-and-fix-vulnerabilities/configure-vulnerability-reporting/add-security-policy
+ghSecureUse:
+  title: GitHub Docs「セキュリティで保護された使用に関するリファレンス」（GitHub Actions）
+  url: https://docs.github.com/ja/actions/reference/security/secure-use
+ghPrt:
+  title: GitHub Docs「pull_request_target を安全に使用する」
+  url: https://docs.github.com/ja/actions/reference/security/securely-using-pull_request_target
+ghAutoUpdateActions:
+  title: GitHub Docs「Dependabot でアクションを最新に保つ」
+  url: https://docs.github.com/ja/code-security/how-tos/secure-your-supply-chain/secure-your-dependencies/auto-update-actions
+ghActionsLock:
+  title: GitHub Docs「ワークフロー依存関係のロックファイル」
+  url: https://docs.github.com/ja/actions/concepts/security/workflow-dependency-lockfiles
+ghDependabotOptions:
+  title: GitHub Docs「Dependabot オプション リファレンス」（cooldown）
+  url: https://docs.github.com/ja/code-security/reference/supply-chain-security/dependabot-options-reference
+ghVisibility:
+  title: GitHub Docs「Organization 内でリポジトリの可視性の変更を制限する」
+  url: https://docs.github.com/ja/organizations/managing-organization-settings/restricting-repository-visibility-changes-in-your-organization
+ghDeleteTransfer:
+  title: GitHub Docs「リポジトリを削除または移譲する権限を設定する」
+  url: https://docs.github.com/ja/organizations/managing-organization-settings/setting-permissions-for-deleting-or-transferring-repositories
+ghSecuringAccounts:
+  title: GitHub Docs「アカウントをセキュリティで保護するためのベスト プラクティス」
+  url: https://docs.github.com/ja/code-security/tutorials/implement-supply-chain-best-practices/securing-accounts
+firebaseInsecure:
+  title: Firebase「安全でないルールの回避」
+  url: https://firebase.google.com/docs/rules/insecure-rules
+firebaseChecklist:
+  title: Firebase「Firebase security checklist」
+  url: https://firebase.google.com/support/guides/security-checklist
+firebaseTest:
+  title: Firebase「Security Rules の単体テスト」
+  url: https://firebase.google.com/docs/rules/unit-tests
+supabaseRls:
+  title: Supabase Docs「Row Level Security」
+  url: https://supabase.com/docs/guides/database/postgres/row-level-security
+supabaseNet:
+  title: Supabase Docs「Network Restrictions」
+  url: https://supabase.com/docs/guides/platform/network-restrictions
+supabaseAdvisors:
+  title: Supabase Docs「Advisors」
+  url: https://supabase.com/docs/guides/observability/advisors
+nextEnv:
+  title: Next.js Docs「How to use environment variables in Next.js」
+  url: https://nextjs.org/docs/app/guides/environment-variables
+viteEnv:
+  title: Vite「環境変数とモード」
+  url: https://vite.dev/guide/env-and-mode
+pnpmAge:
+  title: pnpm「minimumReleaseAge」
+  url: https://pnpm.io/settings/dependency-resolution#minimumreleaseage
+renovateAge:
+  title: Renovate Docs「minimumReleaseAge」
+  url: https://docs.renovatebot.com/configuration-options/#minimumreleaseage
+sentryScrub:
+  title: Sentry Docs「Data Scrubbing」
+  url: https://docs.sentry.io/security-legal-pii/scrubbing/
+driveShare:
+  title: Google ドライブ ヘルプ「Google ドライブのファイルを共有する」
+  url: https://support.google.com/drive/answer/2494822
+supabaseKeys:
+  title: Supabase Docs「API keys」
+  url: https://supabase.com/docs/guides/api/api-keys
+supabaseColumns:
+  title: Supabase Docs「Column Level Security」
+  url: https://supabase.com/docs/guides/database/postgres/column-level-security
+firestoreFields:
+  title: Firebase「Control access to specific fields」
+  url: https://firebase.google.com/docs/firestore/security/rules-fields
+firebaseKeys:
+  title: Firebase「Learn about and manage API keys for Firebase」
+  url: https://firebase.google.com/docs/projects/api-keys
+npmMinAge:
+  title: npm Docs「config」（min-release-age）
+  url: https://docs.npmjs.com/cli/v11/using-npm/config#min-release-age
+npmCi:
+  title: npm Docs「npm ci」
+  url: https://docs.npmjs.com/cli/v11/commands/npm-ci
+npmTrusted:
+  title: npm Docs「Trusted publishing for npm packages」
+  url: https://docs.npmjs.com/trusted-publishers
+pypiTrusted:
+  title: PyPI Docs「Trusted Publishers」
+  url: https://docs.pypi.org/trusted-publishers/
+openssfGuide:
+  title: OpenSSF「Concise Guide for Developing More Secure Software」
+  url: https://best.openssf.org/Concise-Guide-for-Developing-More-Secure-Software
+ipaWeb:
+  title: IPA「安全なウェブサイトの作り方」
+  url: https://www.ipa.go.jp/security/vuln/websecurity/about.html
+ppcLeak:
+  title: 個人情報保護委員会「漏えい等の対応とお役立ち資料」
+  url: https://www.ppc.go.jp/personalinfo/legal/leakAction/
+owaspMfa:
+  title: OWASP Cheat Sheet「Multifactor Authentication」
+  url: https://cheatsheetseries.owasp.org/cheatsheets/Multifactor_Authentication_Cheat_Sheet.html
+owaspSecrets:
+  title: OWASP Cheat Sheet「Secrets Management」
+  url: https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html
+owaspLogging:
+  title: OWASP Cheat Sheet「Logging」
+  url: https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html
+owaspVdp:
+  title: OWASP Cheat Sheet「Vulnerability Disclosure」
+  url: https://cheatsheetseries.owasp.org/cheatsheets/Vulnerability_Disclosure_Cheat_Sheet.html
+owaspTakeover:
+  title: OWASP WSTG「Test for Subdomain Takeover」
+  url: https://wstg.owasp.org/latest/4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management/10-Subdomain_Takeover/
+owaspTop10:
+  title: OWASP Top 10:2025「A01 Broken Access Control」
+  url: https://top10.owasp.org/2025/A01_2025-Broken_Access_Control/
+owaspAuthz:
+  title: OWASP Cheat Sheet「Authorization」
+  url: https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html
+owaspAuthn:
+  title: OWASP Cheat Sheet「Authentication」
+  url: https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html
+owaspPassword:
+  title: OWASP Cheat Sheet「Password Storage」
+  url: https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html
+owaspDb:
+  title: OWASP Cheat Sheet「Database Security」
+  url: https://cheatsheetseries.owasp.org/cheatsheets/Database_Security_Cheat_Sheet.html
+cisaRansomware:
+  title: CISA「#StopRansomware Guide」
+  url: https://www.cisa.gov/stopransomware/ransomware-guide
+gcpKeys:
+  title: Google Cloud「API キーの管理に関するベストプラクティス」
+  url: https://docs.cloud.google.com/docs/authentication/api-keys-best-practices
+gcpBudgets:
+  title: Google Cloud「予算と予算アラートの作成、編集、削除」
+  url: https://docs.cloud.google.com/billing/docs/how-to/budgets
+turnstile:
+  title: Cloudflare Turnstile docs
+  url: https://developers.cloudflare.com/turnstile/
+gmailSender:
+  title: Gmail ヘルプ「メール送信者のガイドライン」
+  url: https://support.google.com/mail/answer/81126
+ubuntuUpdates:
+  title: Ubuntu Server documentation「Automatic updates」
+  url: https://ubuntu.com/server/docs/how-to/software/automatic-updates/
+owaspApi4:
+  title: OWASP API Security Top 10「API4:2023 Unrestricted Resource Consumption」
+  url: https://api-security.owasp.org/editions/2023/en/0xa4-unrestricted-resource-consumption/
+owaspInput:
+  title: OWASP Cheat Sheet「Input Validation」
+  url: https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+owaspXss:
+  title: OWASP Cheat Sheet「Cross Site Scripting Prevention」
+  url: https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
+owaspUpload:
+  title: OWASP Cheat Sheet「File Upload」
+  url: https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html
+owaspLlm:
+  title: OWASP Gen AI Security Project「LLM01:2025 Prompt Injection」
+  url: https://genai.owasp.org/llmrisk/llm01-prompt-injection/
+owaspLlm05:
+  title: OWASP Gen AI Security Project「LLM05:2025 Improper Output Handling」
+  url: https://genai.owasp.org/llmrisk/llm052025-improper-output-handling/
+owaspLlm07:
+  title: OWASP Gen AI Security Project「LLM07:2025 System Prompt Leakage」
+  url: https://genai.owasp.org/llmrisk/llm072025-system-prompt-leakage/
+owaspLlm10:
+  title: OWASP Gen AI Security Project「LLM10:2025 Unbounded Consumption」
+  url: https://genai.owasp.org/llmrisk/llm102025-unbounded-consumption/
+ppcGuideline:
+  title: 個人情報保護委員会「個人情報の保護に関する法律についてのガイドライン（通則編）」
+  url: https://www.ppc.go.jp/personalinfo/legal/guidelines_tsusoku/
+ppcAi:
+  title: 個人情報保護委員会「生成AIサービスの利用に関する注意喚起等について」
+  url: https://www.ppc.go.jp/news/careful_information/230602_AI_utilize_alert/
+ipa10:
+  title: IPA「情報セキュリティ10大脅威 2026」（2026-01-29 のプレス発表）
+  url: https://www.ipa.go.jp/pressrelease/2025/press20260129.html
+owaspA02:
+  title: OWASP Top 10:2025「A02 Security Misconfiguration」
+  url: https://top10.owasp.org/2025/A02_2025-Security_Misconfiguration/
+scorecardChecks:
+  title: OpenSSF Scorecard「Checks」（Webhooks）
+  url: https://github.com/ossf/scorecard/blob/main/docs/checks.md#webhooks
+owaspTop10Index:
+  title: OWASP Top 10:2025
+  url: https://top10.owasp.org/2025/
+owaspCs:
+  title: OWASP Cheat Sheet Series
+  url: https://cheatsheetseries.owasp.org/
+tjAdvisory:
+  title: GitHub Advisory Database「tj-actions/changed-files」（CVE-2025-30066）
+  url: https://github.com/advisories/GHSA-mrrh-fwg8-r2c3
+tjCisa:
+  title: CISA「Supply Chain Compromise of Third-Party tj-actions/changed-files」（2025-03-18）
+  url: https://www.cisa.gov/news-events/alerts/2025/03/18/supply-chain-compromise-third-party-tj-actionschanged-files-cve-2025-30066-and-reviewdogaction
+npmCisa:
+  title: CISA「Widespread Supply Chain Compromise Impacting npm Ecosystem」（2025-09-23）
+  url: https://www.cisa.gov/news-events/alerts/2025/09/23/widespread-supply-chain-compromise-impacting-npm-ecosystem
+gitleaks:
+  title: gitleaks
+  url: https://github.com/gitleaks/gitleaks
+semgrep:
+  title: Semgrep Docs「Quickstart」
+  url: https://docs.semgrep.dev/getting-started/quickstart

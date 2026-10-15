@@ -1,0 +1,13 @@
+id: offboard
+level: 1
+title: 抜けた人や不要な外部コラボレーターの権限を、GitHub とほかのサービスから外した
+when: [team, org]
+risk: 抜けた人のアカウントに権限が残っていると、そのアカウントが乗っ取られたとき、今も使っているリポジトリまで書き換えられます。本人に悪意がなくても起こります。共有のスプレッドシートや、ホスティング・データベースの管理画面に、元メンバーの個人アカウントが残っていることもよくあります。
+why: 抜けるときに権限を外す手順を決めておけば、使われていない権限が溜まりません。
+how:
+  - text: organization なら、外部コラボレーターの一覧を出します。
+  - command: gh api --paginate orgs/<org>/outside_collaborators --jq '.[].login'
+  - text: 個人アカウントのリポジトリなら、リポジトリごとのコラボレーターを確かめます。
+  - command: gh api --paginate repos/<owner>/<repo>/collaborators --jq '.[].login'
+  - text: GitHub のほかに、Google ドライブやフォームの共有、ホスティング（Vercel・Netlify など）、Firebase・Supabase のメンバー、チャットのワークスペースも確かめます。
+related: [ghOutside, ghDataLeaks]

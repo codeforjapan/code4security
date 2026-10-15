@@ -1,0 +1,9 @@
+id: upload
+level: 2
+title: アップロードできるファイルの種類と大きさを制限し、保存先を非公開にした
+when: [upload]
+risk: 何でもアップロードできると、不正なファイルを置かれて配布に使われたり、HTML や SVG に仕込んだスクリプトを実行されたりします。保存先が公開設定だと、ほかの人が上げた書類まで誰でも見られます。
+why: 受け付ける種類と大きさを決め、保存先を非公開にして、見る権限のある人にだけ期限付きの URL で渡せば、これらを防げます。
+how:
+  - text: Firebase Storage のセキュリティルール、Supabase Storage のポリシー、S3 や R2 の署名付き URL
+related: [owaspUpload]

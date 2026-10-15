@@ -1,0 +1,8 @@
+# カテゴリの名前・説明と、項目の並び順（items/deps/<id>.yml）
+title: 依存パッケージ
+items:
+  - dependabot
+  - lockfile
+  - pkgname
+  - cooldown
+  - trustedpub

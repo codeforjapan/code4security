@@ -1,0 +1,14 @@
+id: codeql
+level: 2
+title: コードの静的解析を、push のたびに自動で動かしている
+when: [public, private]
+risk: SQL インジェクションやクロスサイトスクリプティングのような典型的な穴は、書いた本人もレビューした人も見落としがちです。
+why: push のたびに自動で調べ、よくある穴を指摘してくれます。公開リポジトリなら無料で、GitHub Actions のワークフローも調べます。
+how:
+  - command: |-
+      gh api -X PATCH repos/<owner>/<repo>/code-scanning/default-setup \
+        -f state=configured
+how_for_private_repos:
+  text: 個人アカウントや Free の organization の非公開リポジトリでは、CodeQL を使えません（organization が Team 以上のプランで GitHub Code Security を契約したときだけ使えます）。代わりに、Semgrep の無料版を手元や CI で動かします。
+  command: semgrep scan --config auto
+related: [ghCodeql, ghPricing, semgrep, ipaWeb]

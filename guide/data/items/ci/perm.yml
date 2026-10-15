@@ -1,0 +1,9 @@
+id: perm
+level: 1
+title: ワークフローの GITHUB_TOKEN を読み取り専用にした
+when: [actions]
+risk: GITHUB_TOKEN が書き込み可のままだと、ワークフローで使っている外部の action が乗っ取られたとき、その action からリポジトリに勝手に push されるおそれがあります。
+why: 読み取り専用にしておけば、乗っ取られた action にできることが限られます。書き込みが必要なジョブだけに許可を付けます。
+how:
+  - text: 'Settings → Actions → General → Workflow permissions を Read にします。各ワークフローの先頭にも permissions: contents: read を書きます。'
+related: [ghToken, ghSecureUse]

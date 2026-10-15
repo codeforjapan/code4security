@@ -1,0 +1,27 @@
+# ページの最後に載せる、目的別のおすすめ（一言の理由つき）
+- title: 基本の手引き
+  picks:
+    - source: ipaWeb
+      reason: 日本語で読める定番です。Web アプリによくある脆弱性と、作り方での防ぎ方を体系的に学べます。
+    - source: owaspTop10Index
+      reason: Web アプリで実際に多い危険を 10 に絞った世界的な指標です。何から気にすべきかの優先順位がつかめます。
+    - source: owaspCs
+      reason: ログインやファイルのアップロードなど、テーマごとにやるべきことが短くまとまっています。作りながら引く辞書として便利です。
+    - source: openssfGuide
+      reason: オープンソースで開発する人向けに、やるべきことが 1 ページにまとまっています。公開リポジトリで開発するなら最初に読みたい資料です。
+- title: GitHub を使うなら
+  picks:
+    - source: ghSecureUse
+      reason: GitHub Actions の権限、シークレット、外部の action の扱いを公式がまとめています。Actions を使うなら一度は目を通しておきたい資料です。
+    - source: ghDataLeaks
+      reason: organization の権限や設定で何を見直せば情報が漏れにくくなるかを、公式の観点で整理しています。
+- title: 個人情報を扱うなら
+  picks:
+    - source: ppcLeak
+      reason: 個人情報が漏れたときに報告が必要かどうかや、その手順を、国の機関の資料で確かめられます。
+- title: 実際に起きた事例
+  picks:
+    - source: tjCisa
+      reason: 広く使われていた action が改ざんされ、アクセスキーや GitHub のトークンなどのシークレットがワークフローのログから読めるようになった事例です。action を SHA で固定する理由がわかります。
+    - source: npmCisa
+      reason: 自己増殖するワームが 500 以上の npm パッケージを乗っ取り、開発者の GitHub トークンやクラウドの API キーを狙った事例です。公開直後の版をすぐに入れない理由がわかります。

@@ -1,0 +1,15 @@
+id: 2fa
+level: 1
+title: 自分を含め、関わる全員が 2 要素認証（2FA）を使っている（organization なら必須にしている）
+when: []
+risk: パスワードだけのアカウントは、使い回しやフィッシングで簡単に乗っ取られます。乗っ取られると、コードの書き換えもシークレットの持ち出しもできてしまいます。
+why: 2FA があれば、パスワードが漏れただけではログインされません。パスキーやセキュリティキーなら、フィッシングにも強くなります。
+how:
+  - text: 自分のアカウントは Settings → Password and authentication で 2FA を有効にします。ホスティングやデータベースなど、ほかのサービスのアカウントも同じです。
+  - title: 自分の 2FA の設定
+    url: https://github.com/settings/security
+  - text: 2FA の手段は 2 つ以上登録し、リカバリーコードを保管します。端末をなくしても、ログインできなくならないようにするためです。
+  - text: organization なら Settings → Authentication security → Require two-factor authentication で全員に必須にします。必須にすると、2FA を設定していない外部コラボレーターは外され、メンバーは設定するまで organization のリソースを使えなくなるので、先に全員に設定してもらいます。
+  - text: organization なら、安全な 2FA の手段（パスキー、セキュリティキー、認証アプリなど）だけを許可することもできます。2FA を設定していないメンバーは、次のコマンドで確かめられます（Owner だけが使えます）。
+  - command: gh api --paginate 'orgs/<org>/members?filter=2fa_disabled' --jq '.[].login'
+related: [ghPersonal2fa, gh2fa, ghSecuringAccounts, owaspMfa, openssfGuide]

@@ -30,11 +30,12 @@
 
 ## 直し方
 
-点検項目・条件・優先度・資料は、すべて `data.js` にあります。直すのはこのファイルだけです。
+点検項目・条件・優先度・資料は、すべて `data/` の YAML にあります。項目は 1 項目 1 ファイル（`data/items/<カテゴリ>/<id>.yml`）です。直すのはここだけです。
 
-- ページ（`index.html`）は `data.js` をそのまま読み込みます。ビルドは不要で、外部のライブラリも使っていません（フォントだけ Google Fonts から読み込みます）
-- `checklist.json`・`checklist.md`・`llms.txt` は、main に入ったときに GitHub Actions が `export.js` で作り、ページと一緒に公開します。リポジトリには置きません
-- PR では、同じ `export.js` が `data.js` の書き方を確かめます。手元では `node export.js` で確かめられます
+- main に入ると、GitHub Actions が `export.js`（`pnpm build`）で、ページが読み込む `data.js` と、`checklist.json`・`checklist.md`・`llms.txt` を作って公開します。どれもリポジトリには置きません
+- ページ（`index.html`）は外部のライブラリを使っていません（フォントだけ Google Fonts から読み込みます）。YAML を読むための js-yaml は、書き出しのときだけ使います
+- PR では、同じ `export.js` が `data/` の書き方を確かめます
+- 手元では `pnpm install` のあと `pnpm build` で確かめ、`index.html` をブラウザで開くと、直したページを見られます
 
 項目の足し方や文章の決まりは、[CONTRIBUTING.md](CONTRIBUTING.md) にまとめています。
 
@@ -46,7 +47,7 @@
 
 ## ライセンス
 
-- 文章とデータ（`data.js`、公開している `checklist.md`・`checklist.json`・`llms.txt`、`ogp.png`）：[CC0 1.0](LICENSE-CONTENT.md)（パブリック・ドメイン）
+- 文章とデータ（`data/` の YAML、公開している `checklist.md`・`checklist.json`・`llms.txt`、`ogp.png`）：[CC0 1.0](LICENSE-CONTENT.md)（パブリック・ドメイン）
 - コード（`index.html`、`export.js`、`ogp.html`、`.github/` のワークフロー）：[MIT](LICENSE)
 
 文章とデータは、許可を求めたり出典を示したりせずに、自由に使ったり、変えたり、ほかのプロジェクトに取り込んだりできます。出典を示していただけると、読んだ人が最新の版にたどり着けて助かります。

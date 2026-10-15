@@ -1,0 +1,11 @@
+id: pvr
+level: 1
+title: 非公開で脆弱性の報告を受け付け、公開の Issue には書かないと決めてある
+when: [public]
+risk: 穴を見つけた人に知らせる手段がないと、公開の Issue や SNS に書かれてしまうか、誰にも知らされないままになります。自分たちで公開の Issue に書いても、直す前に攻撃の手順を誰にでも見える形で公開することになります。
+why: 非公開の窓口があれば、見つけてくれた人と安全にやり取りし、直してから公表できます。
+how:
+  - text: 非公開の脆弱性報告（private vulnerability reporting）を有効にすると、リポジトリの Security タブに「Report a vulnerability」のボタンが出て、非公開で報告を受け付けられます。
+  - command: gh api -X PUT repos/<owner>/<repo>/private-vulnerability-reporting
+  - text: SECURITY.md に、報告の窓口と返事の目安を書きます。自分たちで見つけた脆弱性は、Security Advisory の下書きか非公開のリポジトリで扱います。
+related: [ghPvr, ghPolicy, owaspVdp]

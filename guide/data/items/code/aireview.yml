@@ -1,0 +1,13 @@
+id: aireview
+level: 3
+title: PR ごとに AI のセキュリティレビューを通している
+when: []
+risk: 「ログインしていれば他人のデータも見られる」といった認可の漏れは、決まったルールで調べるツールではなかなか見つかりません。
+why: AI はコードの意図を読んで、こうした穴も指摘できることがあります。見落としや誤りもあるので、人のレビューの代わりにはなりません。新しく入る穴を止める役なので、今ある穴は別に調べます。
+how:
+  - title: claude-code-security-review
+    url: https://github.com/anthropics/claude-code-security-review
+  - text: 手元なら Claude Code の /security-review
+  - text: 公開リポジトリでは、外部からの PR を AI に読ませると操られるおそれがあります。Settings → Actions → General の「Require approval for all external contributors」で、外部のコントリビューターからの実行に承認を必須にします。
+  - text: API の料金がかかります。
+related: []

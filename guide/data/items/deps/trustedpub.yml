@@ -1,0 +1,10 @@
+id: trustedpub
+level: 1
+title: パッケージを trusted publishing で公開し、トークンでの公開を禁止した
+when: [publish]
+risk: 公開に使うトークンや認証情報が盗まれると、自分のパッケージに悪意あるコードを入れた版を出され、使っている人みんなに被害が広がります。2025 年には、乗っ取った開発者として npm に公開し、ほかのパッケージへ次々に広がるワームが出ました。
+why: trusted publishing では、GitHub Actions などから公開するたびに、期限の短いトークンが自動で発行されます。盗まれて困る長期のトークンを持たずに済みます。
+how:
+  - text: npm なら、パッケージの Settings で trusted publisher（公開に使う GitHub Actions のワークフロー）を登録し、Publishing access を「Require two-factor authentication and disallow tokens」にします。
+  - text: PyPI なら、プロジェクトの管理画面で trusted publisher を登録します。
+related: [npmTrusted, pypiTrusted, npmCisa]

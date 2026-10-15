@@ -1,0 +1,7 @@
+# カテゴリの名前・説明と、項目の並び順（items/access/<id>.yml）
+title: アカウントと権限
+items:
+  - 2fa
+  - offboard
+  - admins
+  - tokens

@@ -1,0 +1,7 @@
+# カテゴリの名前・説明と、項目の並び順（items/ci/<id>.yml）
+title: GitHub Actions とリポジトリの設定
+items:
+  - perm
+  - pin
+  - zizmor
+  - ruleset

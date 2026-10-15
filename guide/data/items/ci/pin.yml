@@ -1,0 +1,14 @@
+id: pin
+level: 2
+title: 外部の action をコミットの SHA で固定し、更新の PR が届くようにしている
+when: [actions]
+risk: action のタグ（v4 など）は、後から別のコードに付け替えられます。2025 年の tj-actions/changed-files の改ざんでは、タグで参照していた多くのリポジトリで、シークレットがログに流出しました。
+why: コミットの SHA は書き換えられないので、確認した版だけが動きます。ただし、SHA で固定した action には Dependabot alerts が出ないので、新しい版は Dependabot の PR で受け取ります。
+how:
+  - command: pinact run
+  - title: pinact
+    url: https://github.com/suzuki-shunsuke/pinact
+  - text: '.github/dependabot.yml に package-ecosystem: github-actions を書くと、固定した SHA を新しい版に上げる PR が届きます。'
+  - text: Settings → Actions → General の「Require actions to be pinned to a full-length commit SHA」を有効にすると、SHA で固定していない action は動かなくなります。
+  - text: GitHub は、ワークフローの依存をまとめて固定するロックファイル（.github/workflows/actions.lock、公開プレビュー）も用意しています。
+related: [tjAdvisory, tjCisa, ghSecureUse, ghAutoUpdateActions, ghActionsLock]

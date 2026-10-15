@@ -1,0 +1,7 @@
+# カテゴリの名前・説明と、項目の並び順（items/inventory/<id>.yml）
+title: 棚卸し
+lead: 把握していないものは守れません。まず、使っていないものを片付けます。
+items:
+  - archive
+  - deploy
+  - apps

@@ -1,0 +1,11 @@
+id: cooldown
+level: 2
+title: 公開されたばかりの版は、数日待ってから入れるようにした
+when: [deps]
+risk: 人気のパッケージが乗っ取られ、悪意あるコードを含む版が公開される事件が続いています。公開直後の版を入れると、インストールしただけでキーなどを盗まれることがあります。
+why: 悪意ある版の多くは、数時間から数日で見つかって取り下げられます。数日待つだけで、ほとんどを避けられます。OpenSSF も、脆弱性を直すためでない更新は 3 日ほど待つよう勧めています。
+how:
+  - text: Dependabot は、バージョンを上げる PR を、何も設定しなくても公開から 3 日たつまで出しません。脆弱性を直す PR は待たずに出ます。
+  - text: 残る穴は、手元で直接打つ npm install や npx です。npm なら、.npmrc に min-release-age=3 のように日数を書きます。pnpm は v11 から、何も設定しなくても 1 日待ちます（minimumReleaseAge の単位は分です）。
+  - text: Renovate を使っているなら、minimumReleaseAge を設定します。
+related: [npmCisa, openssfGuide, ghDependabotOptions, npmMinAge, pnpmAge, renovateAge]
