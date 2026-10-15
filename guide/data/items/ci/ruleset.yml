@@ -11,3 +11,10 @@ how:
   - title: OpenSSF Scorecard
     url: https://github.com/ossf/scorecard
 related: [ghRulesets]
+evidence:
+  - source: ghRulesetRules
+    checked: '2026-10-15'
+    note: 「Restrict deletions」と「Block force pushes」のルールがある
+mappings:
+  - OpenSSF Baseline OSPS-AC-03.01
+  - OpenSSF Baseline OSPS-AC-03.02

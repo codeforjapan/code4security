@@ -7,3 +7,7 @@ why: 判断する人と連絡先を先に決めておけば、最初の 1 時間
 how:
   - text: 判断する人と連絡先を 1 枚にまとめ、README から辿れるようにします。
 related: [ppcLeak, ppcGuideline]
+evidence:
+  - source: ppcGuideline
+    checked: '2026-10-15'
+    note: 委員会への速報は、知ってから概ね 3〜5 日以内が目安

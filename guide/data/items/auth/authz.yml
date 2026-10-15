@@ -8,3 +8,5 @@ how:
   - text: テスト用のアカウントを 2 つ作り、片方でログインしたまま、もう片方のデータの URL や ID を直接開いて、見えないことを確かめます。
   - text: Claude Code の /security-review でも、こうした認可の漏れを探せます。
 related: [owaspTop10, owaspAuthz]
+mappings:
+  - OWASP Top 10:2025 A01 Broken Access Control

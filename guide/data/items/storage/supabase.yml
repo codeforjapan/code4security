@@ -10,3 +10,15 @@ how:
   - text: RLS が守るのは行だけです。ほかの人にも見せる行に、メールアドレスなど本人だけが見る列を混ぜず、別のテーブルに分けます。
   - text: anon と service_role のキーは 2026 年末までに廃止される予定なので、publishable と secret のキーに移ります。
 related: [supabaseRls, supabaseAdvisors, supabaseKeys, supabaseColumns]
+evidence:
+  - source: supabaseRls
+    checked: '2026-10-15'
+    note: ビューは既定で RLS を通らない。Postgres 15 以上は security_invoker = true で通す
+  - source: supabaseKeys
+    checked: '2026-10-15'
+    note: anon と service_role のキーは、2026 年末までに廃止される予定
+  - source: supabaseColumns
+    checked: '2026-10-15'
+    note: RLS は行の単位で制御する
+mappings:
+  - OWASP Top 10:2025 A01 Broken Access Control

@@ -9,3 +9,10 @@ how:
   - text: 指示文（システムプロンプト）に、キーやパスワード、ほかの利用者の情報を書きません。指示文は聞き出される前提で考え、権限の判断は AI に任せずにサーバー側で行います。
   - text: AI に URL を取りに行かせる機能は、行き先を決めたドメインだけに絞ります。
 related: [owaspLlm, owaspLlm07]
+evidence:
+  - source: owaspLlm07
+    checked: '2026-10-15'
+    note: システムプロンプトにキーなどを書かない。権限の判断に使わない
+mappings:
+  - OWASP Top 10 for LLM Applications 2025 LLM01 Prompt Injection
+  - OWASP Top 10 for LLM Applications 2025 LLM07 System Prompt Leakage

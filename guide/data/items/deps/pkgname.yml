@@ -8,3 +8,7 @@ how:
   - text: AI や記事が勧めたパッケージは、名前が公式の案内と一字一句同じか、パッケージのページから公式のリポジトリに辿れるかを確かめてから入れます。
   - command: npm view <パッケージ名> repository.url
 related: [openssfGuide]
+evidence:
+  - source: openssfGuide
+    checked: '2026-10-15'
+    note: 直接の依存は、名前の綴りを確かめ、正しい取得元から入れる

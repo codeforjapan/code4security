@@ -8,3 +8,10 @@ how:
   - command: gh api --paginate 'orgs/<org>/members?role=admin' --jq '.[].login'
   - text: Settings → Member privileges で「Repository visibility change」と「Repository deletion and transfer」のメンバーへの許可を外すと、公開範囲の変更と、リポジトリの削除・移譲を Owner だけにできます。
 related: [ghDataLeaks, ghVisibility, ghDeleteTransfer]
+evidence:
+  - source: ghVisibility
+    checked: '2026-10-15'
+    note: Member privileges で、メンバーによる公開範囲の変更を止められる
+  - source: ghDeleteTransfer
+    checked: '2026-10-15'
+    note: リポジトリの削除と移譲を、Owner だけにできる

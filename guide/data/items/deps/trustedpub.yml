@@ -8,3 +8,13 @@ how:
   - text: npm なら、パッケージの Settings で trusted publisher（公開に使う GitHub Actions のワークフロー）を登録し、Publishing access を「Require two-factor authentication and disallow tokens」にします。
   - text: PyPI なら、プロジェクトの管理画面で trusted publisher を登録します。
 related: [npmTrusted, pypiTrusted, npmCisa]
+evidence:
+  - source: npmTrusted
+    checked: '2026-10-15'
+    note: trusted publisher を設定したら「Require two-factor authentication and disallow tokens」にする
+  - source: pypiTrusted
+    checked: '2026-10-15'
+    note: 公開のたびに発行されるトークンは、自動で期限が切れる
+  - source: npmCisa
+    checked: '2026-10-15'
+    note: ワームは、乗っ取った開発者として npm に公開し、ほかのパッケージへ広がった

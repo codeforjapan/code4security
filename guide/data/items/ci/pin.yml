@@ -12,3 +12,13 @@ how:
   - text: Settings → Actions → General の「Require actions to be pinned to a full-length commit SHA」を有効にすると、SHA で固定していない action は動かなくなります。
   - text: GitHub は、ワークフローの依存をまとめて固定するロックファイル（.github/workflows/actions.lock、公開プレビュー）も用意しています。
 related: [tjAdvisory, tjCisa, ghSecureUse, ghAutoUpdateActions, ghActionsLock]
+evidence:
+  - source: ghSecureUse
+    checked: '2026-10-15'
+    note: SHA で固定した action には Dependabot alerts が出ない。ロックファイルは SHA の固定より強いとしている
+  - source: ghActionsLock
+    checked: '2026-10-15'
+    note: ワークフロー依存関係のロックファイルは、公開プレビュー
+  - source: ghActionsSettings
+    checked: '2026-10-15'
+    note: 「Require actions to be pinned to a full-length commit SHA」で、SHA の固定を必須にできる

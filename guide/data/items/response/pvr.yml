@@ -9,3 +9,10 @@ how:
   - command: gh api -X PUT repos/<owner>/<repo>/private-vulnerability-reporting
   - text: SECURITY.md に、報告の窓口と返事の目安を書きます。自分たちで見つけた脆弱性は、Security Advisory の下書きか非公開のリポジトリで扱います。
 related: [ghPvr, ghPolicy, owaspVdp]
+evidence:
+  - source: ghPvr
+    checked: '2026-10-15'
+    note: 有効にすると、Advisories のページに「Report a vulnerability」のボタンが出る
+mappings:
+  - OpenSSF Baseline OSPS-VM-02.01
+  - OpenSSF Baseline OSPS-VM-03.01

@@ -11,3 +11,7 @@ how:
   - text: 公開リポジトリでは、外部からの PR を AI に読ませると操られるおそれがあります。Settings → Actions → General の「Require approval for all external contributors」で、外部のコントリビューターからの実行に承認を必須にします。
   - text: API の料金がかかります。
 related: []
+evidence:
+  - source: ghActionsSettings
+    checked: '2026-10-15'
+    note: 「Require approval for all external contributors」で、外部のコントリビューターの実行に承認を求められる

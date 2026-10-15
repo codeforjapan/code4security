@@ -7,3 +7,7 @@ why: ルールで「本人のデータだけ」に絞れば、アプリを通さ
 how:
   - text: Firebase コンソールのルール画面と、エミュレータでのルールのテスト
 related: [firebaseChecklist, firebaseInsecure, firebaseTest, firestoreFields]
+evidence:
+  - source: firestoreFields
+    checked: '2026-10-15'
+    note: 文書の一部の項目だけを隠したいときは、別の文書に分ける

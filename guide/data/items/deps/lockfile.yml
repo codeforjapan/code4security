@@ -8,3 +8,7 @@ how:
   - text: package-lock.json、pnpm-lock.yaml、uv.lock など
   - text: CI では npm ci のように、lockfile を書き換えないコマンドでインストールします。
 related: [npmCi]
+evidence:
+  - source: npmCi
+    checked: '2026-10-15'
+    note: npm ci は lockfile を書き換えない

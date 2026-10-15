@@ -12,3 +12,7 @@ how:
   - command: gh api repos/<owner>/<repo>/keys
   - text: Webhook を使っているなら、シークレットを設定し、受け取る側で署名を確かめます。シークレットがないと、誰でも偽の通知を送れます。
 related: [ghApps, ghDeployKeys, scorecardChecks]
+evidence:
+  - source: scorecardChecks
+    checked: '2026-10-15'
+    note: Webhook にシークレットがないことを、Critical のリスクとしている

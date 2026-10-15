@@ -105,6 +105,8 @@ const data = {
     "items[].how": "使えるツール・コマンド・手順。command の <owner> はアカウント名や organization 名、<repo> はリポジトリ名、<org> は organization 名に置き換える。<ドメイン> や <パッケージ名> など、ほかの <…> も自分の値に置き換える",
     "items[].how_for_private_repos": "個人アカウントや Free の organization の非公開リポジトリでは GitHub の機能を使えない項目だけにある、無料の代わりの手段",
     "items[].related": "より詳しく知るための公式ドキュメントや公的機関の資料。本文の根拠として一つずつ検証したものではない",
+    "items[].evidence": "本文の事実を確かめた資料（title・url）と、確かめた日（checked）、確かめた内容（note）。ある項目だけに付く",
+    "items[].mappings": "対応する規格の番号（OWASP・OpenSSF Baseline など）。ある項目だけに付く",
   },
   levels: LEVELS,
   conditions: CONDITIONS,

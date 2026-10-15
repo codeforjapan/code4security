@@ -254,3 +254,12 @@ gitleaks:
 semgrep:
   title: Semgrep Docs「Quickstart」
   url: https://docs.semgrep.dev/getting-started/quickstart
+ghRulesetRules:
+  title: GitHub Docs「ルールセットで使用できるルール」
+  url: https://docs.github.com/ja/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/available-rules-for-rulesets
+ghActionsSettings:
+  title: GitHub Docs「リポジトリの GitHub Actions 設定の管理」
+  url: https://docs.github.com/ja/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository
+ghGhas:
+  title: GitHub Docs「GitHub Advanced Security について」
+  url: https://docs.github.com/ja/get-started/learning-about-github/about-github-advanced-security

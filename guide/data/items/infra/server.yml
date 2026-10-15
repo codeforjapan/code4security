@@ -14,3 +14,9 @@ how:
       curl -s -o /dev/null -w '%{http_code}\n' https://<ドメイン>/.git/config
       curl -s -o /dev/null -w '%{http_code}\n' https://<ドメイン>/.env
 related: [ubuntuUpdates, owaspA02]
+evidence:
+  - source: owaspA02
+    checked: '2026-10-15'
+    note: 不要な機能や、詳しすぎるエラー表示を、設定の不備としている
+mappings:
+  - OWASP Top 10:2025 A02 Security Misconfiguration

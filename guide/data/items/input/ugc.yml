@@ -11,3 +11,7 @@ how:
         --exclude-dir=node_modules .
   - text: 生成 AI の答えを Markdown から HTML にして表示しているなら、その変換で HTML やスクリプトがそのまま通らないかを確かめます。
 related: [owaspXss, ipaWeb, owaspLlm05]
+evidence:
+  - source: owaspLlm05
+    checked: '2026-10-15'
+    note: AI の出力は、使う場所に合わせてエンコードする

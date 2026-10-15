@@ -7,3 +7,7 @@ why: bot 対策と、同じ送信元からの回数制限を入れれば、自�
 how:
   - text: Cloudflare Turnstile などの bot 対策と、ホスティングやフレームワークの回数制限（レート制限）の機能
 related: [turnstile, owaspInput, owaspLlm10]
+evidence:
+  - source: owaspLlm10
+    checked: '2026-10-15'
+    note: 送信元ごとの回数制限と、入力の大きさの上限を勧めている
