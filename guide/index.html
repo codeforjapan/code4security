@@ -653,7 +653,7 @@ grid.addEventListener("click", e => {
   row.querySelector("input").focus({ preventScroll: true });
 });
 
-function paintMap(all, done, l1Done, l1Total) {
+function paintMap(all, done, l1Done, l1Total, shown) {
   const rel = new Set(all.map(i => i.id));
   for (const g of CATEGORIES) {
     const items = g.items.filter(i => rel.has(i.id));
@@ -668,7 +668,7 @@ function paintMap(all, done, l1Done, l1Total) {
   }
   document.getElementById("map-count").textContent = all.length;
   document.getElementById("map-stat").replaceChildren(el("b", null, done), ` / ${all.length} 済み · まずやる ${l1Done}/${l1Total}`);
-  document.getElementById("segs").replaceChildren(...all.map(i => el("i", state.checked[i.id] ? "on" : "")));
+  document.getElementById("segs").replaceChildren(...shown.map(i => el("i", state.checked[i.id] ? "on" : "")));
   // 1 で選んだものを、設定ファイルのように 1 行で見せる
   const count = Object.values(ITEMS).filter(i => !i.when.length || i.when.some(t => state.traits.includes(t))).length;
   document.getElementById("query").replaceChildren(el("span", "k", "selected"), " = [", el("span", "v", state.traits.join(", ")), "]  ", el("span", "r", `→ ${count} / ${Object.keys(ITEMS).length} 項目`));
@@ -767,11 +767,13 @@ let currentGroup = null;
 function update() {
   const total = Object.values(ITEMS);
   const all = total.filter(relevant);
-  const done = all.filter(i => state.checked[i.id]).length;
+  const shown = all.filter(i => i.level <= state.level);  // 進み具合の母数は、表示しているレベルまでの項目
+  const isDone = i => !!state.checked[i.id];
   const l1 = all.filter(i => i.level === 1);
-  const l1Done = l1.filter(i => state.checked[i.id]).length;
+  const l1Done = l1.filter(isDone).length;
   const text = document.getElementById("progress-text");
-  text.replaceChildren(el("b", null, `${done} / ${all.length}`), ` 項目が済み（まずやるは ${l1Done} / ${l1.length}）`);
+  text.replaceChildren(el("b", null, `${shown.filter(isDone).length} / ${shown.length}`), " 項目が済み");
+  if (state.level > 1) text.append(`（まずやるは ${l1Done} / ${l1.length}）`);
 
   // STEP 1 の表示
   const showBox = state.profile === null || editing;
@@ -819,7 +821,7 @@ function update() {
   const next = all.filter(i => i.level === state.level + 1).length;
   document.getElementById("more").hidden = !next;
   document.getElementById("more-btn").textContent = `「${LEVEL_LABEL[state.level + 1]}」の項目も見る（あと ${next} 項目）`;
-  paintMap(all, done, l1Done, l1.length);
+  paintMap(all, all.filter(isDone).length, l1Done, l1.length, shown);
 }
 
 if ("IntersectionObserver" in window) {
