@@ -75,7 +75,7 @@ setup:                          # エージェント向けの手順。人向け�
   assets: [pii, sensitive]
 ```
 
-脅威モデルは「条件 → 守るもの」「項目 → 防いでいる脅威」から組み立てる。v1 では STRIDE のような分類は使わず、平易な文で書く。
+脅威モデルは「条件 → 守るもの」「項目 → 防いでいる脅威」から組み立てる。v1 では STRIDE のような分類は使わず、平易な文で書く。`threat-model.md` の構造は、CyberRiskScape が書き出す `THREAT_MODEL.md` に合わせる（[ADR 0009](0009-cyberriskscape.md)）。
 
 ### 5. 利用者のリポジトリに残すファイル
 
@@ -126,3 +126,4 @@ setup:                          # エージェント向けの手順。人向け�
 - [ADR 0003: v1 の範囲](0003-v1-scope.md)
 - [ADR 0006: スキーマ定義](0006-schema-definition.md)
 - [ADR 0007: checker の起動ルート](0007-checker-entry-points.md)
+- [ADR 0009: 脅威モデルと CyberRiskScape](0009-cyberriskscape.md)
