@@ -762,6 +762,29 @@ addEventListener("focusin", e => requestAnimationFrame(() => {
   const gap = e.target.getBoundingClientRect().top - bar.getBoundingClientRect().bottom - 16;
   if (gap < 0) scrollBy(0, gap);
 }));
+// 矢印キーでも、同じ種類のものを順に移れるようにする。Tab は今までどおり、止まる場所は変えない
+const ARROWS = [
+  { items: ".judge input", prev: ["ArrowUp"], next: ["ArrowDown"] },                                       // 点検の項目
+  { items: "#traits input", prev: ["ArrowUp", "ArrowLeft"], next: ["ArrowDown", "ArrowRight"] },           // 当てはまるもの
+  { items: ".filter button", prev: ["ArrowUp", "ArrowLeft"], next: ["ArrowDown", "ArrowRight"] },          // 表示する優先度
+  { items: "#chips a", prev: ["ArrowLeft"], next: ["ArrowRight"] },                                        // カテゴリ
+];
+addEventListener("keydown", e => {
+  if (e.altKey || e.ctrlKey || e.metaKey || e.shiftKey || e.isComposing) return;
+  const rule = ARROWS.find(r => e.target.matches?.(r.items) && [...r.prev, ...r.next].includes(e.key));
+  if (!rule) return;
+  const list = [...document.querySelectorAll(rule.items)].filter(n => n.getClientRects().length);  // 隠れているものは飛ばす
+  const to = list[list.indexOf(e.target) + (rule.next.includes(e.key) ? 1 : -1)];
+  e.preventDefault();  // 矢印でページが動かないように
+  to?.focus();
+});
+// チェックボックスは、Space だけでなく Enter でも切り替えられるようにする
+addEventListener("keydown", e => {
+  if (e.key !== "Enter" || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey || e.isComposing) return;
+  if (!e.target.matches?.(".judge input, #traits input, #todo-only")) return;
+  e.preventDefault();
+  e.target.click();
+});
 const setLevel = lv => { state.level = lv; save(); update(); };
 const filterButtons = document.querySelectorAll(".filter button");
 filterButtons.forEach(b => b.addEventListener("click", () => setLevel(Number(b.dataset.level))));
