@@ -132,6 +132,7 @@ section { min-width: 0; }
 
 /* 見出し */
 .sec-h { display: flex; align-items: baseline; gap: 14px; font-size: clamp(24px, 3vw, 32px); letter-spacing: -.005em; scroll-margin-top: 24px; }
+.sec-h:focus { outline: none; }  /* 移った先の目印として focus するだけなので、枠は出さない */
 .sec-h .num { font-size: 14px; padding: 2px 8px; border: 1px solid rgb(78 227 138 / .4); border-radius: 6px; transform: translateY(-4px); }
 .sec-note { color: var(--soft); font-size: 15px; }
 .sheet, .auto, .reading, .sources { display: grid; gap: 24px; }
@@ -380,7 +381,7 @@ footer a { color: var(--soft); }
   <section class="sheet narrow" id="sheet" aria-labelledby="step1-title">
     <noscript><p class="noscript">点検表を使うには JavaScript が必要です。<a href="checklist.md">文章だけの版（Markdown）</a>でも、すべての項目を読めます。</p></noscript>
     <div class="profile card" id="profile">
-      <h2 class="sec-h" id="step1-title"><span class="num">01</span>プロジェクトに当てはまるものを選ぶ</h2>
+      <h2 class="sec-h" id="step1-title" tabindex="-1"><span class="num">01</span>プロジェクトに当てはまるものを選ぶ</h2>
       <p class="sec-note">関係のない項目は出しません。迷ったら選んでおきましょう。</p>
       <div class="traits" id="traits"></div>
       <p class="query" id="query"></p>
@@ -397,7 +398,7 @@ footer a { color: var(--soft); }
       <div class="summary-list" id="profile-list"></div>
     </div>
 
-    <h2 class="sec-h" id="step2"><span class="num">02</span>まずすべきことに対処する</h2>
+    <h2 class="sec-h" id="step2" tabindex="-1"><span class="num">02</span>まずすべきことに対処する</h2>
     <ul class="levels" id="levels"></ul>
     <p class="sec-note">コマンドの <code>&lt;owner&gt;</code> は自分のアカウント名か organization 名、<code>&lt;repo&gt;</code> はリポジトリ名に置き換えます。<code>&lt;org&gt;</code> や <code>&lt;ドメイン&gt;</code> なども、同じように自分の値にします。チェックはこのブラウザにだけ保存されます。</p>
     <nav class="toolbar" aria-label="点検の進み具合">
@@ -600,6 +601,10 @@ for (const g of CATEGORIES) {
       const now = isClear() && !was;  // このチェックで、表示している項目がすべて済んだ
       if (now) (state.cleared ||= {})[state.level] = new Date().toLocaleDateString("sv");
       save(); update(); logCheck(it.id, cb.checked);
+      if (row.hidden) {  // 「未チェックだけ」で行が隠れたら、focus が消えないよう、次の行（なければ切り替え）に移す
+        const next = [...document.querySelectorAll(".row:not([hidden])")].find(r => row.compareDocumentPosition(r) & Node.DOCUMENT_POSITION_FOLLOWING);
+        (next ? next.querySelector("input") : document.getElementById("todo-only")).focus();
+      }
       if (now) celebrate();
     });
     judge.append(cb);
@@ -727,7 +732,7 @@ function logCheck(id, checked) {
 
 const wide = matchMedia("(min-width: 761px)");
 const points = document.querySelectorAll(".point");
-const syncPoints = () => points.forEach(d => { d.open = wide.matches; });
+const syncPoints = () => points.forEach(d => { d.open = wide.matches; d.querySelector("summary").tabIndex = wide.matches ? -1 : 0; });  // 広い画面では常に開いていて、押しても何も起きないので、Tab で止めない
 syncPoints();
 wide.addEventListener("change", syncPoints);
 points.forEach(d => d.querySelector("summary").addEventListener("click", e => { if (wide.matches) e.preventDefault(); }));
@@ -749,6 +754,13 @@ document.getElementById("levels").append(...LEVELS.map(({ level: lv, label, desc
   const li = el("li");
   li.append(el("span", "lv lv" + lv, label), text);
   return li;
+}));
+// Tab・Shift+Tab で移った先が、上に貼りついた進み具合の帯に隠れないよう、帯の下までずらす
+addEventListener("focusin", e => requestAnimationFrame(() => {
+  const bar = document.querySelector(".toolbar");
+  if (bar.contains(e.target) || bar.getBoundingClientRect().top > 1) return;  // 貼りついていないあいだは、ずらさない
+  const gap = e.target.getBoundingClientRect().top - bar.getBoundingClientRect().bottom - 16;
+  if (gap < 0) scrollBy(0, gap);
 }));
 const setLevel = lv => { state.level = lv; save(); update(); };
 const filterButtons = document.querySelectorAll(".filter button");
@@ -802,10 +814,11 @@ for (const title of new Set(CONDITIONS.map(c => c.group))) {
   fs.append(el("legend", null, title), wrap);
   traitsEl.append(fs);
 }
-const goStep2 = () => document.getElementById("step2").scrollIntoView();
+// 押したボタンは隠れるので、キーボードで操作している人の focus が消えないよう、移った先の見出しに移す
+const goStep2 = () => { const h = document.getElementById("step2"); h.scrollIntoView(); h.focus({ preventScroll: true }); };
 document.getElementById("apply-profile").addEventListener("click", () => { state.profile = "filtered"; editing = false; save(); update(); goStep2(); });
 document.getElementById("show-all").addEventListener("click", () => { state.profile = "all"; editing = false; save(); update(); goStep2(); });
-document.getElementById("edit-profile").addEventListener("click", () => { editing = true; update(); document.getElementById("profile").scrollIntoView(); });
+document.getElementById("edit-profile").addEventListener("click", () => { editing = true; update(); const h = document.getElementById("step1-title"); h.scrollIntoView(); h.focus({ preventScroll: true }); });
 
 function relevant(it) {
   if (state.profile !== "filtered" || !it.when.length) return true;
