@@ -733,7 +733,18 @@ const filterButtons = document.querySelectorAll(".filter button");
 filterButtons.forEach(b => b.addEventListener("click", () => setLevel(Number(b.dataset.level))));
 const todoOnly = document.getElementById("todo-only");
 todoOnly.addEventListener("change", () => { state.todo = todoOnly.checked; save(); update(); });
-document.getElementById("more-btn").addEventListener("click", () => setLevel(state.level + 1));
+document.getElementById("more-btn").addEventListener("click", () => {
+  const lv = state.level + 1;
+  setLevel(lv);
+  // 新しく出た項目のうち、いちばん上のものまで戻る。カテゴリの最初の項目なら、見出しから見せる
+  const row = [...document.querySelectorAll(".row")].find(r => !r.hidden && ITEMS[r.dataset.id].level === lv);
+  if (!row) return;
+  const sec = row.closest(".group");
+  const target = sec.querySelector(".row:not([hidden])") === row ? sec : row;
+  // 移る距離が長いので、滑らかに動かさずにすぐ移る
+  scrollTo({ top: target.getBoundingClientRect().top + scrollY - document.querySelector(".toolbar").offsetHeight - 16 });
+  row.querySelector("input").focus({ preventScroll: true });
+});
 
 const TRAIT_LABEL = Object.fromEntries(CONDITIONS.map(c => [c.id, c.label]));
 state.traits = state.traits || [];
