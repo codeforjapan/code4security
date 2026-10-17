@@ -242,7 +242,6 @@ section { min-width: 0; }
 .clear h3 { margin: 6px 0 4px; font-size: 19px; }
 .clear p:last-child { margin: 0; color: var(--soft); }
 @keyframes clear-in { from { opacity: 0; transform: translateY(10px); box-shadow: 0 0 0 0 rgb(78 227 138 / .5); } 60% { box-shadow: 0 0 0 10px rgb(78 227 138 / 0); } to { opacity: 1; transform: none; } }
-.progress-text.clear b { color: var(--green); }
 .segs.sweep i { animation: sweep .9s calc(var(--i) * 25ms) ease-out; }
 @keyframes sweep { 30% { background: #fff; box-shadow: 0 0 12px rgb(78 227 138 / .9); } }
 .more { display: flex; justify-content: center; }
@@ -254,7 +253,7 @@ section { min-width: 0; }
 .log p { max-width: min(440px, calc(100vw - 32px)); padding: 7px 12px; border: 1px solid var(--line-2); border-radius: 8px; background: rgb(5 7 10 / .92); color: var(--soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; animation: logline 3.4s ease forwards; }
 .log p b { color: var(--green); font-weight: 700; }
 .log p.undo b { color: var(--amber); }
-.log p.clear { border-color: rgb(78 227 138 / .5); color: var(--text); animation-duration: 5s; }
+.log p.all-clear { border-color: rgb(78 227 138 / .5); color: var(--text); animation-duration: 5s; }
 @keyframes logline { 0% { opacity: 0; transform: translateY(8px); } 8%, 80% { opacity: 1; transform: none; } 100% { opacity: 0; } }
 
 /* 3 毎週、自動で点検する */
@@ -829,7 +828,7 @@ function celebrate() {
   segs.classList.add("sweep");
   const box = document.getElementById("clear");
   box.classList.remove("pop"); void box.offsetWidth; box.classList.add("pop");
-  const p = el("p", "clear");
+  const p = el("p", "all-clear");
   p.append(el("b", null, "★ all clear "), ` ${box.querySelector("h3").textContent}`);
   log.append(p);
   setTimeout(() => p.remove(), 5000);
@@ -845,7 +844,6 @@ function update() {
   const l1Done = l1.filter(isDone).length;
   const text = document.getElementById("progress-text");
   text.replaceChildren(el("b", null, `${shown.filter(isDone).length} / ${shown.length}`), " 項目が済み");
-  if (state.level > 1) text.append(`（まずやるは ${l1Done} / ${l1.length}）`);
 
   // STEP 1 の表示
   const showBox = state.profile === null || editing;
@@ -896,8 +894,6 @@ function update() {
   }
   const clear = shown.length > 0 && shown.every(isDone);
   document.getElementById("empty").hidden = anyVisible || clear;
-  text.classList.toggle("clear", clear);
-  if (clear) text.prepend("✓ ");
   const filtered = state.profile === "filtered" && (state.traits.includes("public") || state.traits.includes("private"));
   document.querySelectorAll("[data-repo]").forEach(c => (c.hidden = filtered && !state.traits.includes(c.dataset.repo)));
   document.querySelectorAll(".n-all").forEach(n => (n.textContent = total.length));
