@@ -741,8 +741,14 @@ document.getElementById("more-btn").addEventListener("click", () => {
   if (!row) return;
   const sec = row.closest(".group");
   const target = sec.querySelector(".row:not([hidden])") === row ? sec : row;
-  // 移る距離が長いので、滑らかに動かさずにすぐ移る
-  scrollTo({ top: target.getBoundingClientRect().top + scrollY - document.querySelector(".toolbar").offsetHeight - 16 });
+  // 移る距離が長いので、手前まではすぐに移り、最後の少しだけ滑らかに上がって、戻ったことを目で追えるようにする
+  const top = target.getBoundingClientRect().top + scrollY - document.querySelector(".toolbar").offsetHeight - 16;
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) { scrollTo({ top }); }
+  else {
+    scrollTo({ top: top + 240 });
+    scrollTo({ top, behavior: "smooth" });
+    setTimeout(() => { if (Math.abs(scrollY - top) > 2) scrollTo({ top }); }, 800);  // 滑らかに動かなかったときも、最後は必ず合わせる
+  }
   row.querySelector("input").focus({ preventScroll: true });
 });
 
