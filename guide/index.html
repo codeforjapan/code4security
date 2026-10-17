@@ -232,6 +232,17 @@ section { min-width: 0; }
 .cmd button:hover { color: #fff; border-color: var(--soft); }
 #auto .cmd pre::before { content: none; }
 .empty { padding: 32px; text-align: center; color: var(--muted); }
+/* 表示している項目がすべて済んだときのまとめ */
+.clear { padding: 22px 24px; border-color: rgb(78 227 138 / .45); background: linear-gradient(135deg, rgb(78 227 138 / .09), transparent 60%), var(--panel); }
+.clear.pop { animation: clear-in .6s ease-out; }
+.clear-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px; margin: 0; font: 700 13px var(--mono); color: var(--green); }
+.clear-head span { color: var(--muted); font-weight: 400; }
+.clear h3 { margin: 6px 0 4px; font-size: 19px; }
+.clear p:last-child { margin: 0; color: var(--soft); }
+@keyframes clear-in { from { opacity: 0; transform: translateY(10px); box-shadow: 0 0 0 0 rgb(78 227 138 / .5); } 60% { box-shadow: 0 0 0 10px rgb(78 227 138 / 0); } to { opacity: 1; transform: none; } }
+.progress-text.clear b { color: var(--green); }
+.segs.sweep i { animation: sweep .9s calc(var(--i) * 25ms) ease-out; }
+@keyframes sweep { 30% { background: #fff; box-shadow: 0 0 12px rgb(78 227 138 / .9); } }
 .more { display: flex; justify-content: center; }
 .reset-row { display: flex; justify-content: flex-end; }
 .reset-row .link-btn { font-size: 13px; color: var(--muted); }
@@ -241,6 +252,7 @@ section { min-width: 0; }
 .log p { max-width: min(440px, calc(100vw - 32px)); padding: 7px 12px; border: 1px solid var(--line-2); border-radius: 8px; background: rgb(5 7 10 / .92); color: var(--soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; animation: logline 3.4s ease forwards; }
 .log p b { color: var(--green); font-weight: 700; }
 .log p.undo b { color: var(--amber); }
+.log p.clear { border-color: rgb(78 227 138 / .5); color: var(--text); animation-duration: 5s; }
 @keyframes logline { 0% { opacity: 0; transform: translateY(8px); } 8%, 80% { opacity: 1; transform: none; } 100% { opacity: 0; } }
 
 /* 3 毎週、自動で点検する */
@@ -406,6 +418,8 @@ footer a { color: var(--soft); }
     </nav>
     <div class="groups" id="groups"></div>
     <p class="empty" id="empty" hidden>表示する項目はありません。</p>
+    <div class="clear card" id="clear" hidden></div>
+    <p class="sr" role="status" id="clear-say"></p>
     <p class="more" id="more" hidden><button type="button" class="btn secondary" id="more-btn"></button></p>
     <p class="reset-row"><button type="button" class="link-btn" id="reset">チェックをすべて外す</button></p>
   </section>
@@ -579,7 +593,14 @@ for (const g of CATEGORIES) {
     cb.type = "checkbox";
     cb.id = "c-" + it.id;
     cb.checked = !!state.checked[it.id];
-    cb.addEventListener("change", () => { state.checked[it.id] = cb.checked; save(); update(); logCheck(it.id, cb.checked); });
+    cb.addEventListener("change", () => {
+      const was = isClear();
+      state.checked[it.id] = cb.checked;
+      const now = isClear() && !was;  // このチェックで、表示している項目がすべて済んだ
+      if (now) (state.cleared ||= {})[state.level] = new Date().toLocaleDateString("sv");
+      save(); update(); logCheck(it.id, cb.checked);
+      if (now) celebrate();
+    });
     judge.append(cb);
 
     const item = el("div", "item");
@@ -796,6 +817,23 @@ function visible(it) {
 
 let currentGroup = null;
 
+const isClear = () => { const s = Object.values(ITEMS).filter(i => relevant(i) && i.level <= state.level); return s.length > 0 && s.every(i => state.checked[i.id]); };
+const clearTitle = (shown, next) => next ? `「${LEVEL_LABEL[state.level]}」${state.level > 1 ? "まで" : ""}の ${shown.length} 項目が、すべて済みました` : `${state.profile === "filtered" ? "当てはまる " : ""}${shown.length} 項目が、すべて済みました`;
+
+// 表示している項目がすべて済んだ瞬間に、進み具合のバーを光らせ、ログとまとめを出す
+function celebrate() {
+  const segs = document.getElementById("segs");
+  [...segs.children].forEach((s, i) => s.style.setProperty("--i", i));
+  segs.classList.add("sweep");
+  const box = document.getElementById("clear");
+  box.classList.remove("pop"); void box.offsetWidth; box.classList.add("pop");
+  const p = el("p", "clear");
+  p.append(el("b", null, "★ all clear "), ` ${box.querySelector("h3").textContent}`);
+  log.append(p);
+  setTimeout(() => p.remove(), 5000);
+  document.getElementById("clear-say").textContent = box.querySelector("h3").textContent;
+}
+
 function update() {
   const total = Object.values(ITEMS);
   const all = total.filter(relevant);
@@ -854,7 +892,10 @@ function update() {
     sec.hidden = !groupVisible;
     anyVisible ||= groupVisible;
   }
-  document.getElementById("empty").hidden = anyVisible;
+  const clear = shown.length > 0 && shown.every(isDone);
+  document.getElementById("empty").hidden = anyVisible || clear;
+  text.classList.toggle("clear", clear);
+  if (clear) text.prepend("✓ ");
   const filtered = state.profile === "filtered" && (state.traits.includes("public") || state.traits.includes("private"));
   document.querySelectorAll("[data-repo]").forEach(c => (c.hidden = filtered && !state.traits.includes(c.dataset.repo)));
   document.querySelectorAll(".n-all").forEach(n => (n.textContent = total.length));
@@ -862,6 +903,21 @@ function update() {
   const next = all.filter(i => i.level === state.level + 1).length;
   document.getElementById("more").hidden = !next;
   document.getElementById("more-btn").textContent = `「${LEVEL_LABEL[state.level + 1]}」の項目も見る（あと ${next} 項目）`;
+  const box = document.getElementById("clear");
+  box.hidden = !clear;
+  if (clear) {
+    const date = state.cleared?.[state.level];
+    const head = el("p", "clear-head", "✓ all clear");
+    if (date) head.append(el("span", null, `${date} に完了`));
+    box.replaceChildren(head, el("h3", null, clearTitle(shown, next)));
+    if (!next) {  // すべて済んだときは、このあとどうするかも書く。次の優先度があるときは、すぐ下のボタンで足りる
+      const a = el("a", null, "毎週の自動点検");
+      a.href = "#auto";
+      const body = el("p");
+      body.append("おつかれさまでした。設定は、人の出入りや依存の更新で少しずつ崩れていきます。", a, "で見守るか、半年ほどしたら、もう一度この点検表を開いてください。");
+      box.append(body);
+    }
+  }
   paintMap(all, all.filter(isDone).length, l1Done, l1.length, shown);
 }
 
