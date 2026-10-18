@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: このリポジトリ自体の脆弱性を報告する
+    url: https://github.com/codeforjapan/code4security/security/advisories/new
+    about: 公開のイシューには書かず、こちらから非公開で知らせてください。

@@ -1,0 +1,38 @@
+name: 質問・指摘・提案
+description: 分からない、間違っていそう、こうしたい、を知らせるときに使います。迷ったらこれで大丈夫です。
+title: "[フィードバック] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        直し方の案があると進みやすいですが、なくても大丈夫です。
+
+        このリポジトリ自体のセキュリティ上の問題は、ここに書かずに [非公開で報告](https://github.com/codeforjapan/code4security/security/advisories/new) してください。
+  - type: dropdown
+    id: kind
+    attributes:
+      label: 種類
+      options:
+        - 質問
+        - 指摘
+        - 提案
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: 気になったこと
+      description: どこで、何が、どう困るか。書かれている箇所は、引用してもらえると読みやすくなります。
+      placeholder: ADR 0005 は project.yml を既定で .gitignore に入れるとしていますが、ADR 0007 では毎週の checker は「clone して読むだけ」です。このままだと、checker が project.yml を読めないように見えます。
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: こうなっているとよさそう
+      description: 案があれば。なければ空で大丈夫です。
+  - type: textarea
+    id: context
+    attributes:
+      label: 補足
+      description: 関連するリンクやスクリーンショットなど。
