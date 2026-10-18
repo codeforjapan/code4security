@@ -1,0 +1,35 @@
+name: 論点
+description: 決めることがあるときに使います。結論は書かなくて大丈夫です。決着したら ADR にまとめて、このイシューを閉じます。
+title: "[論点] "
+body:
+  - type: markdown
+    attributes:
+      value: タイトルは「〜を決める」の形で書いてください。例：`[論点] checker の action の形を決める`
+  - type: textarea
+    id: why
+    attributes:
+      label: なぜ扱うか
+      description: 今どうなっていて、なぜ決める必要があるか。ADR や README は、リンクと引用で示してください。
+      placeholder: |
+        ADR 0001 は次の 2 つを書いていますが、両立しない見込みです。
+
+        > 型を取り除く機能で動かし、ビルドの手順は増やさない
+        > checker を JavaScript の action にできる
+    validations:
+      required: true
+  - type: textarea
+    id: options
+    attributes:
+      label: 決めること
+      description: 選択肢と、選ぶと何が変わるか。
+      placeholder: |
+        - (a) composite action にして、.ts を直接動かす
+        - (b) JavaScript action にして dist をコミットする
+        - (c) Python のまま
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: 補足
+      description: 関連する ADR、先に決まっている必要があるもの、期限の目安など。

@@ -1,0 +1,31 @@
+name: 作業
+description: やることが決まっていて、担当を決めて進めるときに使います。
+title: "[作業] "
+body:
+  - type: markdown
+    attributes:
+      value: タイトルは、何をするかが分かる形で書いてください。例：`[作業] LICENSE を置き、パスごとのライセンス表示を入れる`。着手する人は、始める前にこのイシューにコメントしてください。
+  - type: textarea
+    id: why
+    attributes:
+      label: なぜやるか
+      description: 背景と、どの ADR・roadmap から来ているか。
+      placeholder: main に LICENSE がありません。ADR 0002 は「コードは MIT、データは CC BY 4.0」を引き継ぐとしていますが、どのパスがどちらかが分かりません。
+    validations:
+      required: true
+  - type: textarea
+    id: todo
+    attributes:
+      label: やること
+      description: チェックボックスで書いてください。全部にチェックが付いたら終わり、と分かる形に。
+      placeholder: |
+        - [ ] ルートに LICENSE を置く
+        - [ ] 別ライセンスのパスに、そのパスのライセンス表示を入れる
+        - [ ] README 第 8 節を、決まった 1 つに直す
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: 補足
+      description: 関連する ADR、先に終わっている必要があるもの、期限の目安など。
