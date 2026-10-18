@@ -30,8 +30,9 @@ docs/      ADR・導入手順書
 - [ ] スキーマ v2 を決める（ADR 0005）。スキーマ定義の道具を決め、`export.js` の確認を置き換え、JSON Schema を書き出す（ADR 0006）
 - [ ] checker の起動ルートを決める（ADR 0007）
 - [ ] このリポジトリの守りの最低限: ruleset・2FA・既定の `permissions`・CODEOWNERS・private vulnerability reporting（ADR 0008）
-- [ ] CONTRIBUTING をリポジトリ全体向けに直す。部分ごとの入り口と、Issue テンプレ（項目の提案・ひな形の提案・ADR の提案）を作る
-- [ ] ラベル: `area:guide` `area:plugin` `area:checker` `area:security` `good first issue` `cfj-internal`
+- [x] Issue テンプレ（論点・作業・質問・指摘・提案）を作る。点検項目とひな形の提案のテンプレは、取り込みのあとに足す
+- [ ] CONTRIBUTING をリポジトリ全体向けに直し、部分ごとの入り口を作る（イシューの立て方・決め方・ラベルは [CONTRIBUTING](../CONTRIBUTING.md) に書いた）
+- [x] ラベルとマイルストーン（[CONTRIBUTING](../CONTRIBUTING.md)）
 
 ### Phase 1: 並行して作る（11/1〜11/21）
 
