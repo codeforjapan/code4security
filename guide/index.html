@@ -301,6 +301,9 @@ footer { padding-top: 22px; border-top: 1px solid var(--line); font-size: 13px; 
 footer .eof { font: 12px var(--mono); color: var(--line-2); text-align: center; letter-spacing: .3em; }
 .skip { position: absolute; left: 16px; top: -60px; z-index: 40; padding: 8px 14px; border-radius: 8px; background: var(--green); color: #03140a; font-weight: 700; text-decoration: none; }
 .skip:focus { top: 12px; }
+/* カテゴリの帯の手前に置く、項目へ飛ぶリンク。Tab で止まったときだけ、帯の右下に出す */
+.skip-items { position: absolute; right: var(--gut); bottom: 8px; z-index: 1; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; padding: 4px 12px; border-radius: 8px; background: var(--green); color: #03140a; font-size: 13px; font-weight: 700; text-decoration: none; }
+.skip-items:focus { width: auto; height: auto; overflow: visible; clip-path: none; }
 .noscript { padding: 12px 16px; border-radius: 8px; background: rgb(255 107 107 / .1); }
 
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
@@ -418,6 +421,7 @@ footer a { color: var(--soft); }
           <label class="todo-toggle"><input type="checkbox" id="todo-only">未チェックだけ</label>
         </div>
       </div>
+      <a class="skip-items" id="skip-items" href="#groups">項目へ移動</a>
       <ul class="chips" id="chips"></ul>
     </nav>
     <div class="groups" id="groups"></div>
@@ -786,6 +790,13 @@ addEventListener("keydown", e => {
   if (!e.target.matches?.(".judge input, #traits input, #todo-only")) return;
   e.preventDefault();
   e.target.click();
+});
+// カテゴリの帯を Tab で通り抜けずに、いちばん上の項目のチェックボックスへ移る
+document.getElementById("skip-items").addEventListener("click", e => {
+  const first = [...document.querySelectorAll(".judge input")].find(i => i.getClientRects().length);
+  if (!first) return;  // 項目が 1 つもないときは、リンクの移動（#groups）に任せる
+  e.preventDefault();
+  first.focus();
 });
 const setLevel = lv => { state.level = lv; save(); update(); };
 const filterButtons = document.querySelectorAll(".filter button");
