@@ -80,6 +80,7 @@ section { min-width: 0; }
 .hero h1 { font: 500 13px/1.6 var(--mono); color: var(--green); display: flex; flex-wrap: wrap; gap: 4px 14px; align-items: center; }
 .hero h1::before { content: "~/your-project"; color: var(--muted); }
 .question { font-weight: 700; font-size: clamp(34px, 4.6vw, 60px); line-height: 1.28; letter-spacing: -.01em; word-break: auto-phrase; }
+.js .question:not(.ready) { visibility: hidden; }  /* 1 文字ずつ打つ準備ができるまでは、全文を一瞬見せない（場所は取っておく）。JavaScript がないときは、そのまま見せる */
 .question .ch { visibility: hidden; }  /* まだ打っていない文字も場所は取っておき、打つあいだに折り返しが変わらないようにする */
 .question .ch.on { visibility: visible; }
 /* カーソルは場所を取らない。文字のあいだを動いても、後ろの文字がずれない */
@@ -349,6 +350,7 @@ footer a { color: var(--soft); }
   .scan { display: none; }
 }
 </style>
+<script>document.documentElement.classList.add("js");</script>
 </head>
 <body>
 <a class="skip" href="#sheet">点検表へ移動</a>
@@ -1059,6 +1061,7 @@ for (const node of [...q.childNodes]) {
 const caret = el("span", "caret typing");
 typed.prepend(caret);
 q.replaceChildren(el("span", "sr", said), typed);
+q.classList.add("ready");
 let ci = 0;
 const typeNext = () => {
   chars[ci].classList.add("on");
