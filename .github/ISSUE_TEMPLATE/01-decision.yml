@@ -1,6 +1,7 @@
 name: 論点（決めること）
 description: 決めることがあるときに使います。結論は書かなくて大丈夫です。決着したら ADR にまとめて、このイシューを閉じます。
 title: "[論点] "
+labels: ["type:decision"]
 body:
   - type: markdown
     attributes:

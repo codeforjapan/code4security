@@ -1,6 +1,7 @@
 name: 質問・指摘・提案
 description: 分からない、間違っていそう、こうしたい、を知らせるときに使います。迷ったらこれで大丈夫です。
 title: "[フィードバック] "
+labels: ["type:feedback"]
 body:
   - type: markdown
     attributes:
