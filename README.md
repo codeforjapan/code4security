@@ -78,7 +78,18 @@ OSSとして公開する、小規模組織向け「調べなくても基本の�
 
 ## 8. OSS化の方針
 
-- **ライセンス*：MIT または Apache-2.0。
+- **ライセンス**：コードは [MIT](LICENSE)、文章とデータは [CC BY 4.0](LICENSE-CONTENT.md)。決めた理由は [ADR 0011](docs/adr/0011-license.md)。
+
+  | パス | ライセンス | 著作権者 |
+  |---|---|---|
+  | 下に挙げたもの以外（コード・設定のひな形・`.github/`） | MIT（`LICENSE`） | Code for Japan and contributors |
+  | `README.md`・`CONTRIBUTING.md`・`AGENTS.md`・`docs/` | CC BY 4.0（`LICENSE-CONTENT.md`） | Code for Japan and contributors |
+  | 点検の結果や報告書のひな形 | CC BY 4.0（`LICENSE-CONTENT.md`） | Code for Japan and contributors |
+  | `guide/` のコード | MIT（`guide/LICENSE`） | yokinist、Code for Japan and contributors |
+  | `guide/` の文章とデータ | CC BY 4.0（`guide/LICENSE-CONTENT.md`） | yokinist、Code for Japan and contributors |
+  | `checker/` | MIT（`checker/LICENSE`） | yokinist、Code for Japan and contributors |
+
+  `guide/` と `checker/` は取り込みのあとにできる。出典の示し方は `LICENSE-CONTENT.md` を見る。
 - **リポ構成*：テンプレ／CLI／docs（日本語＋英語）。
 - **既存OSSへの敬意*：委譲するエンジンへは Drips 等でのOSS寄付も検討（別構想と接続）。
 - **コントリビュート*：自治体/シビックテック事例をテンプレとして取り込める設計。
