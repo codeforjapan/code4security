@@ -1,16 +1,14 @@
 # 文章とデータのライセンス
 
-Code for Security の文章とデータは、[クリエイティブ・コモンズ 表示 4.0 国際（CC BY 4.0）](https://creativecommons.org/licenses/by/4.0/deed.ja) で公開しています。コードは [MIT ライセンス](LICENSE) です。
+Code for Security のうち、点検項目や報告書のひな形など、利用者や顧客に渡るガイダンスの文章とデータは、[クリエイティブ・コモンズ 表示 4.0 国際（CC BY 4.0）](https://creativecommons.org/licenses/by/4.0/deed.ja) で公開しています。コードと、README や ADR などのプロジェクトの文書は [MIT ライセンス](LICENSE) です。
 
 ## 対象
 
-- `README.md`・`CONTRIBUTING.md`・`AGENTS.md`
-- `docs/` の文章（ADR・ロードマップ）
 - 点検の結果や報告書のひな形（置き場所が決まったら、ここにパスを足します）
 
 `guide/` の文章とデータ（点検項目の YAML、`checklist.md`・`checklist.json`・`llms.txt` など）も CC BY 4.0 です。もとの作品と著作者が違うので、表示のしかたは `guide/LICENSE-CONTENT.md` に従ってください。
 
-どのパスがどのライセンスかの一覧は、[README の「ライセンス」](README.md#8-oss化の方針) にあります。一覧にないものはコードとして扱い、MIT です。
+どのパスがどのライセンスかの一覧は、[README の「ライセンス」](README.md#8-oss化の方針) にあります。一覧にないもの（コードとプロジェクトの文書）は MIT です。
 
 ## 出典の示し方
 

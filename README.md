@@ -78,12 +78,12 @@ OSSとして公開する、小規模組織向け「調べなくても基本の�
 
 ## 8. OSS化の方針
 
-- **ライセンス**：コードは [MIT](LICENSE)、文章とデータは [CC BY 4.0](LICENSE-CONTENT.md)。
+- **ライセンス**：コードとプロジェクトの文書は [MIT](LICENSE)、点検項目や報告書のひな形など、利用者や顧客に渡るガイダンスの文章とデータは [CC BY 4.0](LICENSE-CONTENT.md)。
 
   | パス | ライセンス |
   |---|---|
-  | 下に挙げたもの以外（コード・設定のひな形・`.github/`） | MIT（`LICENSE`） |
-  | `README.md`・`CONTRIBUTING.md`・`AGENTS.md`・`docs/`・点検の結果や報告書のひな形 | CC BY 4.0（`LICENSE-CONTENT.md`） |
+  | 下に挙げたもの以外（コード・設定のひな形・`.github/`・README や ADR などのプロジェクトの文書） | MIT（`LICENSE`） |
+  | 点検の結果や報告書のひな形 | CC BY 4.0（`LICENSE-CONTENT.md`） |
   | `guide/` のコード | MIT（`guide/LICENSE`） |
   | `guide/` の文章とデータ | CC BY 4.0（`guide/LICENSE-CONTENT.md`） |
   | `checker/` | MIT（`checker/LICENSE`） |
