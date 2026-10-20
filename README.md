@@ -78,7 +78,7 @@ OSSとして公開する、小規模組織向け「調べなくても基本の�
 
 ## 8. OSS化の方針
 
-- **ライセンス**：コードは [MIT](LICENSE)、文章とデータは [CC BY 4.0](LICENSE-CONTENT.md)。決めた理由は [ADR 0011](docs/adr/0011-license.md)。
+- **ライセンス**：コードは [MIT](LICENSE)、文章とデータは [CC BY 4.0](LICENSE-CONTENT.md)。
 
   | パス | ライセンス |
   |---|---|
