@@ -2,8 +2,7 @@
 
 ## ステータス
 
-提案中
-<!-- 方針は 2026-10-18 の打ち合わせで決めた。この PR のレビューで approve をもらってから承認済みにする -->
+承認済み
 
 ## 日付
 
@@ -12,9 +11,9 @@
 ## 決定の記録
 
 - 議論した場所: [PR #1](https://github.com/codeforjapan/code4security/pull/1) のコメント、2026-10-18 の打ち合わせ（[記録](https://github.com/codeforjapan/code4security/pull/1#issuecomment-6246409230)）、承認の決まりは [PR #19 のコメント](https://github.com/codeforjapan/code4security/pull/19#issuecomment-6281748090)
-- 決定の場: 未定（この PR のレビュー）
-- 承認者: 未定
-- 承認日: 未定
+- 決定の場: [PR #19 のレビュー](https://github.com/codeforjapan/code4security/pull/19#pullrequestreview-5599744604)
+- 承認者: [yu23ki14](https://github.com/yu23ki14)
+- 承認日: 2026-10-21
 
 ## コンテキスト
 
