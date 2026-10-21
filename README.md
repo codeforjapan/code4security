@@ -88,7 +88,7 @@ OSSとして公開する、小規模組織向け「調べなくても基本の�
   | `guide/` の文章とデータ | CC BY 4.0（`guide/LICENSE-CONTENT.md`） |
   | `checker/` | MIT（`checker/LICENSE`） |
 
-  `guide/` と `checker/` は取り込みのあとにできる。取り込んだものの元の著作権表示は、そのパスの LICENSE に残す。出典の示し方は `LICENSE-CONTENT.md` を見る。
+  `guide/` と `checker/` は元の作者のリポジトリから取り込んだもので、元の著作権表示は、そのパスの LICENSE に残す。出典の示し方は `LICENSE-CONTENT.md` を見る。
 - **リポ構成*：テンプレ／CLI／docs（日本語＋英語）。
 - **既存OSSへの敬意*：委譲するエンジンへは Drips 等でのOSS寄付も検討（別構想と接続）。
 - **コントリビュート*：自治体/シビックテック事例をテンプレとして取り込める設計。
