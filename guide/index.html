@@ -1,0 +1,1095 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>はじめてのセキュリティ点検</title>
+<meta name="description" content="専任のセキュリティ担当がいないプロジェクト向けのセキュリティ点検。使っているものを選ぶと、確かめるべき項目と、そのリスク・理由・使えるツールが出てきます。">
+<meta name="theme-color" content="#090c10">
+<link rel="canonical" href="https://yokinist.github.io/first-security-checkup/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://yokinist.github.io/first-security-checkup/">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:site_name" content="はじめてのセキュリティ点検">
+<meta property="og:title" content="はじめてのセキュリティ点検">
+<meta property="og:description" content="そのプロジェクト、点検したことはありますか？ むずかしい知識がなくても始められます。当てはまるものを選んで、出てきた項目を上から順に確かめていくセキュリティ点検です。">
+<meta property="og:image" content="https://yokinist.github.io/first-security-checkup/ogp.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="はじめてのセキュリティ点検">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23090c10'/%3E%3Cg fill='%234ee38a'%3E%3Crect x='12' y='12' width='11' height='11' rx='2'/%3E%3Crect x='27' y='12' width='11' height='11' rx='2'/%3E%3Crect x='12' y='27' width='11' height='11' rx='2'/%3E%3C/g%3E%3Cg fill='%23ff6b6b'%3E%3Crect x='42' y='12' width='11' height='11' rx='2'/%3E%3C/g%3E%3Cg fill='%232d3845'%3E%3Crect x='27' y='27' width='11' height='11' rx='2'/%3E%3Crect x='42' y='27' width='11' height='11' rx='2'/%3E%3Crect x='12' y='42' width='11' height='11' rx='2'/%3E%3Crect x='27' y='42' width='11' height='11' rx='2'/%3E%3Crect x='42' y='42' width='11' height='11' rx='2'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="alternate" type="text/markdown" href="checklist.md" title="点検表（Markdown）">
+<link rel="alternate" type="application/json" href="checklist.json" title="点検表（JSON）">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "はじめてのセキュリティ点検", "description": "専任のセキュリティ担当がいないプロジェクト向けのセキュリティ点検。使っているものを選ぶと、確かめるべき項目と、そのリスク・理由・使えるツールが出てきます。", "inLanguage": "ja", "url": "https://yokinist.github.io/first-security-checkup/", "license": "https://creativecommons.org/licenses/by/4.0/deed.ja", "about": ["情報セキュリティ", "個人開発", "シビックテック", "GitHub"], "audience": {"@type": "Audience", "audienceType": "個人開発者・シビックテックのボランティア"}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap">
+<style>
+/* コンソール風：開発者が毎日見ている画面の文法。全項目を 1 枚の「点検マップ」にして、チェックするとマスが点く */
+[hidden] { display: none !important; }
+.group-lead, .sec-note, .blk p, .reason { word-break: auto-phrase; text-wrap: pretty; }
+:root {
+  --bg: #090c10;
+  --panel: #0f141a;
+  --panel-2: #151b23;
+  --line: #1f2731;
+  --line-2: #2c3743;
+  --text: #e3e9f0;
+  --soft: #aab6c4;
+  --muted: #7a8899;
+  --green: #4ee38a;
+  --red: #ff6b6b;
+  --amber: #ffbd52;
+  --grey: #8f9cab;
+  --cyan: #6fd6ff;
+  --sans: "IBM Plex Sans JP", "Hiragino Sans", "Noto Sans JP", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --gut: clamp(16px, 4vw, 48px);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { overflow-x: clip; }
+body { margin: 0; color: var(--text); font-family: var(--sans); font-size: 16px; line-height: 1.8; font-synthesis: none; -webkit-font-smoothing: antialiased;
+  background: radial-gradient(1200px 600px at 75% -10%, rgb(78 227 138 / .09), transparent 60%), radial-gradient(900px 500px at -10% 30%, rgb(111 214 255 / .06), transparent 60%), radial-gradient(circle, rgb(255 255 255 / .05) 1px, transparent 1.2px) 0 0 / 24px 24px, var(--bg); background-attachment: fixed; }
+h1, h2, h3 { margin: 0; line-height: 1.45; font-weight: 700; word-break: auto-phrase; text-wrap: balance; }
+p { margin: 0; }
+a { color: var(--cyan); text-underline-offset: 3px; text-decoration-color: rgb(111 214 255 / .4); }
+a:hover { text-decoration-color: currentColor; }
+:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; border-radius: 4px; }
+code, pre { font-family: var(--mono); font-size: 13px; }
+code { white-space: nowrap; padding: 1px 6px; border-radius: 4px; background: var(--panel-2); border: 1px solid var(--line); color: var(--text); }
+pre code { padding: 0; border: 0; background: none; }
+
+.wrap { --gap: 96px; max-width: 1180px; margin-inline: auto; padding: 0 var(--gut) 80px; display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--gap); }
+main { display: contents; }
+section { min-width: 0; }
+.narrow { max-width: 860px; width: 100%; margin-inline: auto; }
+
+/* ボタン */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 12px; padding: 13px 22px; border: 1px solid var(--green); border-radius: 8px; background: var(--green); color: #03140a; font: 700 15px/1.4 var(--sans); text-decoration: none; cursor: pointer; transition: box-shadow .2s, transform .2s; }
+.btn kbd { font: 700 12px var(--mono); padding: 1px 6px; border-radius: 4px; background: rgb(0 0 0 / .14); }
+.btn:hover { box-shadow: 0 0 0 4px rgb(78 227 138 / .18), 0 0 32px rgb(78 227 138 / .35); }
+.btn.secondary { background: transparent; color: var(--green); }
+.link-btn { font: inherit; font-size: 14px; padding: 0; border: 0; background: none; color: var(--cyan); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgb(111 214 255 / .4); cursor: pointer; }
+
+
+/* ヒーロー */
+.hero { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: 56px; align-items: center; margin-top: 56px; }
+.hero-text { display: grid; gap: 26px; }
+.hero h1 { font: 500 13px/1.6 var(--mono); color: var(--green); display: flex; flex-wrap: wrap; gap: 4px 14px; align-items: center; }
+.hero h1::before { content: "~/your-project"; color: var(--muted); }
+.question { font-weight: 700; font-size: clamp(34px, 4.6vw, 60px); line-height: 1.28; letter-spacing: -.01em; word-break: auto-phrase; }
+.js .question:not(.ready) { visibility: hidden; }  /* 1 文字ずつ打つ準備ができるまでは、全文を一瞬見せない（場所は取っておく）。JavaScript がないときは、そのまま見せる */
+.question .ch { visibility: hidden; }  /* まだ打っていない文字も場所は取っておき、打つあいだに折り返しが変わらないようにする */
+.question .ch.on { visibility: visible; }
+/* カーソルは場所を取らない。文字のあいだを動いても、後ろの文字がずれない */
+.caret { display: inline-block; position: relative; width: 0; height: .92em; vertical-align: -.08em; animation: caret 1s steps(1) infinite; }
+.caret::before { content: ""; position: absolute; left: 6px; top: 0; width: .5em; height: 100%; background: var(--green); box-shadow: 0 0 18px rgb(78 227 138 / .6); }
+@keyframes caret { 50% { opacity: 0; } }
+.caret.typing { display: none; }  /* 打つ前と打っているあいだは出さない。目が文字から離れないように */
+.lead { word-break: auto-phrase; text-wrap: pretty; color: var(--soft); font-size: 17px; max-width: 32em; }
+.cta { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 24px; }
+.cta a:not(.btn) { font-size: 14px; }
+.note { text-wrap: pretty; font-size: 13px; color: var(--muted); }
+
+/* 点検マップ（見せ場）。1 マス = 1 項目。行 = カテゴリ */
+.map { position: relative; border: 1px solid var(--line-2); border-radius: 14px; background: linear-gradient(180deg, rgb(21 27 35 / .92), rgb(13 17 23 / .92)); box-shadow: 0 40px 80px -40px rgb(0 0 0 / .8), inset 0 1px 0 rgb(255 255 255 / .04); overflow: hidden; }
+.map-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--line); font: 12px var(--mono); color: var(--muted); }
+.map-bar b { color: var(--text); font-weight: 400; }
+.map-bar .lights { display: flex; gap: 6px; }
+.map-bar .lights i { width: 10px; height: 10px; border-radius: 50%; background: var(--line-2); }
+.map-grid { position: relative; display: grid; gap: 7px; padding: 18px 18px 16px; }
+.map-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 14px; }
+.map-row .label { font-size: 12.5px; color: var(--soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: color .3s; }
+.map-row.na .label { color: var(--muted); opacity: .55; }
+.map-row.complete .label { color: var(--green); }
+.cells { display: grid; grid-template-columns: repeat(var(--cols, 5), 26px); gap: 6px; }
+.cell { width: 26px; height: 26px; padding: 0; border: 1px solid var(--c); border-radius: 5px; background: color-mix(in srgb, var(--c) 14%, transparent); cursor: pointer; transition: background .35s, box-shadow .35s, border-color .35s, opacity .3s, transform .2s; opacity: 0; animation: boot .3s calc(var(--i) * 18ms + 500ms) forwards; }
+.cell[data-lv="1"] { --c: var(--red); }
+.cell[data-lv="2"] { --c: var(--amber); }
+.cell[data-lv="3"] { --c: var(--grey); }
+.cell.out { background: transparent; border-style: dashed; }
+.cell.na { --c: var(--line-2); background: transparent; border-style: dotted; }
+.cell.done { --c: var(--green); background: var(--green); box-shadow: 0 0 14px rgb(78 227 138 / .55); }
+.cell:hover { transform: scale(1.18); }
+.map-grid.ready .cell { opacity: 1; animation: none; }
+.map-grid.ready .cell.pulse { animation: pulse .7s ease-out; }
+@keyframes boot { from { opacity: 0; transform: scale(.4); } to { opacity: 1; transform: none; } }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgb(78 227 138 / .8); } 100% { box-shadow: 0 0 0 14px rgb(78 227 138 / 0); } }
+.scan { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(90deg, transparent, rgb(78 227 138 / .18) 45%, rgb(78 227 138 / .5) 50%, transparent 52%); transform: translateX(-100%); animation: scan 1.6s .35s cubic-bezier(.5, 0, .3, 1) forwards; }
+@keyframes scan { to { transform: translateX(100%); } }
+.map-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 16px; padding: 12px 16px; border-top: 1px solid var(--line); font: 11.5px var(--mono); color: var(--muted); }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 14px; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 10px; height: 10px; border-radius: 3px; border: 1px solid var(--c); background: color-mix(in srgb, var(--c) 18%, transparent); }
+.map-stat b { color: var(--green); font-weight: 700; }
+.tip { position: fixed; z-index: 20; max-width: 280px; padding: 8px 12px; border: 1px solid var(--line-2); border-radius: 8px; background: #05070a; color: var(--text); font-size: 12.5px; line-height: 1.55; pointer-events: none; box-shadow: 0 12px 30px rgb(0 0 0 / .5); }
+.tip small { display: block; font: 11px var(--mono); color: var(--muted); }
+
+.flow { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--line); grid-column: 1 / -1; }
+.flow li { display: flex; align-items: center; gap: 14px; padding: 16px 20px; background: var(--panel); font-weight: 500; font-size: 14.5px; color: var(--soft); }
+.num { flex: none; font: 700 13px var(--mono); color: var(--green); }
+
+/* 見出し */
+.sec-h { display: flex; align-items: baseline; gap: 14px; font-size: clamp(24px, 3vw, 32px); letter-spacing: -.005em; scroll-margin-top: 24px; }
+.sec-h:focus { outline: none; }  /* 移った先の目印として focus するだけなので、枠は出さない */
+.sec-h .num { font-size: 14px; padding: 2px 8px; border: 1px solid rgb(78 227 138 / .4); border-radius: 6px; transform: translateY(-4px); }
+.sec-note { color: var(--soft); font-size: 15px; }
+.sheet, .auto, .reading, .sources { display: grid; gap: 24px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; }
+
+/* 1 当てはまるものを選ぶ */
+.profile { padding: 32px; display: grid; gap: 22px; }
+.traits { display: grid; gap: 22px; }
+.trait-group { border: 0; margin: 0; padding: 0; min-width: 0; }
+.trait-group legend { padding: 0; margin-bottom: 10px; font: 12px var(--mono); color: var(--muted); }
+.trait-group legend::before { content: "// "; }
+.trait-list { display: flex; flex-wrap: wrap; gap: 8px; }
+.trait { display: inline-flex; gap: 10px; align-items: center; padding: 8px 14px 8px 10px; border: 1px solid var(--line-2); border-radius: 8px; background: var(--panel-2); font-size: 14px; line-height: 1.5; cursor: pointer; transition: border-color .2s, background .2s, color .2s; }
+.trait:hover { border-color: var(--soft); }
+.trait:has(input:checked) { border-color: var(--green); background: rgb(78 227 138 / .1); color: #fff; }
+.trait:has(input:focus-visible) { outline: 2px solid var(--green); outline-offset: 2px; }
+.trait input, .todo-toggle input, .judge input { appearance: none; flex: none; margin: 0; width: 18px; height: 18px; border: 1.5px solid var(--line-2); border-radius: 4px; background: var(--bg) no-repeat center / 0; cursor: pointer; transition: background-color .15s, border-color .15s, background-size .2s cubic-bezier(.3, 1.6, .5, 1); }
+.trait input:checked, .todo-toggle input:checked, .judge input:checked { border-color: var(--green); background-color: var(--green); background-size: 78%; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 8.5l3.2 3L13 4.5' fill='none' stroke='%2303140a' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
+.query { font: 13px/1.7 var(--mono); color: var(--muted); padding: 12px 14px; border-radius: 8px; background: var(--bg); border: 1px solid var(--line); overflow-wrap: anywhere; }
+.query .k { color: var(--cyan); }
+.query .v { color: var(--text); }
+.query .r { color: var(--green); }
+.profile-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; }
+.profile-summary { display: grid; gap: 12px; padding: 18px 22px; font-size: 15px; }
+.summary-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 16px; }
+.summary-title { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; font-weight: 700; }
+.summary-count { font: 12.5px var(--mono); font-weight: 400; color: var(--muted); }
+.summary-list { display: grid; gap: 8px; }
+.summary-row { display: grid; grid-template-columns: 8.5em minmax(0, 1fr); gap: 4px 12px; align-items: baseline; }
+.summary-group { font: 12px var(--mono); color: var(--muted); }
+.summary-group::before { content: "// "; }
+.summary-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.summary-tags li { padding: 2px 10px; border: 1px solid rgb(78 227 138 / .35); border-radius: 6px; background: rgb(78 227 138 / .07); font-size: 13px; line-height: 1.6; color: var(--text); }
+.summary-note { font-size: 14px; color: var(--soft); }
+
+/* 2 まずすべきことに対処する */
+.levels { margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 8px 24px; font-size: 14px; color: var(--soft); }
+.levels li { display: flex; align-items: center; gap: 10px; }
+.lv { display: inline-flex; align-items: center; gap: 6px; padding: 1px 9px; border-radius: 6px; font: 700 12px/1.8 var(--sans); letter-spacing: .02em; white-space: nowrap; color: var(--c); background: color-mix(in srgb, var(--c) 13%, transparent); }
+.lv::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.lv1 { --c: var(--red); }
+.lv2 { --c: var(--amber); }
+.lv3 { --c: var(--grey); }
+.toolbar { position: sticky; top: 0; z-index: 5; margin-inline: calc(var(--gut) * -1); padding: 12px var(--gut); display: grid; gap: 10px; background: rgb(9 12 16 / .82); backdrop-filter: blur(14px) saturate(1.4); -webkit-backdrop-filter: blur(14px) saturate(1.4); border-bottom: 1px solid var(--line); }
+.toolbar > * { width: 100%; max-width: 860px; margin-inline: auto; }
+.toolbar-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; }
+.progress { display: grid; gap: 7px; min-width: min(100%, 300px); }
+.progress-text { font-size: 13.5px; color: var(--soft); font-variant-numeric: tabular-nums; }
+.progress-text b { font: 700 15px var(--mono); color: var(--text); margin-right: 2px; }
+.segs { display: flex; gap: 2px; height: 8px; }
+.segs i { flex: 1; border-radius: 2px; background: var(--line-2); transition: background .3s, box-shadow .3s; }
+.segs i.on { background: var(--green); box-shadow: 0 0 8px rgb(78 227 138 / .5); }
+.filters { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; }
+.filter { display: inline-flex; padding: 3px; gap: 2px; border-radius: 8px; background: var(--panel-2); border: 1px solid var(--line); }
+.filter button { white-space: nowrap; font: 500 13px var(--sans); padding: 4px 12px; border: 0; border-radius: 6px; background: transparent; color: var(--soft); cursor: pointer; }
+.filter button[aria-pressed="true"] { background: var(--line-2); color: #fff; }
+.todo-toggle { display: inline-flex; align-items: center; gap: 8px; font-size: 13.5px; color: var(--soft); cursor: pointer; }
+.chips { display: flex; gap: 6px; margin: 0; padding: 0; list-style: none; overflow-x: auto; scrollbar-width: none; }
+.chips::-webkit-scrollbar { display: none; }
+.chips li { flex: none; }
+.chips a { display: inline-flex; gap: 8px; padding: 3px 10px; border-radius: 6px; border: 1px solid var(--line); color: var(--soft); text-decoration: none; white-space: nowrap; font-size: 12.5px; }
+.chips a .n { font-family: var(--mono); color: var(--muted); }
+.chips a.done { border-color: rgb(78 227 138 / .45); color: var(--green); }
+.chips a.done .n { color: var(--green); }
+.chips a[aria-current="true"] { background: var(--panel-2); border-color: var(--soft); color: #fff; }
+
+.groups { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; }
+.group { scroll-margin-top: 140px; min-width: 0; overflow: hidden; }
+.group-head { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 4px 14px; padding: 18px 24px; border-bottom: 1px solid var(--line); background: linear-gradient(90deg, rgb(78 227 138 / .04), transparent 40%); }
+.group-head::before { content: attr(data-n); font: 700 13px var(--mono); color: var(--green); }
+.group-head h3 { font-size: 18px; }
+.group-meta { display: flex; align-items: center; gap: 10px; font: 12px var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.gbar { width: 64px; height: 4px; border-radius: 4px; background: var(--line-2); overflow: hidden; }
+.gbar > span { display: block; height: 100%; width: 0; background: var(--green); transition: width .4s; }
+.group-lead { grid-column: 2 / -1; font-size: 14px; color: var(--soft); }
+.row { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 0 14px; padding: 22px 24px 24px; border-bottom: 1px solid var(--line); transition: background .3s; }
+.row:last-child { border-bottom: 0; }
+.row:hover { background: rgb(255 255 255 / .015); }
+.judge { padding-top: 2px; }
+.judge input { width: 24px; height: 24px; border-radius: 6px; }
+.judge input:hover { border-color: var(--green); }
+.item { display: grid; gap: 14px; min-width: 0; }
+.item-head { display: grid; gap: 8px; justify-items: start; }
+.item .t { font-size: 17.5px; font-weight: 700; line-height: 1.6; cursor: pointer; word-break: auto-phrase; }
+.blk { display: grid; gap: 6px; min-width: 0; font-size: 15px; line-height: 1.85; color: var(--soft); }
+.blk-label { font: 700 11.5px/1.6 var(--mono); letter-spacing: .04em; color: var(--muted); }
+.blk.risk { padding: 12px 16px; border-left: 2px solid var(--red); border-radius: 0 8px 8px 0; background: rgb(255 107 107 / .07); color: var(--text); }
+.blk.risk .blk-label { color: var(--red); }
+.blk.risk .blk-label::before { content: "! "; }
+.blk.use { padding: 14px 16px; border-radius: 10px; background: var(--panel-2); border: 1px solid var(--line); }
+.blk.use .blk-label { color: var(--cyan); }
+.refs { font-size: 12.5px; color: var(--muted); line-height: 1.75; }
+.refs a { color: var(--muted); text-decoration-color: var(--line-2); }
+.row.checked .t { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--green); }
+.row.checked .blk, .row.checked .refs { display: none; }
+.cmd { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: start; background: #05070a; border: 1px solid var(--line); min-width: 0; border-radius: 8px; }
+.cmd pre { margin: 0; padding: 11px 14px; white-space: pre-wrap; overflow-x: auto; line-height: 1.65; color: var(--text); }
+.cmd pre::before { content: "$ "; color: var(--green); }
+.cmd button { margin: 7px 7px 0 0; font: 11.5px var(--mono); padding: 2px 10px; border: 1px solid var(--line-2); border-radius: 6px; background: var(--panel-2); color: var(--soft); cursor: pointer; }
+.cmd button:hover { color: #fff; border-color: var(--soft); }
+#auto .cmd pre::before { content: none; }
+.empty { padding: 32px; text-align: center; color: var(--muted); }
+/* 表示している項目がすべて済んだときのまとめ */
+.clear { padding: 22px 24px; border-color: rgb(78 227 138 / .45); background: linear-gradient(135deg, rgb(78 227 138 / .09), transparent 60%), var(--panel); }
+.clear.pop { animation: clear-in .6s ease-out; }
+.clear-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px; margin: 0; font: 700 13px var(--mono); color: var(--green); }
+.clear-head span { color: var(--muted); font-weight: 400; }
+.clear h3 { margin: 6px 0 4px; font-size: 19px; }
+.clear p:last-child { margin: 0; color: var(--soft); }
+@keyframes clear-in { from { opacity: 0; transform: translateY(10px); box-shadow: 0 0 0 0 rgb(78 227 138 / .5); } 60% { box-shadow: 0 0 0 10px rgb(78 227 138 / 0); } to { opacity: 1; transform: none; } }
+.segs.sweep i { animation: sweep .9s calc(var(--i) * 25ms) ease-out; }
+@keyframes sweep { 30% { background: #fff; box-shadow: 0 0 12px rgb(78 227 138 / .9); } }
+.more { display: flex; justify-content: center; }
+.reset-row { display: flex; justify-content: flex-end; }
+.reset-row .link-btn { font-size: 13px; color: var(--muted); }
+
+/* ログ（チェックしたときに左下に流れる） */
+.log { position: fixed; left: 16px; bottom: 16px; z-index: 30; display: grid; gap: 6px; pointer-events: none; font: 12px/1.5 var(--mono); }
+.log p { max-width: min(440px, calc(100vw - 32px)); padding: 7px 12px; border: 1px solid var(--line-2); border-radius: 8px; background: rgb(5 7 10 / .92); color: var(--soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; animation: logline 3.4s ease forwards; }
+.log p b { color: var(--green); font-weight: 700; }
+.log p.undo b { color: var(--amber); }
+.log p.all-clear { border-color: rgb(78 227 138 / .5); color: var(--text); animation-duration: 5s; }
+@keyframes logline { 0% { opacity: 0; transform: translateY(8px); } 8%, 80% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+
+/* 3 毎週、自動で点検する */
+.auto-body { padding: 28px; display: grid; gap: 16px; }
+.auto-body > p { color: var(--soft); }
+.tools { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 10px; }
+.tools li { display: grid; gap: 6px; align-content: start; padding: 16px 18px; border-radius: 10px; background: var(--panel-2); border: 1px solid var(--line); }
+.tools a { font-weight: 700; }
+.tools p { font-size: 14px; color: var(--soft); line-height: 1.75; }
+h3.sub { font-size: 16px; margin-top: 6px; }
+
+/* AI に相談する */
+.ask { position: relative; padding: 32px; border-radius: 16px; display: grid; gap: 16px; background: linear-gradient(var(--panel), var(--panel)) padding-box, linear-gradient(120deg, rgb(111 214 255 / .7), rgb(78 227 138 / .5) 50%, rgb(111 214 255 / .1)) border-box; border: 1px solid transparent; }
+.ask .sec-h .num { color: var(--cyan); border-color: rgb(111 214 255 / .45); }
+.ask > p { color: var(--soft); }
+.ask-warn { font-size: 14px; color: var(--amber) !important; }
+.ask-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+.ask .btn { background: var(--cyan); border-color: var(--cyan); color: #02121a; }
+.ask .btn:hover { box-shadow: 0 0 0 4px rgb(111 214 255 / .18), 0 0 32px rgb(111 214 255 / .35); }
+.copy-status { font-size: 13px; color: var(--green); }
+.prompt-preview summary { cursor: pointer; font-size: 14px; color: var(--soft); }
+.prompt-preview pre { margin: 10px 0 0; padding: 14px; max-height: 360px; overflow: auto; white-space: pre-wrap; background: #05070a; border: 1px solid var(--line); border-radius: 8px; color: var(--text); font-size: 12px; line-height: 1.7; }
+
+/* 大事なこと・資料 */
+.points { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 10px; counter-reset: pt; }
+.point { counter-increment: pt; padding: 20px 22px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; }
+.point summary { list-style: none; display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.point summary::-webkit-details-marker { display: none; }
+.point h3 { font-size: 16.5px; }
+.point h3::before { content: "0" counter(pt) "  "; font: 700 12px var(--mono); color: var(--green); white-space: pre; }
+.point p { margin-top: 8px; font-size: 14.5px; color: var(--soft); line-height: 1.8; }
+.reading-hint { display: none; font-size: 13px; color: var(--muted); }
+.source-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.source-kind { padding: 22px 24px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; }
+.source-kind h3 { font: 700 12.5px var(--mono); color: var(--muted); margin-bottom: 12px; }
+.source-kind h3::before { content: "## "; color: var(--green); }
+.source-kind ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 14px; }
+.source-kind li { display: grid; gap: 2px; font-size: 15px; }
+.checked-at { font-size: 12.5px; color: var(--muted); text-align: right; }
+.source-kind .reason { font-size: 13.5px; color: var(--soft); line-height: 1.75; }
+
+footer { padding-top: 22px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); line-height: 1.8; display: grid; gap: 14px; }
+footer .eof { font: 12px var(--mono); color: var(--line-2); text-align: center; letter-spacing: .3em; }
+.skip { position: absolute; left: 16px; top: -60px; z-index: 40; padding: 8px 14px; border-radius: 8px; background: var(--green); color: #03140a; font-weight: 700; text-decoration: none; }
+.skip:focus { top: 12px; }
+/* カテゴリの帯の手前に置く、項目へ飛ぶリンク。Tab で止まったときだけ、帯の右下に出す */
+.skip-items { position: absolute; right: var(--gut); bottom: 8px; z-index: 1; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; padding: 4px 12px; border-radius: 8px; background: var(--green); color: #03140a; font-size: 13px; font-weight: 700; text-decoration: none; }
+.skip-items:focus { width: auto; height: auto; overflow: visible; clip-path: none; }
+.noscript { padding: 12px 16px; border-radius: 8px; background: rgb(255 107 107 / .1); }
+
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.trial { padding: 10px 14px; border-radius: 8px; border: 1px solid rgb(255 189 82 / .35); background: rgb(255 189 82 / .07); font-size: 14px; color: var(--soft); }
+.badge { display: inline-block; margin-right: 10px; padding: 0 9px; border-radius: 6px; background: rgb(255 189 82 / .16); color: var(--amber); font-size: 12px; font-weight: 700; line-height: 1.9; }
+.how { margin: 0; padding-left: 1.6em; display: grid; gap: 6px; color: var(--soft); }
+.how li::marker { color: var(--green); font-family: var(--mono); }
+footer a { color: var(--soft); }
+.foot-links { display: flex; flex-wrap: wrap; gap: 6px 20px; font-size: 14px; }
+
+@media (max-width: 980px) {
+  .hero { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+  .source-list { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 760px) {
+  .wrap { --gap: 72px; padding-bottom: 56px; }
+  .hero { gap: 32px; margin-top: 32px; }
+  .question { font-size: clamp(30px, 8.6vw, 40px); }
+  .cta .btn { flex: 1 1 100%; }
+  .map-grid { padding: 14px 12px; gap: 6px; }
+  .map-row { gap: 10px; }
+  .map-row .label { font-size: 11.5px; }
+  .cells { grid-template-columns: repeat(var(--cols, 5), 22px); gap: 5px; }
+  .cell { width: 22px; height: 22px; border-radius: 4px; }
+  .flow { grid-template-columns: minmax(0, 1fr); }
+  .profile, .ask, .auto-body { padding: 20px; }
+  .toolbar { padding-block: 8px; gap: 8px; }
+  .progress { min-width: 0; flex: 1 1 100%; }
+  .filters { flex-wrap: nowrap; gap: 10px; }
+  .filter button { padding: 3px 9px; font-size: 12.5px; }
+  .todo-toggle { font-size: 12.5px; white-space: nowrap; }
+  .group-head { padding: 16px; grid-template-columns: auto minmax(0, 1fr); }
+  .group-meta { grid-column: 2; }
+  .gbar { width: 48px; }
+  .row { grid-template-columns: 28px minmax(0, 1fr); gap: 0 10px; padding: 18px 16px; }
+  .reading-hint { display: block; }
+  .point summary { cursor: pointer; }
+  .point summary::after { content: "+"; font-family: var(--mono); color: var(--muted); flex: none; }
+  .point[open] summary::after { content: "−"; }
+  .source-kind { padding: 18px; }
+  .summary-row { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+}
+@media (pointer: coarse) { .btn kbd { display: none; } }  /* キーボードのない端末では ↵ を出さない */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0s !important; animation-delay: 0s !important; transition: none !important; }
+  .caret { animation: none !important; }
+  .scan { display: none; }
+}
+</style>
+<script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+<a class="skip" href="#sheet">点検表へ移動</a>
+<div class="wrap">
+  <header class="hero">
+    <div class="hero-text">
+      <h1>はじめてのセキュリティ点検</h1>
+      <p class="question" id="question">そのプロジェクト、<br>点検したことは<br>ありますか？</p>
+      <p class="lead">むずかしい知識がなくても始められます。プロジェクトに当てはまるものを選んで、出てきた項目を上から順に確かめていきます。</p>
+      <p class="cta"><a class="btn" href="#sheet">点検をはじめる <kbd aria-hidden="true">↵</kbd></a><a href="#auto">毎週の自動点検（試験運用中）</a></p>
+      <p class="note">すべてチェックしても、安全を保証するものではありません。よくある穴を減らすための目安として使ってください。</p>
+    </div>
+    <figure class="map" style="margin:0" aria-label="点検マップ。1 マスが 1 項目で、チェックすると緑に点きます">
+      <div class="map-bar"><span class="lights" aria-hidden="true"><i></i><i></i><i></i></span><span>check-map · <b id="map-count"></b> items</span></div>
+      <div class="map-grid" id="map-grid"><div class="scan" aria-hidden="true"></div></div>
+      <div class="map-foot">
+        <span class="legend" aria-hidden="true"><span style="--c:var(--red)"><i></i>まずやる</span><span style="--c:var(--amber)"><i></i>次にやる</span><span style="--c:var(--grey)"><i></i>余裕ができたら</span><span style="--c:var(--green)"><i style="background:var(--green)"></i>済み</span></span>
+        <span class="map-stat" id="map-stat"></span>
+      </div>
+    </figure>
+    <ol class="flow" aria-label="点検の流れ">
+      <li><span class="num">01</span>当てはまるものを選ぶ</li>
+      <li><span class="num">02</span>まずすべきことに対処する</li>
+      <li><span class="num">03</span>自動で点検し続ける</li>
+    </ol>
+  </header>
+
+  <main id="main">
+
+  <section class="sheet narrow" id="sheet" aria-labelledby="step1-title">
+    <noscript><p class="noscript">点検表を使うには JavaScript が必要です。<a href="checklist.md">文章だけの版（Markdown）</a>でも、すべての項目を読めます。</p></noscript>
+    <div class="profile card" id="profile">
+      <h2 class="sec-h" id="step1-title" tabindex="-1"><span class="num">01</span>プロジェクトに当てはまるものを選ぶ</h2>
+      <p class="sec-note">関係のない項目は出しません。迷ったら選んでおきましょう。</p>
+      <div class="traits" id="traits"></div>
+      <p class="query" id="query"></p>
+      <div class="profile-actions">
+        <button type="button" class="btn" id="apply-profile">この内容で点検表を作る</button>
+        <button type="button" class="link-btn" id="show-all">選ばずにすべての項目を見る</button>
+      </div>
+    </div>
+    <div class="profile-summary card" id="profile-summary" hidden>
+      <div class="summary-head">
+        <p class="summary-title"><span class="num">01</span>当てはまるもの<span class="summary-count" id="profile-count"></span></p>
+        <button type="button" class="link-btn" id="edit-profile">選び直す</button>
+      </div>
+      <div class="summary-list" id="profile-list"></div>
+    </div>
+
+    <h2 class="sec-h" id="step2" tabindex="-1"><span class="num">02</span>まずすべきことに対処する</h2>
+    <ul class="levels" id="levels"></ul>
+    <p class="sec-note">コマンドの <code>&lt;owner&gt;</code> は自分のアカウント名か organization 名、<code>&lt;repo&gt;</code> はリポジトリ名に置き換えます。<code>&lt;org&gt;</code> や <code>&lt;ドメイン&gt;</code> なども、同じように自分の値にします。チェックはこのブラウザにだけ保存されます。</p>
+    <nav class="toolbar" aria-label="点検の進み具合">
+      <div class="toolbar-row">
+        <div class="progress">
+          <p class="progress-text" id="progress-text">読み込み中</p>
+          <div class="segs" id="segs" aria-hidden="true"></div>
+        </div>
+        <div class="filters">
+          <div class="filter" role="group" aria-label="表示する優先度">
+            <button type="button" data-level="1" aria-pressed="true">まずやる</button>
+            <button type="button" data-level="2" aria-pressed="false">次にやるまで</button>
+            <button type="button" data-level="3" aria-pressed="false">すべて</button>
+          </div>
+          <label class="todo-toggle"><input type="checkbox" id="todo-only">未チェックだけ</label>
+        </div>
+      </div>
+      <a class="skip-items" id="skip-items" href="#groups">項目へ移動</a>
+      <ul class="chips" id="chips"></ul>
+    </nav>
+    <div class="groups" id="groups"></div>
+    <p class="empty" id="empty" hidden>表示する項目はありません。</p>
+    <div class="clear card" id="clear" hidden></div>
+    <p class="sr" role="status" id="clear-say"></p>
+    <p class="more" id="more" hidden><button type="button" class="btn secondary" id="more-btn"></button></p>
+    <p class="reset-row"><button type="button" class="link-btn" id="reset">チェックをすべて外す</button></p>
+  </section>
+
+  <section class="auto narrow" id="auto" aria-labelledby="auto-title">
+    <h2 class="sec-h" id="auto-title"><span class="num">03</span>毎週、自動で点検し続ける</h2>
+    <div class="auto-body card">
+      <p class="trial"><span class="badge">試験運用中</span>動かしてみた感想や、うまく動かなかったことを <a href="https://github.com/yokinist/weekly-security-checker/issues">Issue</a> で教えてください。</p>
+      <p>危ないのは、いま触っているリポジトリより、動いたまま誰も見なくなったリポジトリです。そこで、アカウントや organization のリポジトリをまとめて毎週調べ、見つかった指摘を非公開のリポジトリの Issue にまとめる GitHub Action「<a href="https://github.com/yokinist/weekly-security-checker">weekly-security-checker</a>」を用意しました。同じ指摘は二重に立たず、直ると自動で閉じます。</p>
+      <p>調べるのは、依存パッケージの脆弱性、漏れたキー（コミット履歴も含む）、ワークフローの危ない書き方、そしてそれらを見つける機能が無効になっていないかです。</p>
+      <h3 class="sub">使い方</h3>
+      <ol class="how">
+        <li>Issue を集める<b>非公開</b>のリポジトリを作ります。Issue に脆弱性の情報が載るためです</li>
+        <li>読み取り専用の fine-grained トークンを作り、そのリポジトリに <code>SCAN_TOKEN</code> として登録します。必要な権限は <a href="https://github.com/yokinist/weekly-security-checker#使い方">README</a> にあります</li>
+        <li>次のファイルを <code>.github/workflows/</code> に置きます</li>
+      </ol>
+      <div id="yaml"></div>
+    <h3 class="sub">ほかに、自動化に使えるもの</h3>
+    <ul class="tools">
+      <li><a href="https://github.com/ossf/allstar" target="_blank" rel="noopener">OpenSSF Allstar</a><p>org の設定違反（ブランチ保護がない、外部コラボレーターがいる、危ないワークフローなど）を見つけて Issue を立てる GitHub App です。</p></li>
+      <li><a href="https://docs.renovatebot.com/" target="_blank" rel="noopener">Renovate</a><p>依存の更新 PR を自動で出します。minimumReleaseAge で、公開されたばかりの版を避けられます。</p></li>
+      <li><a href="https://github.com/anthropics/claude-code-security-review" target="_blank" rel="noopener">claude-code-security-review</a><p>PR ごとに Claude がセキュリティの観点でレビューし、問題のある行にコメントを付けます。API の料金がかかります。外部からの PR に使うときは、実行に承認を必須にしておきます。</p></li>
+    </ul>
+    </div>
+  </section>
+
+  <section class="ask narrow" id="ask" aria-labelledby="ask-title">
+    <h2 class="sec-h" id="ask-title"><span class="num">AI</span>AI に相談する</h2>
+    <p>選んだものと、点検表の進み具合をまとめた相談文を作ります。ChatGPT や Claude などの AI に貼り付け、プロジェクトの説明を書き足してください。次に何をすればよいかを、AI と一緒に考えられます。</p>
+    <p class="ask-warn">キーやパスワード、利用者の個人情報は貼り付けないでください。AI の答えは間違っていることもあるので、コマンドは公式のドキュメントで確かめてから使ってください。</p>
+    <div class="ask-actions">
+      <button type="button" class="btn" id="copy-prompt">相談文をコピー</button>
+      <span class="copy-status" id="copy-status" role="status"></span>
+    </div>
+    <details class="prompt-preview">
+      <summary>相談文を見る</summary>
+      <pre id="prompt-preview"></pre>
+    </details>
+  </section>
+
+  <section class="reading" aria-labelledby="reading-title">
+    <h2 class="sec-h" id="reading-title">点検するときに大事なこと</h2>
+    <p class="reading-hint">見出しをタップすると説明が開きます。</p>
+    <div class="points">
+      <details class="point">
+        <summary><h3>脆弱性は非公開の場所で扱う</h3></summary>
+        <p>公開リポジトリの Issue に脆弱性を書くと、直す前に攻撃の手順を公開することになります。Security Advisory の下書きか、非公開のリポジトリで扱います。漏れたキーの値はどこにも貼りません。</p>
+      </details>
+      <details class="point">
+        <summary><h3>放置されたプロジェクトほど危ない</h3></summary>
+        <p>動いたまま誰も見なくなったリポジトリには、古い依存パッケージや消し忘れたキーが残っていても、気づく人がいません。1 つずつではなく、アカウントや organization のリポジトリをまとめて見るようにします。</p>
+      </details>
+      <details class="point">
+        <summary><h3>スキャンより先に棚卸し</h3></summary>
+        <p>把握していないものは守れません。リポジトリだけでなく、デプロイ先、ドメイン、外部連携、そしてそれぞれのアカウントの持ち主まで書き出します。</p>
+      </details>
+      <details class="point">
+        <summary><h3>事故はツールが見ない場所で起きる</h3></summary>
+        <p>スキャナーが得意なのは依存パッケージとコードです。実際の漏えいは、データベースのルールや共有設定、抜けた人の権限など、ツールの外で起きることが多くあります。</p>
+      </details>
+      <details class="point">
+        <summary><h3>通知が多すぎると誰も見なくなる</h3></summary>
+        <p>アラートを全部 Issue にすると、すぐ 100 件を超えることもあります。原因ごとにまとめ、動いているもの、外から触れるものを先に直します。</p>
+      </details>
+      <details class="point">
+        <summary><h3>直せるものは PR で、使わないものはアーカイブ</h3></summary>
+        <p>Issue を読んで手で直すより、自動で届く修正 PR をマージするほうが速く片付きます。もう使っていないリポジトリは、アーカイブすれば直す対象から外せます（残っているキーは先に失効させます）。</p>
+      </details>
+      <details class="point">
+        <summary><h3>点検する仕組みそのものを守る</h3></summary>
+        <p>全リポジトリを読めるトークンは、攻撃者にとっても魅力的です。権限は読み取りだけにして、期限を付けます。調べる対象のコードは実行しません。AI に調べさせるなら、リポジトリ内の文章に操られる前提で、書き込み権限を渡しません。</p>
+      </details>
+    </div>
+  </section>
+
+  <section class="sources" aria-labelledby="sources-title">
+    <h2 class="sec-h" id="sources-title">おすすめの資料</h2>
+    <p class="sec-note">もっと深く知りたいときに読む資料を、目的別に選びました。各項目に直接関係する資料は、項目ごとの「関連」に載せています。</p>
+    <div class="source-list" id="source-list"></div>
+    <p class="checked-at">リンクは 2026 年 10 月に開けることを確かめました。</p>
+  </section>
+  </main>
+
+  <footer>
+    <p class="foot-links"><a href="https://github.com/yokinist/first-security-checkup">ソースコード（GitHub）</a><a href="https://github.com/yokinist/first-security-checkup/issues">ご意見・誤りの報告</a><a href="checklist.md">文章だけの版</a><a href="checklist.json">JSON</a></p>
+    <p>この点検表は、よくある穴を減らすための目安です。すべての項目を満たしても、安全を保証するものではありません。個人情報を多く扱うときや、自治体などと契約して運用するときは、専門家による診断も検討してください。内容は 2026 年 10 月時点の情報です。</p>
+    <p>内容の正確さや完全さは保証しません。この点検表を使ったことで生じた損害について、作者は責任を負いません。使うときは、公式の資料でも確かめてください。</p>
+    <p>調査と執筆に AI（Claude）を使っています。事実は資料を開いて確かめ、確かめた日を残していますが、誤りが含まれることがあります。誤りに気づいたら <a href="https://github.com/yokinist/first-security-checkup/issues">Issue</a> で教えてください。</p>
+    <p>文章とデータは <a href="https://creativecommons.org/licenses/by/4.0/deed.ja">CC BY 4.0</a>、コードは MIT ライセンスで公開しています。出典を示せば、自由に使ったり変えたりできます。</p>
+    <p class="eof" aria-hidden="true">— EOF —</p>
+  </footer>
+</div>
+<div class="log" id="log" aria-hidden="true"></div>
+<div class="tip" id="tip" hidden></div>
+<script src="data.js"></script>
+<script>
+document.documentElement.lang = "ja";
+const YAML = `name: weekly security check
+on:
+  schedule:
+    - cron: "0 0 * * 1" # 毎週月曜 9:00 JST
+  workflow_dispatch:
+permissions:
+  contents: read
+  issues: write
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: yokinist/weekly-security-checker@b8f6e5fcdc39d30bffed944ffad9a645d587c107 # v0.1.1
+        with:
+          scan-token: \${{ secrets.SCAN_TOKEN }}`;
+
+const KEY = "small-project-security-checklist";
+let state = {};
+try { state = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { state = {}; }
+state.checked = state.checked || {};
+state.level = state.level || 1;  // 1・2・3。最初は「まずやる」だけ見せる
+const LEVEL_LABEL = Object.fromEntries(LEVELS.map(l => [l.level, l.label]));
+state.todo = !!state.todo;
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} };
+
+const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
+
+function cmdBlock(text) {
+  const box = el("div", "cmd");
+  const pre = el("pre", null, text);
+  const btn = el("button", null, "コピー");
+  btn.type = "button";
+  btn.setAttribute("aria-label", "コマンドをコピー");
+  btn.addEventListener("click", () => copy(pre, btn));
+  box.append(pre, btn);
+  return box;
+}
+
+function copy(pre, btn) {
+  const done = (label) => { btn.textContent = label; setTimeout(() => (btn.textContent = "コピー"), 1600); };
+  const select = () => { const r = document.createRange(); r.selectNodeContents(pre); const s = getSelection(); s.removeAllRanges(); s.addRange(r); done("選択しました"); };
+  try {
+    navigator.clipboard.writeText(pre.textContent).then(() => done("コピーしました"), select);
+  } catch (e) { select(); }
+}
+
+function link(label, href) { const a = el("a", null, label); a.href = href; a.target = "_blank"; a.rel = "noopener"; return a; }
+
+const ITEMS = {};
+const groupsEl = document.getElementById("groups");
+for (const g of CATEGORIES) {
+  const sec = el("section", "group card");
+  sec.id = g.id;
+  sec.setAttribute("aria-labelledby", "g-" + g.id);
+  const head = el("div", "group-head");
+  const h = el("h3", null, g.title);
+  h.id = "g-" + g.id;
+  head.dataset.n = String(CATEGORIES.indexOf(g) + 1).padStart(2, "0");
+  const meta = el("span", "group-meta");
+  const gbar = el("span", "gbar");
+  gbar.append(el("span"));
+  meta.append(el("span", "count"), gbar);
+  head.append(h, meta);
+  if (g.lead) head.append(el("p", "group-lead", g.lead));
+  sec.append(head);
+  for (const it of g.items) {
+    ITEMS[it.id] = it;
+    const row = el("div", "row");
+    row.dataset.id = it.id;
+
+    const judge = el("div", "judge");
+    const cb = el("input");
+    cb.type = "checkbox";
+    cb.id = "c-" + it.id;
+    cb.checked = !!state.checked[it.id];
+    cb.addEventListener("change", () => {
+      const was = isClear();
+      state.checked[it.id] = cb.checked;
+      const now = isClear() && !was;  // このチェックで、表示している項目がすべて済んだ
+      if (now) (state.cleared ||= {})[state.level] = new Date().toLocaleDateString("sv");
+      save(); update(); logCheck(it.id, cb.checked);
+      if (row.hidden) {  // 「未チェックだけ」で行が隠れたら、focus が消えないよう、次の行（なければ切り替え）に移す
+        const next = [...document.querySelectorAll(".row:not([hidden])")].find(r => row.compareDocumentPosition(r) & Node.DOCUMENT_POSITION_FOLLOWING);
+        (next ? next.querySelector("input") : document.getElementById("todo-only")).focus();
+      }
+      if (now) celebrate();
+    });
+    judge.append(cb);
+
+    const item = el("div", "item");
+    const head2 = el("div", "item-head");
+    const t = el("label", "t", it.title);
+    t.htmlFor = cb.id;
+    head2.append(el("span", "lv lv" + it.level, LEVEL_LABEL[it.level]), t);
+    item.append(head2);
+    const para = text => el("p", null, text);
+    const blk = (cls, label, nodes) => {
+      const b = el("div", "blk " + cls);
+      b.append(el("p", "blk-label", label), ...nodes);
+      item.append(b);
+      return b;
+    };
+    const useNodes = it.how.map(u => {
+      if (u.command) return cmdBlock(u.command);
+      if (u.url) { const p = el("p"); p.append(link(u.title, u.url)); return p; }
+      return para(u.text);
+    });
+    blk("risk", "放っておくと", [para(it.risk)]);
+    blk("why", "なぜ必要か", [para(it.why)]);
+    if (it.how_for_private_repos) {
+      blk("use", "使えるもの（公開リポジトリ）", useNodes).dataset.repo = "public";
+      blk("use", "使えるもの（非公開リポジトリ）", [para(it.how_for_private_repos.text), ...(it.how_for_private_repos.command ? [cmdBlock(it.how_for_private_repos.command)] : [])]).dataset.repo = "private";
+    } else {
+      blk("use", "使えるもの", useNodes);
+    }
+    if (it.related.length) {
+      const refs = el("p", "refs", "関連：");
+      it.related.forEach((k, i) => { if (i) refs.append("、"); refs.append(link(SOURCES[k].title, SOURCES[k].url)); });
+      item.append(refs);
+    }
+    row.append(judge, item);
+    sec.append(row);
+  }
+  groupsEl.append(sec);
+}
+document.getElementById("yaml").replaceWith(cmdBlock(YAML));
+
+// 点検マップ：カテゴリ 1 行、項目 1 マス。マスを押すと、その項目へ移動する
+const grid = document.getElementById("map-grid");
+grid.style.setProperty("--cols", Math.max(...CATEGORIES.map(g => g.items.length)));  // 列の数は、項目のいちばん多いカテゴリに合わせる
+const cells = {};
+let k = 0;
+for (const g of CATEGORIES) {
+  const row = el("div", "map-row");
+  row.dataset.g = g.id;
+  const box = el("span", "cells");
+  for (const it of g.items) {
+    const c = el("button", "cell");
+    c.type = "button";
+    c.tabIndex = -1;  // 同じ移動は点検表のほうでできるので、Tab では止めない
+    c.dataset.lv = it.level;
+    c.dataset.id = it.id;
+    c.style.setProperty("--i", k++);
+    c.setAttribute("aria-label", `${LEVEL_LABEL[it.level]}：${it.title}`);
+    box.append(c);
+    cells[it.id] = c;
+  }
+  row.append(el("span", "label", g.title), box);
+  grid.append(row);
+}
+const tip = document.getElementById("tip");
+grid.addEventListener("pointerover", e => {
+  const c = e.target.closest(".cell");
+  if (!c) return;
+  const it = ITEMS[c.dataset.id];
+  tip.replaceChildren(el("small", null, `${LEVEL_LABEL[it.level]} · ${state.checked[it.id] ? "済み" : "まだ"}`), it.title);
+  tip.hidden = false;
+  const r = c.getBoundingClientRect();
+  tip.style.left = Math.min(r.left, innerWidth - 296) + "px";
+  tip.style.top = r.bottom + 10 + "px";
+});
+grid.addEventListener("pointerout", e => { if (e.target.closest(".cell")) tip.hidden = true; });
+addEventListener("scroll", () => (tip.hidden = true), { passive: true });
+grid.addEventListener("click", e => {
+  const c = e.target.closest(".cell");
+  if (!c) return;
+  const it = ITEMS[c.dataset.id];
+  if (it.level > state.level) setLevel(it.level);
+  if (state.todo && state.checked[it.id]) { state.todo = false; save(); update(); }
+  const row = document.querySelector(`.row[data-id="${it.id}"]`);
+  if (row.hidden) return;
+  row.scrollIntoView({ block: "center", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+  row.querySelector("input").focus({ preventScroll: true });
+});
+
+function paintMap(all, done, l1Done, l1Total, shown) {
+  const rel = new Set(all.map(i => i.id));
+  for (const g of CATEGORIES) {
+    const items = g.items.filter(i => rel.has(i.id));
+    const row = grid.querySelector(`[data-g="${g.id}"]`);
+    row.classList.toggle("na", !items.length);
+    row.classList.toggle("complete", items.length > 0 && items.every(i => state.checked[i.id]));
+  }
+  for (const [id, c] of Object.entries(cells)) {
+    c.classList.toggle("na", !rel.has(id));
+    c.classList.toggle("out", rel.has(id) && ITEMS[id].level > state.level);
+    c.classList.toggle("done", rel.has(id) && !!state.checked[id]);
+  }
+  document.getElementById("map-count").textContent = all.length;
+  document.getElementById("map-stat").replaceChildren(el("b", null, done), ` / ${all.length} 済み · まずやる ${l1Done}/${l1Total}`);
+  document.getElementById("segs").replaceChildren(...shown.map(i => el("i", state.checked[i.id] ? "on" : "")));
+  // 1 で選んだものを、設定ファイルのように 1 行で見せる
+  const count = Object.values(ITEMS).filter(i => !i.when.length || i.when.some(t => state.traits.includes(t))).length;
+  document.getElementById("query").replaceChildren(el("span", "k", "selected"), " = [", el("span", "v", state.traits.join(", ")), "]  ", el("span", "r", `→ ${count} / ${Object.keys(ITEMS).length} 項目`));
+}
+
+// チェックしたときに、左下へログを流す
+const log = document.getElementById("log");
+function logCheck(id, checked) {
+  const p = el("p", checked ? "" : "undo");
+  p.append(el("b", null, checked ? "✓ done " : "↺ undo "), ` ${LEVEL_LABEL[ITEMS[id].level]}  ${ITEMS[id].title}`);
+  log.append(p);
+  while (log.children.length > 4) log.firstChild.remove();
+  setTimeout(() => p.remove(), 3500);
+  const c = cells[id];
+  c.classList.remove("pulse");
+  void c.offsetWidth;
+  if (checked) c.classList.add("pulse");
+}
+
+const wide = matchMedia("(min-width: 761px)");
+const points = document.querySelectorAll(".point");
+const syncPoints = () => points.forEach(d => { d.open = wide.matches; d.querySelector("summary").tabIndex = wide.matches ? -1 : 0; });  // 広い画面では常に開いていて、押しても何も起きないので、Tab で止めない
+syncPoints();
+wide.addEventListener("change", syncPoints);
+points.forEach(d => d.querySelector("summary").addEventListener("click", e => { if (wide.matches) e.preventDefault(); }));
+
+const sourceList = document.getElementById("source-list");
+for (const { title, picks } of RECOMMENDED) {
+  const box = el("div", "source-kind card");
+  const ul = el("ul");
+  for (const { source, reason } of picks) {
+    const li = el("li");
+    li.append(link(SOURCES[source].title, SOURCES[source].url), el("span", "reason", reason));
+    ul.append(li);
+  }
+  box.append(el("h3", null, title), ul);
+  sourceList.append(box);
+}
+
+document.getElementById("levels").append(...LEVELS.map(({ level: lv, label, description: text }) => {
+  const li = el("li");
+  li.append(el("span", "lv lv" + lv, label), text);
+  return li;
+}));
+// Tab・Shift+Tab で移った先が、上に貼りついた進み具合の帯に隠れないよう、帯の下までずらす
+addEventListener("focusin", e => requestAnimationFrame(() => {
+  const bar = document.querySelector(".toolbar");
+  if (bar.contains(e.target) || bar.getBoundingClientRect().top > 1) return;  // 貼りついていないあいだは、ずらさない
+  const gap = e.target.getBoundingClientRect().top - bar.getBoundingClientRect().bottom - 16;
+  if (gap < 0) scrollBy(0, gap);
+}));
+// 矢印キーでも、同じ種類のものを順に移れるようにする。Tab は今までどおり、止まる場所は変えない
+const ARROWS = [
+  { items: ".judge input", prev: ["ArrowUp"], next: ["ArrowDown"] },                                       // 点検の項目
+  { items: "#traits input", prev: ["ArrowUp", "ArrowLeft"], next: ["ArrowDown", "ArrowRight"] },           // 当てはまるもの
+  { items: ".filter button", prev: ["ArrowUp", "ArrowLeft"], next: ["ArrowDown", "ArrowRight"] },          // 表示する優先度
+  { items: "#chips a", prev: ["ArrowLeft"], next: ["ArrowRight"] },                                        // カテゴリ
+];
+addEventListener("keydown", e => {
+  if (e.altKey || e.ctrlKey || e.metaKey || e.shiftKey || e.isComposing) return;
+  const rule = ARROWS.find(r => e.target.matches?.(r.items) && [...r.prev, ...r.next].includes(e.key));
+  if (!rule) return;
+  const list = [...document.querySelectorAll(rule.items)].filter(n => n.getClientRects().length);  // 隠れているものは飛ばす
+  const to = list[list.indexOf(e.target) + (rule.next.includes(e.key) ? 1 : -1)];
+  e.preventDefault();  // 矢印でページが動かないように
+  to?.focus();
+});
+// チェックボックスは、Space だけでなく Enter でも切り替えられるようにする
+addEventListener("keydown", e => {
+  if (e.key !== "Enter" || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey || e.isComposing) return;
+  if (!e.target.matches?.(".judge input, #traits input, #todo-only")) return;
+  e.preventDefault();
+  e.target.click();
+});
+// カテゴリの帯を Tab で通り抜けずに、いちばん上の項目のチェックボックスへ移る
+document.getElementById("skip-items").addEventListener("click", e => {
+  const first = [...document.querySelectorAll(".judge input")].find(i => i.getClientRects().length);
+  if (!first) return;  // 項目が 1 つもないときは、リンクの移動（#groups）に任せる
+  e.preventDefault();
+  first.focus();
+});
+const setLevel = lv => { state.level = lv; save(); update(); };
+const filterButtons = document.querySelectorAll(".filter button");
+filterButtons.forEach(b => b.addEventListener("click", () => setLevel(Number(b.dataset.level))));
+const todoOnly = document.getElementById("todo-only");
+todoOnly.addEventListener("change", () => { state.todo = todoOnly.checked; save(); update(); });
+document.getElementById("more-btn").addEventListener("click", () => {
+  const lv = state.level + 1;
+  setLevel(lv);
+  // 新しく出た項目のうち、いちばん上のものまで戻る。カテゴリの最初の項目なら、見出しから見せる
+  const row = [...document.querySelectorAll(".row")].find(r => !r.hidden && ITEMS[r.dataset.id].level === lv);
+  if (!row) return;
+  const sec = row.closest(".group");
+  const target = sec.querySelector(".row:not([hidden])") === row ? sec : row;
+  // 移る距離が長いので、手前まではすぐに移り、最後の少しだけ滑らかに上がって、戻ったことを目で追えるようにする
+  const top = target.getBoundingClientRect().top + scrollY - document.querySelector(".toolbar").offsetHeight - 16;
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) { scrollTo({ top }); }
+  else {
+    scrollTo({ top: top + 240 });
+    scrollTo({ top, behavior: "smooth" });
+    setTimeout(() => { if (Math.abs(scrollY - top) > 2) scrollTo({ top }); }, 800);  // 滑らかに動かなかったときも、最後は必ず合わせる
+  }
+  row.querySelector("input").focus({ preventScroll: true });
+});
+
+const TRAIT_LABEL = Object.fromEntries(CONDITIONS.map(c => [c.id, c.label]));
+state.traits = state.traits || [];
+// profile: null はまだ選んでいない（すべて表示）、"all" はすべて表示を選んだ、"filtered" は絞り込み中
+state.profile = state.profile || null;
+let editing = false;
+
+const traitsEl = document.getElementById("traits");
+for (const title of new Set(CONDITIONS.map(c => c.group))) {
+  const fs = el("fieldset", "trait-group");
+  const wrap = el("div", "trait-list");
+  for (const { id, label } of CONDITIONS.filter(c => c.group === title)) {
+    const lab = el("label", "trait");
+    const cb = el("input");
+    cb.type = "checkbox";
+    cb.id = "t-" + id;
+    cb.value = id;
+    cb.checked = state.traits.includes(id);
+    cb.addEventListener("change", () => {
+      state.traits = [...traitsEl.querySelectorAll("input:checked")].map(c => c.value);
+      save();
+      update();
+    });
+    lab.append(cb, el("span", null, label));
+    wrap.append(lab);
+  }
+  fs.append(el("legend", null, title), wrap);
+  traitsEl.append(fs);
+}
+// 押したボタンは隠れるので、キーボードで操作している人の focus が消えないよう、移った先の見出しに移す
+const goStep2 = () => { const h = document.getElementById("step2"); h.scrollIntoView(); h.focus({ preventScroll: true }); };
+document.getElementById("apply-profile").addEventListener("click", () => { state.profile = "filtered"; editing = false; save(); update(); goStep2(); });
+document.getElementById("show-all").addEventListener("click", () => { state.profile = "all"; editing = false; save(); update(); goStep2(); });
+document.getElementById("edit-profile").addEventListener("click", () => { editing = true; update(); const h = document.getElementById("step1-title"); h.scrollIntoView(); h.focus({ preventScroll: true }); });
+
+function relevant(it) {
+  if (state.profile !== "filtered" || !it.when.length) return true;
+  return it.when.some(t => state.traits.includes(t));
+}
+
+function visible(it) {
+  return relevant(it) && it.level <= state.level && !(state.todo && state.checked[it.id]);
+}
+
+let currentGroup = null;
+
+const isClear = () => { const s = Object.values(ITEMS).filter(i => relevant(i) && i.level <= state.level); return s.length > 0 && s.every(i => state.checked[i.id]); };
+const clearTitle = (shown, next) => next ? `「${LEVEL_LABEL[state.level]}」${state.level > 1 ? "まで" : ""}の ${shown.length} 項目が、すべて済みました` : `${state.profile === "filtered" ? "当てはまる " : ""}${shown.length} 項目が、すべて済みました`;
+
+// 表示している項目がすべて済んだ瞬間に、進み具合のバーを光らせ、ログとまとめを出す
+function celebrate() {
+  const segs = document.getElementById("segs");
+  [...segs.children].forEach((s, i) => s.style.setProperty("--i", i));
+  segs.classList.add("sweep");
+  const box = document.getElementById("clear");
+  box.classList.remove("pop"); void box.offsetWidth; box.classList.add("pop");
+  const p = el("p", "all-clear");
+  p.append(el("b", null, "★ all clear "), ` ${box.querySelector("h3").textContent}`);
+  log.append(p);
+  setTimeout(() => p.remove(), 5000);
+  document.getElementById("clear-say").textContent = box.querySelector("h3").textContent;
+}
+
+function update() {
+  const total = Object.values(ITEMS);
+  const all = total.filter(relevant);
+  const shown = all.filter(i => i.level <= state.level);  // 進み具合の母数は、表示しているレベルまでの項目
+  const isDone = i => !!state.checked[i.id];
+  const l1 = all.filter(i => i.level === 1);
+  const l1Done = l1.filter(isDone).length;
+  const text = document.getElementById("progress-text");
+  text.replaceChildren(el("b", null, `${shown.filter(isDone).length} / ${shown.length}`), " 項目が済み");
+
+  // STEP 1 の表示
+  const showBox = state.profile === null || editing;
+  document.getElementById("profile").hidden = !showBox;
+  document.getElementById("profile-summary").hidden = showBox;
+  const picked = CONDITIONS.filter(c => state.traits.includes(c.id));
+  document.getElementById("profile-count").textContent = state.profile === "filtered" ? `${total.length} 項目のうち ${all.length} 項目` : `${total.length} 項目すべて`;
+  const list = document.getElementById("profile-list");
+  if (state.profile !== "filtered") list.replaceChildren(el("p", "summary-note", "選ばずに、すべての項目を表示しています。"));
+  else if (!picked.length) list.replaceChildren(el("p", "summary-note", "何も選んでいないので、どのプロジェクトにも関係する項目だけを表示しています。"));
+  else list.replaceChildren(...[...new Set(picked.map(c => c.group))].map(group => {
+    const row = el("div", "summary-row");
+    const tags = el("ul", "summary-tags");
+    tags.append(...picked.filter(c => c.group === group).map(c => el("li", null, c.label)));
+    row.append(el("span", "summary-group", group), tags);
+    return row;
+  }));
+  document.getElementById("apply-profile").textContent = editing ? "この内容で絞り込み直す" : "この内容で点検表を作る";
+
+  filterButtons.forEach(b => b.setAttribute("aria-pressed", String(Number(b.dataset.level) === state.level)));
+  todoOnly.checked = state.todo;
+  let anyVisible = false;
+  const chips = document.getElementById("chips");
+  chips.replaceChildren();
+  for (const g of CATEGORIES) {
+    const sec = document.getElementById(g.id);
+    const items = g.items.filter(i => relevant(i) && i.level <= state.level);
+    if (!items.length) { sec.hidden = true; continue; }
+    const n = items.filter(i => state.checked[i.id]).length;
+    const li = el("li");
+    const a = el("a", n === items.length ? "done" : "");
+    a.href = "#" + g.id;
+    a.setAttribute("aria-current", String(g.id === currentGroup));
+    a.append(el("span", null, g.title), el("span", "n", `${n}/${items.length}`));
+    li.append(a);
+    chips.append(li);
+    sec.querySelector(".count").textContent = `${n} / ${items.length} 済み`;
+    sec.querySelector(".gbar > span").style.width = (n / items.length * 100) + "%";
+    let groupVisible = false;
+    for (const row of sec.querySelectorAll(".row")) {
+      const it = ITEMS[row.dataset.id];
+      row.classList.toggle("checked", !!state.checked[it.id]);
+      row.hidden = !visible(it);
+      groupVisible ||= !row.hidden;
+    }
+    sec.hidden = !groupVisible;
+    anyVisible ||= groupVisible;
+  }
+  const clear = shown.length > 0 && shown.every(isDone);
+  document.getElementById("empty").hidden = anyVisible || clear;
+  const filtered = state.profile === "filtered" && (state.traits.includes("public") || state.traits.includes("private"));
+  document.querySelectorAll("[data-repo]").forEach(c => (c.hidden = filtered && !state.traits.includes(c.dataset.repo)));
+  document.querySelectorAll(".n-all").forEach(n => (n.textContent = total.length));
+  // 次の優先度へ進むボタン
+  const next = all.filter(i => i.level === state.level + 1).length;
+  document.getElementById("more").hidden = !next;
+  document.getElementById("more-btn").textContent = `「${LEVEL_LABEL[state.level + 1]}」の項目も見る（あと ${next} 項目）`;
+  const box = document.getElementById("clear");
+  box.hidden = !clear;
+  if (clear) {
+    const date = state.cleared?.[state.level];
+    const head = el("p", "clear-head", "✓ all clear");
+    if (date) head.append(el("span", null, `${date} に完了`));
+    box.replaceChildren(head, el("h3", null, clearTitle(shown, next)));
+    if (!next) {  // すべて済んだときは、このあとどうするかも書く。次の優先度があるときは、すぐ下のボタンで足りる
+      const a = el("a", null, "毎週の自動点検");
+      a.href = "#auto";
+      const body = el("p");
+      body.append("おつかれさまでした。設定は、人の出入りや依存の更新で少しずつ崩れていきます。", a, "で見守るか、半年ほどしたら、もう一度この点検表を開いてください。");
+      box.append(body);
+    }
+  }
+  paintMap(all, all.filter(isDone).length, l1Done, l1.length, shown);
+}
+
+if ("IntersectionObserver" in window) {
+  const io = new IntersectionObserver(entries => {
+    for (const e of entries) {
+      if (!e.isIntersecting) continue;
+      currentGroup = e.target.id;
+      document.querySelectorAll("#chips a").forEach(a => a.setAttribute("aria-current", String(a.hash === "#" + currentGroup)));
+    }
+  }, { rootMargin: "-160px 0px -60% 0px" });
+  document.querySelectorAll(".group").forEach(g => io.observe(g));
+}
+
+// 「AI に相談する」の相談文。STEP 1 で選んだものと、チェックの状態から作る
+function buildPrompt() {
+  const items = Object.values(ITEMS).filter(relevant);
+  const todo = items.filter(i => !state.checked[i.id]);
+  const done = items.filter(i => state.checked[i.id]);
+  const category = id => CATEGORIES.find(g => g.items.some(i => i.id === id)).title;
+  const picked = state.profile === "filtered"
+    ? state.traits.map(t => TRAIT_LABEL[t]).join("、") || "（選んでいない）"
+    : "（まだ選んでいない。すべての項目を対象にしている）";
+  // 公開／非公開のどちらかを選んでいれば、選んだほうの手段だけを入れる（ページの表示と同じ）
+  const repoPicked = state.profile === "filtered" && (state.traits.includes("public") || state.traits.includes("private"));
+  const showPublic = !repoPicked || state.traits.includes("public");
+  const showPrivate = !repoPicked || state.traits.includes("private");
+  const lines = [
+    "個人開発や小さなチームのセキュリティについて相談させてください。下の「点検表」は、よくある穴を減らすための目安です（安全を保証するものではありません）。",
+    "",
+    "## 私のプロジェクト",
+    `- 使っているもの: ${picked}`,
+    "- 補足: （ここにプロジェクトの説明を書き足す。キーやパスワード、利用者の個人情報は書かない）",
+    "",
+    "## お願い",
+    "1. まだ済んでいない項目のうち、「まずやる」から順に、最初に取り組むべきものを 3 つ選び、私のプロジェクトでの具体的な手順を教えてください",
+    "2. 私の説明から、点検表に載っていない危ない点があれば指摘してください",
+    "3. わからないことは推測せず、私に質問してください",
+    "",
+    `## まだ済んでいない項目（${todo.length} 項目）`,
+  ];
+  for (const { level: lv, label, description: desc } of LEVELS) {
+    const list = todo.filter(i => i.level === lv);
+    if (!list.length) continue;
+    lines.push("", `### ${label}（${desc}）`);
+    for (const it of list) {
+      const how = it.how.map(u => u.command ? "`" + u.command.replace(/\s*\\\n\s*/g, " ") + "`" : u.url ? `${u.title}（${u.url}）` : u.text);
+      lines.push(`- [ ] ${it.title}（${category(it.id)}）`, `  - 放っておくと: ${it.risk}`);
+      if (!it.how_for_private_repos || showPublic) lines.push(`  - ${it.how_for_private_repos ? "公開リポジトリなら" : "使えるもの"}: ${how.join(" / ")}`);
+      if (it.how_for_private_repos && showPrivate) lines.push(`  - 非公開リポジトリなら: ${it.how_for_private_repos.text}`);
+    }
+  }
+  if (done.length) lines.push("", `## 済んだ項目（${done.length} 項目）`, ...done.map(i => `- [x] ${i.title}`));
+  return lines.join("\n");
+}
+const promptPre = document.getElementById("prompt-preview");
+promptPre.closest("details").addEventListener("toggle", e => { if (e.target.open) promptPre.textContent = buildPrompt(); });
+document.getElementById("copy-prompt").addEventListener("click", () => {
+  const text = buildPrompt();
+  promptPre.textContent = text;
+  const status = document.getElementById("copy-status");
+  const fallback = () => {
+    promptPre.closest("details").open = true;
+    const r = document.createRange(); r.selectNodeContents(promptPre);
+    const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r);
+    status.textContent = "選択しました。コピーしてください";
+  };
+  try {
+    navigator.clipboard.writeText(text).then(() => (status.textContent = "コピーしました。AI に貼り付けて、補足を書き足してください"), fallback);
+  } catch (e) { fallback(); }
+});
+
+const reset = document.getElementById("reset");
+let armed = null;
+reset.addEventListener("click", () => {
+  if (!armed) {
+    reset.textContent = "もう一度押すと、すべて外します";
+    armed = setTimeout(() => { armed = null; reset.textContent = "チェックをすべて外す"; }, 3000);
+    return;
+  }
+  clearTimeout(armed); armed = null;
+  state.checked = {}; save();
+  document.querySelectorAll(".judge input").forEach(c => (c.checked = false));
+  reset.textContent = "すべて外しました";
+  setTimeout(() => (reset.textContent = "チェックをすべて外す"), 1600);
+  update();
+});
+
+update();
+// 項目は描画後に作られるので、#deps などのリンクで開いたときはここで移動する
+const target = location.hash && document.getElementById(location.hash.slice(1));
+if (target) target.scrollIntoView();
+
+// 見出しを 1 文字ずつ打つ。読み上げには元の文をそのまま渡す
+const q = document.getElementById("question");
+const said = q.textContent;
+const typed = el("span");
+typed.setAttribute("aria-hidden", "true");
+const chars = [];
+for (const node of [...q.childNodes]) {
+  if (node.nodeType !== 3) { typed.append(node); continue; }
+  for (const ch of node.textContent) { const s = el("span", "ch", ch); chars.push(s); typed.append(s); }
+}
+// カーソルは、打つ前も打っているあいだも出さず、打ち終えてから、Enter を待つように末尾で点滅する
+const caret = el("span", "caret typing");
+typed.prepend(caret);
+q.replaceChildren(el("span", "sr", said), typed);
+q.classList.add("ready");
+let ci = 0;
+const typeNext = () => {
+  chars[ci].classList.add("on");
+  chars[ci].after(caret);
+  if (++ci < chars.length) setTimeout(typeNext, 55);
+  else caret.classList.remove("typing");
+};
+if (matchMedia("(prefers-reduced-motion: reduce)").matches) { chars.forEach(c => c.classList.add("on")); caret.classList.remove("typing"); typed.append(caret); }
+else setTimeout(typeNext, 600);
+setTimeout(() => grid.classList.add("ready"), 1700);
+
+// 表紙が見えているあいだは、どこも選んでいなくても Enter で点検をはじめる（ボタンの ↵ のとおり）
+const start = document.querySelector(".cta .btn");
+addEventListener("keydown", e => {
+  if (e.key !== "Enter" || e.isComposing || document.activeElement !== document.body || start.getBoundingClientRect().bottom < 0) return;
+  start.click();
+});
+</script>
+</body>
+</html>

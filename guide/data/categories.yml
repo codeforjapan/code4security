@@ -1,0 +1,13 @@
+# カテゴリの並び順。各カテゴリの中身は items/<id>/ にある
+- inventory
+- access
+- secrets
+- deps
+- code
+- auth
+- input
+- storage
+- privacy
+- infra
+- ci
+- response

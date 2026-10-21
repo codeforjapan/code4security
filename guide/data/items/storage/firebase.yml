@@ -1,0 +1,13 @@
+id: firebase
+level: 1
+title: Firebase のセキュリティルールが、誰でも読み書きできる設定になっていない
+when: [firebase]
+risk: '試作のときの allow read, write: if true; が本番に残っていると、プロジェクトの ID を知っている誰でも、登録された個人情報を全件読んだり書き換えたりできます。ID はページを開けば見えます。ログインしていれば誰でも許す if request.auth != null; も、アカウントを作れば誰でも全件を読めるので同じです。'
+why: ルールで「本人のデータだけ」に絞れば、アプリを通さない直接のアクセスも防げます。ルールは文書ごとに読み書きを許すので、文書の一部の項目だけを隠すことはできません。ほかの人にも見せる文書に、メールアドレスなど本人だけが見る項目を混ぜず、別の文書に分けます。
+how:
+  - text: Firebase コンソールのルール画面と、エミュレータでのルールのテスト
+related: [firebaseChecklist, firebaseInsecure, firebaseTest, firestoreFields]
+evidence:
+  - source: firestoreFields
+    checked: '2026-10-15'
+    note: 文書の一部の項目だけを隠したいときは、別の文書に分ける

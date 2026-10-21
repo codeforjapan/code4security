@@ -1,0 +1,9 @@
+# カテゴリの名前・説明と、項目の並び順（items/storage/<id>.yml）
+title: データベースとストレージ
+lead: 漏えいの多くは、コードではなく「データが誰から見えるか」の設定で起きます。
+items:
+  - dbnet
+  - backup
+  - firebase
+  - supabase
+  - share

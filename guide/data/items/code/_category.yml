@@ -1,0 +1,5 @@
+# カテゴリの名前・説明と、項目の並び順（items/code/<id>.yml）
+title: コード
+items:
+  - codeql
+  - aireview

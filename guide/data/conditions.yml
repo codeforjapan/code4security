@@ -1,0 +1,70 @@
+# 当てはまるものの選択肢。項目の when から id で指す。group ごとにまとめて表示する
+- id: org
+  group: GitHub とチーム
+  label: GitHub の organization（org）で運営している
+- id: team
+  group: GitHub とチーム
+  label: 複数人で開発している
+- id: public
+  group: GitHub とチーム
+  label: 公開リポジトリがある
+- id: private
+  group: GitHub とチーム
+  label: 非公開リポジトリがある
+- id: actions
+  group: GitHub とチーム
+  label: GitHub Actions を使っている
+- id: frontend
+  group: 作っているもの
+  label: ブラウザで動く画面（Next.js・Vite など）
+- id: auth
+  group: 作っているもの
+  label: ログイン機能
+- id: form
+  group: 作っているもの
+  label: 入力フォーム（問い合わせ・申込など）
+- id: ugc
+  group: 作っているもの
+  label: 利用者の投稿をほかの人にも見せる機能
+- id: upload
+  group: 作っているもの
+  label: ファイルのアップロード
+- id: ai
+  group: 作っているもの
+  label: 生成 AI を使った機能
+- id: publish
+  group: 作っているもの
+  label: npm や PyPI に公開しているパッケージ
+- id: deps
+  group: 使っているもの
+  label: npm や pip などの外部パッケージ
+- id: db
+  group: 使っているもの
+  label: データベース
+- id: firebase
+  group: 使っているもの
+  label: Firebase
+- id: supabase
+  group: 使っているもの
+  label: Supabase
+- id: paidapi
+  group: 使っているもの
+  label: 従量課金の API（地図・生成 AI・メール送信など）
+- id: deploy
+  group: 使っているもの
+  label: Vercel・Netlify・クラウドなどのホスティング
+- id: server
+  group: 使っているもの
+  label: 自前のサーバー（VPS など）
+- id: domain
+  group: 使っているもの
+  label: 独自ドメイン
+- id: pii
+  group: 扱うデータ
+  label: 氏名や連絡先などの個人情報
+- id: sensitive
+  group: 扱うデータ
+  label: 健康・福祉・子どもなど、特に配慮が必要な情報
+- id: share
+  group: 扱うデータ
+  label: スプレッドシートやクラウドストレージで共有しているデータ

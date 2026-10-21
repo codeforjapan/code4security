@@ -1,0 +1,17 @@
+id: admins
+level: 2
+title: organization の基本権限を Read 以下にし、Owner を必要な人だけにした
+when: [org]
+risk: Owner は organization の削除や設定の変更、シークレットの差し替えまでできます。Owner が多いほど、そのうち誰かが乗っ取られる可能性が上がります。メンバーが非公開リポジトリをうっかり公開に切り替えると、履歴に残ったキーや個人情報がまとめて見えるようになります。
+why: 普段の作業は書き込み権限で足ります。Owner を絞れば、1 人が乗っ取られたときの被害を小さくできます。
+how:
+  - command: gh api --paginate 'orgs/<org>/members?role=admin' --jq '.[].login'
+  - text: Settings → Member privileges で「Repository visibility change」と「Repository deletion and transfer」のメンバーへの許可を外すと、公開範囲の変更と、リポジトリの削除・移譲を Owner だけにできます。
+related: [ghDataLeaks, ghVisibility, ghDeleteTransfer]
+evidence:
+  - source: ghVisibility
+    checked: '2026-10-15'
+    note: Member privileges で、メンバーによる公開範囲の変更を止められる
+  - source: ghDeleteTransfer
+    checked: '2026-10-15'
+    note: リポジトリの削除と移譲を、Owner だけにできる

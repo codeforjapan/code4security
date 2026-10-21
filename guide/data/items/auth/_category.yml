@@ -1,0 +1,6 @@
+# カテゴリの名前・説明と、項目の並び順（items/auth/<id>.yml）
+title: ログイン機能
+lead: ログイン画面があることと、データが守られていることは別の話です。
+items:
+  - authz
+  - authimpl

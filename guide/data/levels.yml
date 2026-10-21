@@ -1,0 +1,10 @@
+# 優先度。画面には番号ではなく label を出す
+- level: 1
+  label: まずやる
+  description: 被害が大きく、手間の少ないもの
+- level: 2
+  label: 次にやる
+  description: 続けて運用していくなら
+- level: 3
+  label: 余裕ができたら
+  description: 利用者や関わる人が増えてきたら

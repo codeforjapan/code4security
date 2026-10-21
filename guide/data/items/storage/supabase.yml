@@ -1,0 +1,24 @@
+id: supabase
+level: 1
+title: Supabase で公開しているスキーマ（public など）の全テーブルに RLS（行ごとのアクセス制御）を有効にし、ビューにも効かせた
+when: [supabase]
+risk: RLS が無効なテーブルは、ブラウザに埋め込まれた publishable キー（旧 anon キー）を使えば、誰でも全件を読み書きできます。このキーはページを開けば見えます。
+why: RLS を有効にしてポリシーを書けば、キーが見えていても許可した行しか読めません。secret キー（旧 service_role キー）は RLS を無視するので、ブラウザのコードや NEXT_PUBLIC_ の変数には入れません。
+how:
+  - text: ダッシュボードの Security Advisor
+  - text: ビューは、既定では RLS を通らずに全行を返します。Postgres 15 以上なら、with (security_invoker = true) を付けて作ります。
+  - text: RLS が守るのは行だけです。ほかの人にも見せる行に、メールアドレスなど本人だけが見る列を混ぜず、別のテーブルに分けます。
+  - text: anon と service_role のキーは 2026 年末までに廃止される予定なので、publishable と secret のキーに移ります。
+related: [supabaseRls, supabaseAdvisors, supabaseKeys, supabaseColumns]
+evidence:
+  - source: supabaseRls
+    checked: '2026-10-15'
+    note: ビューは既定で RLS を通らない。Postgres 15 以上は security_invoker = true で通す
+  - source: supabaseKeys
+    checked: '2026-10-15'
+    note: anon と service_role のキーは、2026 年末までに廃止される予定
+  - source: supabaseColumns
+    checked: '2026-10-15'
+    note: RLS は行の単位で制御する
+mappings:
+  - OWASP Top 10:2025 A01 Broken Access Control
