@@ -54,6 +54,6 @@
 ## ライセンス
 
 - 文章とデータ（`data/` の YAML、公開している `checklist.md`・`checklist.json`・`llms.txt`、`ogp.png`）：[CC BY 4.0](LICENSE-CONTENT.md)
-- コード（`index.html`、`export.js`、`ogp.html`、`.github/` のワークフロー）：[MIT](LICENSE)
+- コード（`index.html`、`export.js`、`ogp.html`）：[MIT](LICENSE)
 
-出典を示せば、自由に使ったり変えたりできます。出典の示し方の例：「はじめてのセキュリティ点検（https://yokinist.github.io/first-security-checkup/）、CC BY 4.0」
+出典を示せば、自由に使ったり変えたりできます。出典の示し方の例：「はじめてのセキュリティ点検（https://github.com/codeforjapan/code4security/tree/main/guide）、CC BY 4.0」

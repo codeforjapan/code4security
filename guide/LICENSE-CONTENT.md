@@ -8,6 +8,6 @@
 
 出典の示し方の例：
 
-> はじめてのセキュリティ点検（https://yokinist.github.io/first-security-checkup/）、CC BY 4.0
+> はじめてのセキュリティ点検（https://github.com/codeforjapan/code4security/tree/main/guide）、CC BY 4.0
 
 ライセンスの正式な文は [CC BY 4.0 の利用許諾](https://creativecommons.org/licenses/by/4.0/legalcode.ja) を見てください。
