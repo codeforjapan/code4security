@@ -25,6 +25,8 @@ yokinist さんの許可をもらったうえで、両方を `codeforjapan/code4
 - コミット履歴を残して取り込む（`git merge --allow-unrelated-histories` でサブディレクトリへ）
 - 配置: `guide/`（first-security-checkup）、`checker/`（weekly-security-checker）
 - ライセンスは元のまま引き継ぐ: コードは MIT、`guide/data/` などの文章とデータは CC BY 4.0
+  - 元の著作者の表示を残すために、`guide/LICENSE`・`guide/LICENSE-CONTENT.md`・`checker/LICENSE` を消さずに置く。リポジトリ全体のライセンスと、パスごとの一覧は [ADR 0011](0011-license.md) で決める
+  - `guide/LICENSE-CONTENT.md` にある出典の示し方（題名・URL）を、取り込みのあとの名前と URL に合わせて直すかどうかは、yokinist さんと決める
 - 実装の言語をそろえるために、weekly-security-checker を TypeScript で書き直すかどうかは [ADR 0001](0001-implementation-language.md) で決める。書き直す場合も、取り込みは履歴を残して行い、書き直しはそのあとの PR にする
 - 元リポジトリの扱い（移転先の案内・アーカイブ）は yokinist さんと決める
 
@@ -65,3 +67,4 @@ yokinist さんの許可をもらったうえで、両方を `codeforjapan/code4
 - [ADR 0001: 実装の言語](0001-implementation-language.md)
 - [ADR 0003: v1 の範囲](0003-v1-scope.md)
 - [ADR 0005: スキーマ v2 と、利用者側に残すファイル](0005-schema-v2-and-project-state.md)
+- [ADR 0011: ライセンス](0011-license.md)

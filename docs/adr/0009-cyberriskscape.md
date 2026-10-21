@@ -81,3 +81,4 @@ v1（[ADR 0003](0003-v1-scope.md)）の 2 段階目では、点検表から脅�
 - [ADR 0003: v1 の範囲](0003-v1-scope.md)
 - [ADR 0005: スキーマ v2 と、利用者側に残すファイル](0005-schema-v2-and-project-state.md)
 - [ADR 0008: このリポジトリの防御](0008-repo-defense.md)
+- [ADR 0011: ライセンス](0011-license.md)
