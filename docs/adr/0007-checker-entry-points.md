@@ -43,13 +43,15 @@ lefthook と PR 時の確認は「ルーチンのツール」の置き場で、c
 | `verify: ask` | × | ○（エージェントがオーナーに聞く） |
 | 結果の出し先 | 非公開リポジトリの Issue | JSON（エージェントが `project.yml` を更新する）と、人向けの表示 |
 
+定期実行の列は、checker を TypeScript に移し終えたあとの形。それまでは、定期実行の checker は今の検知のまま動き、`verify` は使わない（[ADR 0001](0001-implementation-language.md)）。
+
 ### 3. 結果の形を 1 つにそろえる
 
 どちらの起動ルートも、項目 ID ごとに `pass` / `fail` / `unknown`（調べられなかった）と根拠を返す。Issue の起票と `project.yml` の更新は、この結果を受け取る側の仕事にする。
 
 ### 4. 手元のルートは、plugin の MCP サーバーのツールにする
 
-手元で確かめる入り口は、CLI ではなく MCP サーバーのツール（例: `verify_item`・`verify_all`）にする。`verify` を実行する処理は、定期実行の checker と同じものを使う（[ADR 0001](0001-implementation-language.md)）。
+手元で確かめる入り口は、CLI ではなく MCP サーバーのツール（例: `verify_item`・`verify_all`）にする。`verify` を実行する処理は、定期実行の checker と同じものを使う（[ADR 0001](0001-implementation-language.md)）。ただし、checker を TypeScript に移し終えるまでは、MCP サーバーだけが使う。
 
 ## 根拠
 
