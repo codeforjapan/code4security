@@ -1,5 +1,5 @@
 // data/ の YAML を読み、書き方を確かめてから、ページが読む data.js と checklist.json・checklist.md・llms.txt を書き出す: pnpm build
-// 公開のときは GitHub Actions（.github/workflows/pages.yml）が実行する。誤りがあればここで止まり、公開されない
+// PR と main では GitHub Actions（リポジトリ直下の .github/workflows/guide.yml）が実行する。誤りがあればここで止まる
 const fs = require("fs");
 const path = require("path");
 const yaml = require("js-yaml");
