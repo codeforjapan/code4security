@@ -2,12 +2,18 @@
 
 ## ステータス
 
-提案中
-<!-- yokinist さんの許可をもらってから承認済みにし、取り込みを実行する -->
+承認済み
 
 ## 日付
 
 2026-10-16
+
+## 決定の記録
+
+- 議論した場所: [PR #1](https://github.com/codeforjapan/code4security/pull/1)、取り込みの作業は [#17](https://github.com/codeforjapan/code4security/issues/17)・[#18](https://github.com/codeforjapan/code4security/issues/18)。yokinist さんの許可は、本人がこの ADR を承認済みにする PR を出したことで示す
+- 決定の場: この ADR を承認済みにする PR のレビュー
+- 承認者: 未定（レビューのあとに書く）
+- 承認日: 未定
 
 ## コンテキスト
 
@@ -26,9 +32,9 @@ yokinist さんの許可をもらったうえで、両方を `codeforjapan/code4
 - 配置: `guide/`（first-security-checkup）、`checker/`（weekly-security-checker）
 - ライセンスは元のまま引き継ぐ: コードは MIT、`guide/data/` などの文章とデータは CC BY 4.0
   - 元の著作者の表示を残すために、`guide/LICENSE`・`guide/LICENSE-CONTENT.md`・`checker/LICENSE` を消さずに置く。リポジトリ全体のライセンスと、パスごとの一覧は [ADR 0011](0011-license.md) で決める
-  - `guide/LICENSE-CONTENT.md` にある出典の示し方（題名・URL）を、取り込みのあとの名前と URL に合わせて直すかどうかは、yokinist さんと決める
-- 実装の言語をそろえるために、weekly-security-checker を TypeScript で書き直すかどうかは [ADR 0001](0001-implementation-language.md) で決める。書き直す場合も、取り込みは履歴を残して行い、書き直しはそのあとの PR にする
-- 元リポジトリの扱い（移転先の案内・アーカイブ）は yokinist さんと決める
+  - `guide/LICENSE-CONTENT.md` にある出典の示し方の URL は、取り込み先（`https://github.com/codeforjapan/code4security/tree/main/guide`）に直す（取り込みの PR で行う）。題名の「はじめてのセキュリティ点検」は変えない
+- weekly-security-checker は Python のまま取り込み、TypeScript へはそのあとの PR で小さく分けて移す（[#7](https://github.com/codeforjapan/code4security/issues/7)、[ADR 0001](0001-implementation-language.md)）
+- 元リポジトリは、README で移転先を案内してからアーカイブする。点検表のページ（`https://yokinist.github.io/first-security-checkup/`）は、このリポジトリから公開できるようになるまで残す
 
 ## 根拠
 
@@ -47,8 +53,8 @@ yokinist さんの許可をもらったうえで、両方を `codeforjapan/code4
 
 - 作者の意向と合わない形で取り込んでしまう
   - 緩和策: 取り込みの前に yokinist さんの許可をもらい、配置・ライセンスの表記・元リポジトリの扱い・TypeScript への書き直しをいっしょに決める
-- 元リポジトリの checker（`uses: yokinist/weekly-security-checker@...`）をすでに使っている人がいる
-  - 緩和策: 元リポジトリの README で移転先を案内し、一定期間は元のタグを残す
+- 元リポジトリの checker（`uses: yokinist/weekly-security-checker@...`）を使い始める人がいるかもしれない。2026-10-22 の時点で、公開リポジトリで使っているところは見つからず、作者も非公開のリポジトリで使っていない
+  - 緩和策: 元リポジトリの README で移転先を案内する。元のタグ（v0.1.0・v0.1.1）は消さず、アーカイブしたあとも呼べるようにしておく
 - リポジトリが大きくなり、変更が関係のない部分の CI まで動かす
   - 緩和策: ワークフローを `paths` で部分ごとに分ける
 
@@ -59,8 +65,10 @@ yokinist さんの許可をもらったうえで、両方を `codeforjapan/code4
 
 ## 今後の方向性
 
-- 許可をもらったら、取り込みを 1 つの PR で行い、このステータスを承認済みにする
-- checker を `uses: codeforjapan/code4security/checker@<sha>` で呼べるよう、`action.yml` の置き場所を合わせる
+- 取り込みは 1 つの PR で行い、マージは履歴が残る「Create a merge commit」で行う（Squash では元の履歴が消える）
+- checker は `checker/action.yml` に置き、`uses: codeforjapan/code4security/checker@<sha>` で呼べるようにする
+- 点検表のページをこのリポジトリの GitHub Pages から公開し、`guide/` と `checker/` の中にある元リポジトリへのリンクを付け替える。公開の設定にはリポジトリの管理者の操作が要る
+- 取り込んだ `guide/CONTRIBUTING.md`・`guide/SECURITY.md`・`checker/SECURITY.md`・`guide/.github/pull_request_template.md` を、リポジトリ直下の文書とまとめる
 
 ## 参考
 
