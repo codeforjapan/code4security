@@ -72,12 +72,12 @@
        runs-on: ubuntu-latest
        timeout-minutes: 15
        steps:
-         - uses: yokinist/weekly-security-checker@v0.1.1
+         - uses: codeforjapan/code4security/checker@314f2e782f8fdef3ac062a6eafd9cce4b07ac5c6
            with:
              scan-token: ${{ secrets.SCAN_TOKEN }}
    ```
 
-   タグは後から付け替えられるので、実際に使うときはコミットの SHA に固定するのがおすすめです（[pinact](https://github.com/suzuki-shunsuke/pinact) の `pinact run` で置き換えられます）。
+   `@` のあとは、checker を含むコミットの SHA です。タグと違って付け替えられないので、知らないうちに中身が変わりません。新しい版を使うときは、[checker の変更の履歴](https://github.com/codeforjapan/code4security/commits/main/checker) から SHA を選んで書き換えます。
 
 5. **試しに動かす**
 
