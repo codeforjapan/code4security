@@ -148,4 +148,4 @@ pnpm の版は `guide/package.json` で決めています（corepack を使う�
 
 ## 脆弱性の報告
 
-このリポジトリ自体のセキュリティ上の問題は、公開のイシューに書かず、[SECURITY.md](SECURITY.md) の手順で[非公開で報告](https://github.com/codeforjapan/code4security/security/advisories/new)してください。
+このリポジトリ自体のセキュリティ上の問題は、公開のイシューに書かず、[非公開で報告](https://github.com/codeforjapan/code4security/security/advisories/new)してください。
