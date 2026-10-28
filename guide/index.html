@@ -435,13 +435,13 @@ footer a { color: var(--soft); }
   <section class="auto narrow" id="auto" aria-labelledby="auto-title">
     <h2 class="sec-h" id="auto-title"><span class="num">03</span>毎週、自動で点検し続ける</h2>
     <div class="auto-body card">
-      <p class="trial"><span class="badge">試験運用中</span>動かしてみた感想や、うまく動かなかったことを <a href="https://github.com/yokinist/weekly-security-checker/issues">Issue</a> で教えてください。</p>
-      <p>危ないのは、いま触っているリポジトリより、動いたまま誰も見なくなったリポジトリです。そこで、アカウントや organization のリポジトリをまとめて毎週調べ、見つかった指摘を非公開のリポジトリの Issue にまとめる GitHub Action「<a href="https://github.com/yokinist/weekly-security-checker">weekly-security-checker</a>」を用意しました。同じ指摘は二重に立たず、直ると自動で閉じます。</p>
+      <p class="trial"><span class="badge">試験運用中</span>動かしてみた感想や、うまく動かなかったことを <a href="https://github.com/codeforjapan/code4security/issues">Issue</a> で教えてください。</p>
+      <p>危ないのは、いま触っているリポジトリより、動いたまま誰も見なくなったリポジトリです。そこで、アカウントや organization のリポジトリをまとめて毎週調べ、見つかった指摘を非公開のリポジトリの Issue にまとめる GitHub Action「<a href="https://github.com/codeforjapan/code4security/tree/main/checker">weekly-security-checker</a>」を用意しました。同じ指摘は二重に立たず、直ると自動で閉じます。</p>
       <p>調べるのは、依存パッケージの脆弱性、漏れたキー（コミット履歴も含む）、ワークフローの危ない書き方、そしてそれらを見つける機能が無効になっていないかです。</p>
       <h3 class="sub">使い方</h3>
       <ol class="how">
         <li>Issue を集める<b>非公開</b>のリポジトリを作ります。Issue に脆弱性の情報が載るためです</li>
-        <li>読み取り専用の fine-grained トークンを作り、そのリポジトリに <code>SCAN_TOKEN</code> として登録します。必要な権限は <a href="https://github.com/yokinist/weekly-security-checker#使い方">README</a> にあります</li>
+        <li>読み取り専用の fine-grained トークンを作り、そのリポジトリに <code>SCAN_TOKEN</code> として登録します。必要な権限は <a href="https://github.com/codeforjapan/code4security/tree/main/checker#使い方">README</a> にあります</li>
         <li>次のファイルを <code>.github/workflows/</code> に置きます</li>
       </ol>
       <div id="yaml"></div>
@@ -512,10 +512,10 @@ footer a { color: var(--soft); }
   </main>
 
   <footer>
-    <p class="foot-links"><a href="https://github.com/yokinist/first-security-checkup">ソースコード（GitHub）</a><a href="https://github.com/yokinist/first-security-checkup/issues">ご意見・誤りの報告</a><a href="checklist.md">文章だけの版</a><a href="checklist.json">JSON</a></p>
+    <p class="foot-links"><a href="https://github.com/codeforjapan/code4security/tree/main/guide">ソースコード（GitHub）</a><a href="https://github.com/codeforjapan/code4security/issues">ご意見・誤りの報告</a><a href="checklist.md">文章だけの版</a><a href="checklist.json">JSON</a></p>
     <p>この点検表は、よくある穴を減らすための目安です。すべての項目を満たしても、安全を保証するものではありません。個人情報を多く扱うときや、自治体などと契約して運用するときは、専門家による診断も検討してください。内容は 2026 年 10 月時点の情報です。</p>
     <p>内容の正確さや完全さは保証しません。この点検表を使ったことで生じた損害について、作者は責任を負いません。使うときは、公式の資料でも確かめてください。</p>
-    <p>調査と執筆に AI（Claude）を使っています。事実は資料を開いて確かめ、確かめた日を残していますが、誤りが含まれることがあります。誤りに気づいたら <a href="https://github.com/yokinist/first-security-checkup/issues">Issue</a> で教えてください。</p>
+    <p>調査と執筆に AI（Claude）を使っています。事実は資料を開いて確かめ、確かめた日を残していますが、誤りが含まれることがあります。誤りに気づいたら <a href="https://github.com/codeforjapan/code4security/issues">Issue</a> で教えてください。</p>
     <p>文章とデータは <a href="https://creativecommons.org/licenses/by/4.0/deed.ja">CC BY 4.0</a>、コードは MIT ライセンスで公開しています。出典を示せば、自由に使ったり変えたりできます。</p>
     <p class="eof" aria-hidden="true">— EOF —</p>
   </footer>

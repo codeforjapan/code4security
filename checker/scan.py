@@ -188,7 +188,7 @@ def finding(repo, kind, key, severity, title, what, where, fix, verify):
 {verify}
 
 ---
-<sub>[weekly-security-checker](https://github.com/yokinist/weekly-security-checker) が自動で起票・更新しています。直ると次回の実行で自動で閉じます。対応しないと決めたら「Close as not planned」で閉じてください（再発しても開き直しません）。</sub>
+<sub>[weekly-security-checker](https://github.com/codeforjapan/code4security/tree/main/checker) が自動で起票・更新しています。直ると次回の実行で自動で閉じます。対応しないと決めたら「Close as not planned」で閉じてください（再発しても開き直しません）。</sub>
 """
     return {"fp": fp, "repo": name, "title": f"[{short}] {title}", "body": body,
             "labels": [MARK, f"repo:{short}", f"severity:{severity}", f"kind:{kind}"]}

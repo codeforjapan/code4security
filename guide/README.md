@@ -16,9 +16,9 @@
 
 ## 毎週、自動で点検し続ける（試験運用中）
 
-点検表のうち、自動で調べられる部分（依存パッケージの脆弱性、漏れたキー、ワークフローの危ない書き方、それらを見つける機能が無効になっていないか）は、GitHub Action [weekly-security-checker](https://github.com/yokinist/weekly-security-checker) で毎週見張れます。アカウントや organization のリポジトリをまとめて調べ、指摘を非公開のリポジトリの Issue にまとめます。放置されたリポジトリほど危ないからです。
+点検表のうち、自動で調べられる部分（依存パッケージの脆弱性、漏れたキー、ワークフローの危ない書き方、それらを見つける機能が無効になっていないか）は、GitHub Action [weekly-security-checker](https://github.com/codeforjapan/code4security/tree/main/checker) で毎週見張れます。アカウントや organization のリポジトリをまとめて調べ、指摘を非公開のリポジトリの Issue にまとめます。放置されたリポジトリほど危ないからです。
 
-試験運用中なので、動かしてみた感想や、うまく動かなかったことを [weekly-security-checker の Issue](https://github.com/yokinist/weekly-security-checker/issues) で教えてください。
+試験運用中なので、動かしてみた感想や、うまく動かなかったことを [Issue](https://github.com/codeforjapan/code4security/issues) で教えてください。
 
 ## 文章だけで読む・ほかのツールで使う
 
@@ -43,13 +43,13 @@
 
 ## ご意見・誤りの報告
 
-点検項目の誤りや、足したほうがよい項目は [Issue](https://github.com/yokinist/first-security-checkup/issues) で教えてください。直す PR も歓迎します（[CONTRIBUTING.md](../CONTRIBUTING.md#点検項目の入り口guide)）。このページ自体のセキュリティ上の問題は、[SECURITY.md](../SECURITY.md) の手順で、公開せずに知らせてください。
+点検項目の誤りや、足したほうがよい項目は [Issue](https://github.com/codeforjapan/code4security/issues) で教えてください。直す PR も歓迎します（[CONTRIBUTING.md](../CONTRIBUTING.md#点検項目の入り口guide)）。このページ自体のセキュリティ上の問題は、[SECURITY.md](../SECURITY.md) の手順で、公開せずに知らせてください。
 
 ## 作り方と免責
 
 調査と執筆、コードづくりに、Anthropic の AI「Claude」を使っています。事実（設定の名前、プラン、既定の値など）は資料を開いて確かめ、確かめた日を各項目の `evidence` に残していますが、誤りが含まれることがあります。
 
-この点検表は、情報の提供を目的としたものです。内容の正確さや完全さは保証しません。この点検表を使ったことで生じた損害について、作者は責任を負いません。使うときは、公式の資料でも確かめてください。誤りに気づいたら [Issue](https://github.com/yokinist/first-security-checkup/issues) で教えてください。
+この点検表は、情報の提供を目的としたものです。内容の正確さや完全さは保証しません。この点検表を使ったことで生じた損害について、作者は責任を負いません。使うときは、公式の資料でも確かめてください。誤りに気づいたら [Issue](https://github.com/codeforjapan/code4security/issues) で教えてください。
 
 ## ライセンス
 

@@ -3,7 +3,7 @@
 アカウントや organization のリポジトリを毎週まとめて調べ、セキュリティの指摘を、非公開のリポジトリの Issue にまとめる GitHub Action です。
 
 > [!NOTE]
-> **試験運用中です。** 動かしてみた感想や、うまく動かなかったこと、足してほしい点検を [Issue](https://github.com/yokinist/weekly-security-checker/issues) で教えてください。
+> **試験運用中です。** 動かしてみた感想や、うまく動かなかったこと、足してほしい点検を [Issue](https://github.com/codeforjapan/code4security/issues) で教えてください。
 
 点検表のページ「[はじめてのセキュリティ点検](https://yokinist.github.io/first-security-checkup/)」のうち、自動で調べられる部分を見張り続けるためのものです。
 

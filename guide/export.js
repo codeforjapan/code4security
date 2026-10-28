@@ -186,7 +186,7 @@ write("llms.txt", [
   `- [点検表（Markdown）](${data.url}checklist.md): すべての項目のリスク・必要な理由・使えるツール・関連資料`,
   `- [点検表（JSON）](${data.url}checklist.json): 条件と項目の対応。使い方と各フィールドの意味も含む`,
   `- [点検表のページ](${data.url}): 条件を選んで点検し、AI への相談文も作れる`,
-  "- [weekly-security-checker](https://github.com/yokinist/weekly-security-checker): アカウントや organization のリポジトリを毎週まとめて調べ、指摘を非公開リポジトリの Issue にまとめる GitHub Action（試験運用中）",
+  "- [weekly-security-checker](https://github.com/codeforjapan/code4security/tree/main/checker): アカウントや organization のリポジトリを毎週まとめて調べ、指摘を非公開リポジトリの Issue にまとめる GitHub Action（試験運用中）",
   "",
 ].join("\n"));
 
