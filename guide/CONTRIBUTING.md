@@ -9,7 +9,7 @@
 - 点検項目・条件・優先度・資料は、すべて [`data/`](data) の YAML にあります。**直すのはここだけ**です
 - ページが読み込む `data.js` と、`checklist.json`・`checklist.md`・`llms.txt` は、main に入ったときに自動で作られます
 - PR を送ると、`data/` の書き方が自動で確かめられます。誤りがあれば、どこが違うかが表示されます
-- 直すべきか迷うときや、大きく変えたいときは、先に [Issue](https://github.com/yokinist/first-security-checkup/issues) で相談してください。ページの見た目や動き（`index.html`）を変えたいときも、先に相談してください
+- 直すべきか迷うときや、大きく変えたいときは、先に [Issue](https://github.com/codeforjapan/code4security/issues) で相談してください。ページの見た目や動き（`index.html`）を変えたいときも、先に相談してください
 
 ## 項目を足す前に
 
