@@ -43,7 +43,7 @@
 
 ## ご意見・誤りの報告
 
-点検項目の誤りや、足したほうがよい項目は [Issue](https://github.com/yokinist/first-security-checkup/issues) で教えてください。直す PR も歓迎します（[CONTRIBUTING.md](CONTRIBUTING.md)）。このページ自体のセキュリティ上の問題は、[SECURITY.md](SECURITY.md) の手順で、公開せずに知らせてください。
+点検項目の誤りや、足したほうがよい項目は [Issue](https://github.com/yokinist/first-security-checkup/issues) で教えてください。直す PR も歓迎します（[CONTRIBUTING.md](CONTRIBUTING.md)）。このページ自体のセキュリティ上の問題は、[SECURITY.md](../SECURITY.md) の手順で、公開せずに知らせてください。
 
 ## 作り方と免責
 
