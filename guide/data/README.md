@@ -2,7 +2,7 @@
 
 点検表の中身（項目・条件・優先度・資料）は、すべてこのフォルダの YAML にあります。直すのはここだけです。
 
-ページが読み込む `data.js` と、`checklist.json`・`checklist.md`・`llms.txt` は、main に入ったときに、ここから自動で作られます。文章の書き方や資料の決まりは、[CONTRIBUTING.md](../CONTRIBUTING.md) を見てください。
+ページが読み込む `data.js` と、`checklist.json`・`checklist.md`・`llms.txt` は、main に入ったときに、ここから自動で作られます。文章の書き方や資料の決まりは、[CONTRIBUTING.md の点検項目の入り口](../../CONTRIBUTING.md#点検項目の入り口guide) を見てください。
 
 ## ファイル
 

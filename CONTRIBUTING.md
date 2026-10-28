@@ -2,7 +2,7 @@
 
 Code for Security に協力してくださって、ありがとうございます。わかりにくいところの質問、誤りの指摘、論点への意見、作業の引き受けを歓迎します。
 
-この手引きには、イシューの立て方と、決め方を書いています。点検項目・plugin・checker ごとの入り口は、[first-security-checkup](https://github.com/codeforjapan/code4security/issues/17) と [weekly-security-checker](https://github.com/codeforjapan/code4security/issues/18) の取り込みが済んだら足します。
+この手引きには、イシューの立て方と、決め方と、部分ごとの入り口（[点検項目](#点検項目の入り口guide)・[checker](#checker-の入り口checker)）を書いています。plugin の入り口は、plugin ができたら足します。
 
 ## イシューを立てる
 
@@ -67,6 +67,85 @@ Code for Security に協力してくださって、ありがとうございま�
 
 10/24 のような細かい目安は、マイルストーンを分けずに、イシューの本文（補足の「期限の目安」）に書きます。
 
+## 点検項目の入り口（`guide/`）
+
+点検表「はじめてのセキュリティ点検」の誤りの指摘、わかりにくい言い回しの改善、項目や資料の追加を歓迎します。データの仕組み（ファイルの役割、項目の欄、よくある作業、`pnpm build` が確かめること）は、[guide/data/README.md](guide/data/README.md) を見てください。
+
+### はじめに
+
+- 点検項目・条件・優先度・資料は、すべて [`guide/data/`](guide/data) の YAML にあります。**直すのはここだけ**です
+- ページが読み込む `data.js` と、`checklist.json`・`checklist.md`・`llms.txt` は、`pnpm build` で `data/` から書き出すもので、コミットしません
+- PR を送ると、`data/` の書き方が自動で確かめられます。誤りがあれば、どこが違うかが表示されます
+- 直すべきか迷うときや、大きく変えたいときは、先に[イシュー](https://github.com/codeforjapan/code4security/issues/new/choose)で相談してください。ページの見た目や動き（`guide/index.html`）を変えたいときも、先に相談してください
+
+### 項目を足す前に
+
+項目は少ないほど、最後まで使ってもらえます。足す前に、次を確かめてください。
+
+- 今ある項目に一文足せば済まないか
+- 個人開発や小さなチームで、実際に起きている事故につながるものか
+- 公式のドキュメントや公的機関の資料が、その対策を勧めているか
+
+優先度は次の基準で決めます。
+
+| level | 名前 | 基準 |
+|---|---|---|
+| 1 | まずやる | 被害が大きく、手間の少ないもの |
+| 2 | 次にやる | 続けて運用していくなら |
+| 3 | 余裕ができたら | 利用者や関わる人が増えてきたら |
+
+### 文章の決まり
+
+- 「放っておくと」（`risk`）と「なぜ必要か」（`why`）は分けて、具体的に書きます。1 文にまとめません
+- `title` は「〜した」「〜している」の形にして、済んだかどうかを確かめられる一文にします
+- 「ツール」「リポジトリ」と書きます。「道具」「リポ」とは書きません
+- 専門用語は、初めて読む人にもわかるように言い換えるか、短い説明を添えます
+- 怖がらせる書き方はしません。何が起きるかを、落ち着いて具体的に書きます
+
+### 資料の決まり
+
+- 本文に書く事実（設定の名前、料金やプラン、既定の値、日付など）は、資料を読んで確かめてから書きます。PR には、確かめた資料の URL を書いてください
+- `related` に載せるのは、公式のドキュメントや公的機関の資料です。製品の宣伝や、出どころのわからない記事は載せません
+- `related` は「より詳しく知るための資料」です。本文のすべてをその資料で確かめた、という意味ではありません
+- 本文の事実を資料で確かめたときは、`evidence` に資料と確かめた日を書きます。いつの情報かがわかり、古くなったものを見つけやすくなります
+- リンクは、開けることを確かめてから載せます。日本語版がある資料は、日本語版にします
+
+### AI を使うとき
+
+AI を使ってもかまいません。本文に書く事実は、AI の答えをそのまま使わず、資料を開いて確かめてから送ってください。この点検表自体も、AI（Claude）を使って作り、事実は資料で確かめています。
+
+### 送り方
+
+**ブラウザだけで送る（手元に何も入れなくてよい）**
+
+1. 項目を直すなら、GitHub で [`guide/data/items`](guide/data/items) から項目のファイルを開き、鉛筆のボタン（Edit this file）を押します。項目を足すなら、カテゴリのフォルダで「Add file」→「Create new file」から `<id>.yml` を作り、同じフォルダの `_category.yml` にも id を足します
+2. 直したら「Commit changes…」を押し、「Propose changes」で PR を作ります
+3. PR の自動の確認（guide / build）が通れば準備完了です。通らなければ、表示された箇所を直します
+
+**手元で確かめてから送る**
+
+```sh
+cd guide
+pnpm install
+pnpm build
+```
+
+pnpm の版は `guide/package.json` で決めています（corepack を使うと、その版が自動で使われます）。`pnpm build` が確かめることは [guide/data/README.md](guide/data/README.md#確かめる) にあります。`guide/index.html` をブラウザで開けば、直したページを見られます。
+
+コミットメッセージは `fix: 〜の説明を直す`、`feat: 〜の項目を足す` のような [Conventional Commits](https://www.conventionalcommits.org/ja/v1.0.0/) の形で、日本語で書けます。
+
+## checker の入り口（`checker/`）
+
+毎週リポジトリを横断して調べる GitHub Action です。使い方と、調べるものは [checker/README.md](checker/README.md) にあります。
+
+- 使ってみた感想や、うまく動かなかったこと、足してほしい点検は、[イシュー](https://github.com/codeforjapan/code4security/issues/new/choose)で教えてください
+- 今は Python で書かれていて、TypeScript に小さく分けて移す予定です（[ADR 0001](docs/adr/0001-implementation-language.md)）。大きく変える前に、イシューで相談してください
+- 手元では `cd checker && python3 test_scan.py` でテストを動かせます。PR では、同じテストが自動で動きます
+
+## ライセンス
+
+送っていただいた変更は、[README 第 8 節](README.md#8-oss化の方針)のパスごとのライセンス（コードは MIT、`guide/` の文章とデータなどは CC BY 4.0）で公開します。PR を送ることで、この条件で公開することに同意したものとします。
+
 ## 脆弱性の報告
 
-このリポジトリ自体のセキュリティ上の問題は、公開のイシューに書かず、[非公開で報告](https://github.com/codeforjapan/code4security/security/advisories/new)してください。
+このリポジトリ自体のセキュリティ上の問題は、公開のイシューに書かず、[SECURITY.md](SECURITY.md) の手順で[非公開で報告](https://github.com/codeforjapan/code4security/security/advisories/new)してください。
