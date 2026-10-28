@@ -2,7 +2,7 @@
 
 Code for Security に協力してくださって、ありがとうございます。わかりにくいところの質問、誤りの指摘、論点への意見、作業の引き受けを歓迎します。
 
-この手引きには、イシューの立て方と、決め方と、部分ごとの入り口（[点検項目](#点検項目の入り口guide)・[checker](#checker-の入り口checker)）を書いています。plugin の入り口は、plugin ができたら足します。
+この手引きには、イシューの立て方と、決め方を書いています。点検項目・plugin・checker ごとの入り口は、[first-security-checkup](https://github.com/codeforjapan/code4security/issues/17) と [weekly-security-checker](https://github.com/codeforjapan/code4security/issues/18) の取り込みが済んだら足します。
 
 ## イシューを立てる
 
@@ -66,22 +66,6 @@ Code for Security に協力してくださって、ありがとうございま�
 | Phase 3: v1 を公開する | 12/12 | v1 のタグを打ち、イベントで使える |
 
 10/24 のような細かい目安は、マイルストーンを分けずに、イシューの本文（補足の「期限の目安」）に書きます。
-
-## 点検項目の入り口（`guide/`）
-
-点検表「はじめてのセキュリティ点検」の誤りの指摘、わかりにくい言い回しの改善、項目や資料の追加を歓迎します。項目の足し方、文章と資料の決まり、送り方は [guide/CONTRIBUTING.md](guide/CONTRIBUTING.md) にあります。
-
-## checker の入り口（`checker/`）
-
-毎週リポジトリを横断して調べる GitHub Action です。使い方と、調べるものは [checker/README.md](checker/README.md) にあります。
-
-- 使ってみた感想や、うまく動かなかったこと、足してほしい点検は、[イシュー](https://github.com/codeforjapan/code4security/issues/new/choose)で教えてください
-- 今は Python で書かれていて、TypeScript に小さく分けて移す予定です（[ADR 0001](docs/adr/0001-implementation-language.md)）。大きく変える前に、イシューで相談してください
-- 手元では `cd checker && python3 test_scan.py` でテストを動かせます。PR では、同じテストが自動で動きます
-
-## ライセンス
-
-送っていただいた変更は、[README 第 8 節](README.md#8-oss化の方針)のパスごとのライセンス（コードは MIT、`guide/` の文章とデータなどは CC BY 4.0）で公開します。PR を送ることで、この条件で公開することに同意したものとします。
 
 ## 脆弱性の報告
 
