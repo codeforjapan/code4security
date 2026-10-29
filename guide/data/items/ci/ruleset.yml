@@ -1,0 +1,20 @@
+id: ruleset
+level: 1
+title: main の force push と削除を禁止した
+when: []
+risk: 1 人のアカウントが乗っ取られたり、操作を誤ったりすると、main の履歴を force push で書き換えられたり、ブランチごと消されたりします。
+why: force push と削除を禁止すれば、main の履歴が消えるのを防げます。複数人で開発しているなら、main への変更に PR と 1 人以上の承認も求めます。そうすれば、1 人のアカウントが乗っ取られても、ほかの人の目を通さずには書き換えられません。
+how:
+  - text: Settings → Rules → Rulesets で main を対象に作り、「Restrict deletions」と「Block force pushes」を有効にします。非公開リポジトリでは、GitHub Free では使えません（Pro・Team 以上）。
+  - text: OpenSSF Scorecard を使うと、ブランチ保護やトークンの権限などの設定をまとめて確かめられます。
+  - command: GITHUB_AUTH_TOKEN=$(gh auth token) scorecard --repo=github.com/<owner>/<repo>
+  - title: OpenSSF Scorecard
+    url: https://github.com/ossf/scorecard
+related: [ghRulesets]
+evidence:
+  - source: ghRulesetRules
+    checked: '2026-10-15'
+    note: 「Restrict deletions」と「Block force pushes」のルールがある
+mappings:
+  - OpenSSF Baseline OSPS-AC-03.01
+  - OpenSSF Baseline OSPS-AC-03.02

@@ -1,0 +1,12 @@
+id: mailauth
+level: 2
+title: 独自ドメインに SPF・DKIM・DMARC を設定した
+when: [domain]
+risk: 設定がないと、第三者がそのドメインを名乗ってメールを送れます。プロジェクトを名乗った偽の案内で、利用者がだまされます。
+why: SPF・DKIM を設定し、DMARC を p=quarantine か p=reject にすれば、受け取る側がなりすましを見分けて弾けます（p=none は報告だけです）。メールを送らないドメインなら、SPF に v=spf1 -all、DMARC に p=reject を設定します。
+how:
+  - text: SPF と DMARC の設定は、次のコマンドで確かめられます。
+  - command: |-
+      dig +short TXT <ドメイン>
+      dig +short TXT _dmarc.<ドメイン>
+related: [gmailSender]

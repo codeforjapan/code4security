@@ -1,0 +1,9 @@
+id: logs
+level: 3
+title: 個人情報をログやエラー通知に出していない
+when: [pii, sensitive]
+risk: エラー通知やサーバーのログに氏名や住所が入ると、本来そのデータを見る権限のない人や外部サービスにも渡ります。
+why: ログに個人情報を出さなければ、漏れうる場所を本体のデータベースだけに絞れます。
+how:
+  - text: Sentry の Data Scrubbing、ログに出す値の見直し
+related: [owaspLogging, sentryScrub]

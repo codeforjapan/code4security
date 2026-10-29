@@ -1,0 +1,6 @@
+# カテゴリの名前・説明と、項目の並び順（items/infra/<id>.yml）
+title: ドメインとサーバー
+items:
+  - dns
+  - mailauth
+  - server

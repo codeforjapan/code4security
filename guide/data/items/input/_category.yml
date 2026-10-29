@@ -1,0 +1,8 @@
+# カテゴリの名前・説明と、項目の並び順（items/input/<id>.yml）
+title: 利用者からの入力
+lead: 外から入ってくるものは、すべて疑ってかかります。
+items:
+  - form
+  - ugc
+  - upload
+  - ai

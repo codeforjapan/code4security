@@ -1,0 +1,12 @@
+id: tokens
+level: 2
+title: 期限のない personal access token を使っていない
+when: []
+risk: 期限のないトークンは、どこかに置き忘れたり漏れたりすると、気づくまでずっと使われ続けます。classic のトークンは、全リポジトリへの広い権限を持ちがちです。
+why: 期限と権限を絞っておけば、漏れても被害の範囲と期間が限られます。
+how:
+  - title: fine-grained のトークン一覧
+    url: https://github.com/settings/personal-access-tokens
+  - title: classic のトークン一覧
+    url: https://github.com/settings/tokens
+related: [ghPat]

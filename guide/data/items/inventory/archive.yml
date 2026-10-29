@@ -1,0 +1,14 @@
+id: archive
+level: 2
+title: 使っていないリポジトリをアーカイブした
+when: []
+risk: 使っていないリポジトリにも古い依存パッケージが残り、脆弱性の通知が出続けます。誰も見ていないので直されず、通知が増えるほど本当に危ないものが埋もれます。
+why: アーカイブすると読み取り専用になり、手を入れなくてよいものとして区別できます。ただし公開リポジトリに残ったキーはアーカイブしても見えるので、先に失効させます。チームなら、残すリポジトリごとに担当者を決めておくと、指摘を確実に誰かへ渡せます。
+how:
+  - text: 最後に更新した日が古い順に並べて、使っていないものを探します。
+  - command: |-
+      gh repo list <owner> --limit 1000 --no-archived \
+        --json name,pushedAt \
+        --jq 'sort_by(.pushedAt) | .[] | "\(.pushedAt[:10]) \(.name)"'
+  - command: gh repo archive <owner>/<repo>
+related: [ghArchive]

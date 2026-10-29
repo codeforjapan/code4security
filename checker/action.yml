@@ -1,0 +1,50 @@
+name: weekly-security-checker
+description: アカウントや organization のリポジトリを横断してセキュリティの指摘を集め、このワークフローを置いた非公開リポジトリの Issue にまとめる（試験運用中）
+inputs:
+  scan-token:
+    description: 対象リポジトリのアラートと中身を読めるトークン（fine-grained PAT・読み取り専用）
+    required: true
+  target:
+    description: owner（最近 push された順に max-repos 件）または owner/repo
+    default: ${{ github.repository_owner }}
+  max-repos:
+    description: 対象リポジトリの上限
+    default: "8"
+  dry-run:
+    description: true なら起票せず、計画と本文だけ表示する
+    default: "false"
+  github-token:
+    description: 起票に使うトークン（issues:write があればよい）
+    default: ${{ github.token }}
+runs:
+  using: composite
+  steps:
+    # 版を固定し、ダウンロードしたものはハッシュで確かめる
+    - name: gitleaks と zizmor を入れる
+      shell: bash
+      env:
+        GITLEAKS_VERSION: 8.30.1
+        GITLEAKS_SHA256: 551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb
+        ZIZMOR_REQUIREMENT: "zizmor==1.30.1 --hash=sha256:eee12266b793cb87ad4a7e3af2e72404f8a63e3de5eb099b80bf7b1cfd232a8e"
+      run: |
+        set -euo pipefail
+        bin="$RUNNER_TEMP/weekly-security-checker-bin"
+        mkdir -p "$bin"
+        curl -sSfL -o "$RUNNER_TEMP/gitleaks.tar.gz" \
+          "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz"
+        echo "${GITLEAKS_SHA256}  $RUNNER_TEMP/gitleaks.tar.gz" | sha256sum -c -
+        tar -xzf "$RUNNER_TEMP/gitleaks.tar.gz" -C "$bin" gitleaks
+        python3 -m venv "$RUNNER_TEMP/zizmor-venv"
+        echo "$ZIZMOR_REQUIREMENT" > "$RUNNER_TEMP/zizmor-requirements.txt"
+        "$RUNNER_TEMP/zizmor-venv/bin/pip" install --quiet --only-binary :all: --require-hashes -r "$RUNNER_TEMP/zizmor-requirements.txt"
+        ln -s "$RUNNER_TEMP/zizmor-venv/bin/zizmor" "$bin/zizmor"
+    - shell: bash
+      # 入れたツールは、このステップの中だけで PATH に通す（GITHUB_PATH は使わない）
+      run: PATH="$RUNNER_TEMP/weekly-security-checker-bin:$PATH" python3 "$GITHUB_ACTION_PATH/scan.py" "$TARGET" --max "$MAX_REPOS" $([ "$DRY_RUN" = true ] && echo --dry-run)
+      env:
+        TARGET: ${{ inputs.target }}
+        MAX_REPOS: ${{ inputs.max-repos }}
+        DRY_RUN: ${{ inputs.dry-run }}
+        SCAN_TOKEN: ${{ inputs.scan-token }}
+        GH_TOKEN: ${{ inputs.github-token }}
+        DEST_REPO: ${{ github.repository }}

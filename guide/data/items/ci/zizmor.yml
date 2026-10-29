@@ -1,0 +1,20 @@
+id: zizmor
+level: 2
+title: ワークフローの危ない書き方を検査した
+when: [actions]
+risk: Issue のタイトルや PR のブランチ名を run にそのまま埋め込むと、外部の人がその文字列でコマンドを実行できます。pull_request_target を誤って使うと、フォークからの PR にシークレットを渡してしまいます。
+why: zizmor はこうした危ない書き方を見つけ、直し方も示します。
+how:
+  - command: uvx zizmor .
+  - title: zizmor
+    url: https://docs.zizmor.sh/
+  - text: 公開リポジトリでは、2026 年 11 月 2 日から、pull_request_target で動くワークフローが既定で止まります。動かなくなっても安易に許可し直さず、本当に必要かを確かめます。
+  - text: 公開リポジトリなら、CodeQL の既定のセットアップも GitHub Actions のワークフローを調べます。
+related: [ghSecureUse, ghPrt]
+evidence:
+  - source: ghPrt
+    checked: '2026-10-15'
+    note: 公開リポジトリでは、pull_request_target を止める既定のポリシーを 2026-11-02 から実際に効かせる
+mappings:
+  - OpenSSF Baseline OSPS-BR-01.01
+  - OpenSSF Baseline OSPS-BR-01.03

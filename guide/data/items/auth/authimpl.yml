@@ -1,0 +1,9 @@
+id: authimpl
+level: 2
+title: パスワードの保存やログインの仕組みを自前で作っていない
+when: [auth]
+risk: パスワードをそのまま、または弱い方法で保存していると、データベースが漏れたときに全員のパスワードが読まれます。同じパスワードを使い回している人は、ほかのサービスまで危なくなります。
+why: 実績のある認証サービスやライブラリを使えば、パスワードの安全な保存、総当たりへの対策、2FA などをまとめて任せられます。
+how:
+  - text: Firebase Authentication、Supabase Auth、Auth.js、Clerk など。Auth.js なら、パスワードを自分で扱う Credentials ではなく、外部のアカウントでのログインを使います。
+related: [owaspAuthn, owaspPassword]

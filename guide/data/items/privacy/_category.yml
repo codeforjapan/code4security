@@ -1,0 +1,7 @@
+# カテゴリの名前・説明と、項目の並び順（items/privacy/<id>.yml）
+title: 個人情報
+lead: 市民の情報を扱うなら、ここがいちばん大事です。
+items:
+  - sensitive
+  - logs
+  - minimize

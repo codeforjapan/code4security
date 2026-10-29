@@ -1,0 +1,22 @@
+id: dependabot
+level: 1
+title: Dependabot alerts と security updates を有効にした
+when: [deps]
+risk: 使っているパッケージに既知の脆弱性があっても、有効にしていなければ誰にも知らされません。攻撃する側は、公開された脆弱性の情報をもとに古いままのサイトを狙います。通知が届いても、手で直す手間がかかると後回しになり、その間ずっと穴が開いたままになります。
+why: alerts を有効にすると、該当するパッケージと直し方が届きます。security updates も有効にすれば、直すための PR が自動で届き、確かめてマージするだけで済みます。どちらも、非公開リポジトリでも追加の料金なしで使えます。
+how:
+  - command: |-
+      gh api -X PUT repos/<owner>/<repo>/vulnerability-alerts
+      gh api -X PUT repos/<owner>/<repo>/automated-security-fixes
+  - text: GitHub 以外の場所（手元での作業中や、ほかのサービスのリポジトリ）では、OSV-Scanner で同じように調べられます。
+  - command: osv-scanner scan source -r .
+  - title: OSV-Scanner
+    url: https://google.github.io/osv-scanner/
+related: [ghDependabot, ghSecUpdates]
+evidence:
+  - source: ghGhas
+    checked: '2026-10-15'
+    note: Dependabot alerts は、すべてのプランに含まれる
+  - source: ghSecUpdates
+    checked: '2026-10-15'
+    note: security updates は、alerts を有効にしたリポジトリで使える

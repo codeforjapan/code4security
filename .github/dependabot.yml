@@ -1,0 +1,16 @@
+# ワークフローの action（SHA で固定）と、guide/ の書き出しに使う js-yaml の新しい版は、Dependabot の PR で受け取る
+# 公開されたばかりの版は避けるため、7 日待ってから PR を出す
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 7
+  - package-ecosystem: npm
+    directory: /guide
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 7

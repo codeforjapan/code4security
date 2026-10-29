@@ -1,0 +1,22 @@
+id: server
+level: 2
+title: サーバーを自動で更新し、SSH は鍵だけでログインでき、.git や .env を外から開けないようにした
+when: [server]
+risk: インターネットに公開されたサーバーには、SSH へのパスワード総当たりや、既知の脆弱性を狙った攻撃が常に来ます。更新が止まったサーバーは乗っ取られ、ほかへの攻撃の踏み台に使われます。公開しているディレクトリに .git や .env が残っていると、ソースコードやキーをそのまま持ち出されます。
+why: セキュリティ更新を自動で入れ、SSH のパスワードでのログインを止めて鍵だけにすれば、よくある攻撃の多くを防げます。使わないポートはファイアウォールで閉じます。
+how:
+  - text: Ubuntu なら、セキュリティ更新の自動適用（unattended-upgrades）は最初から入っていて有効です。入っていなければ次のコマンドで入れます。
+  - command: sudo apt install unattended-upgrades
+  - text: SSH は、鍵でログインできることを確かめてから、/etc/ssh/sshd_config.d/00-no-password.conf に PasswordAuthentication no と書き、sudo systemctl restart ssh で反映します。次のコマンドで no と出れば完了です。
+  - command: sudo sshd -T | grep -i passwordauthentication
+  - text: 外から .git や .env を開けないことを確かめます。次のコマンドで 404 や 403 が返れば大丈夫です。200 が返ったら、中身が見えていないか開いて確かめます。本番ではデバッグ表示も切り、HTTPS だけで公開します。
+  - command: |-
+      curl -s -o /dev/null -w '%{http_code}\n' https://<ドメイン>/.git/config
+      curl -s -o /dev/null -w '%{http_code}\n' https://<ドメイン>/.env
+related: [ubuntuUpdates, owaspA02]
+evidence:
+  - source: owaspA02
+    checked: '2026-10-15'
+    note: 不要な機能や、詳しすぎるエラー表示を、設定の不備としている
+mappings:
+  - OWASP Top 10:2025 A02 Security Misconfiguration

@@ -1,0 +1,32 @@
+# guide/ の data/ の書き方を確かめ、checklist.json・checklist.md・llms.txt を書き出せるかを確かめる
+# GitHub Pages への公開は、このリポジトリで Pages を有効にしてから足す
+name: guide
+
+on:
+  push:
+    branches: [main]
+    paths: [guide/**, .github/workflows/guide.yml]
+  pull_request:
+    paths: [guide/**, .github/workflows/guide.yml]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    defaults:
+      run:
+        working-directory: guide
+    env:
+      COREPACK_ENABLE_DOWNLOAD_PROMPT: "0"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      # pnpm は package.json の packageManager で固定した版を、corepack が確かめてから使う
+      - run: corepack enable
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - run: pnpm build

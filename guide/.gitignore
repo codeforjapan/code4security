@@ -1,0 +1,6 @@
+# export.js（pnpm build）が data/ から作り、公開のときに GitHub Actions が作り直すので、コミットしない
+data.js
+checklist.json
+checklist.md
+llms.txt
+node_modules/

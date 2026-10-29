@@ -1,0 +1,5 @@
+# カテゴリの名前・説明と、項目の並び順（items/response/<id>.yml）
+title: 報告の受け付けと対応
+items:
+  - pvr
+  - contact
