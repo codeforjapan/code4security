@@ -28,7 +28,7 @@ Claude Code・Codex・Cursor・GitHub Copilot で使えるようにし、イベ�
 v1 に含めるもの:
 
 - `guide/`: 項目データとスキーマ v2（[ADR 0005](0005-schema-v2-and-project-state.md)）
-- `agent/`: 上の 1〜4 を進める、エージェントに読ませる Markdown の手順（特定の AI 製品に依存しない。[ADR 0004](0004-repo-role-and-distribution.md)）
+- `agent/`: エージェントに読ませる、対策ごとの Markdown。何を・なぜ設定するか、使えるツール、公式ドキュメントとセットアップガイドへのリンクを書く（特定の AI 製品に依存しない。[ADR 0004](0004-repo-role-and-distribution.md)）
 - `kit/`: ルーチン項目の設定テンプレ
 - `checker/`: 毎週の横断チェック
 - 日本語の導入手順書
@@ -41,7 +41,7 @@ v1 に含めないもの:
 - 見つかったものを仕分けて直していく運用（トリアージ）。今の checker が見つけたものを Issue にする動きはそのまま残し、v1 では手を加えない
 - OWASP・IPA などとの対応表。代わりに、対策ごとに書く Markdown の中に、参照先（OWASP・IPA などの該当箇所）へのリンクを入れ、「なぜ必要か」を人が辿れるようにする（[#21](https://github.com/codeforjapan/code4security/issues/21)）
 - 他人の OSS を見て回る取り組みと、修正への報酬
-- plugin・skill・MCP サーバー。v1 では Markdown の手順を配る（[ADR 0004](0004-repo-role-and-distribution.md)）
+- plugin・skill・MCP サーバー。v1 では Markdown を配る（[ADR 0004](0004-repo-role-and-distribution.md)）
 
 GitHub 以外（Slack・Google Workspace・Notion・独自ドメインなど）の項目も v1 に入れる。CfJ の運営に必要なので CfJ のメンバーが担当し、Issue にはするがコミュニティには依頼しない（`cfj-internal` ラベル）。
 
@@ -92,4 +92,4 @@ GitHub 以外（Slack・Google Workspace・Notion・独自ドメインなど）�
 
 - v1 をコーディングエージェント前提にし、Claude Code・Codex・Cursor・GitHub Copilot で最後まで試すことを「決定」に、その理由を「根拠」に足した（[#5](https://github.com/codeforjapan/code4security/issues/5)、2026-10-30 の打ち合わせ）
 - CLI（設計も残さない）・診断エンジン・トリアージ・OWASP / IPA との対応表を「v1 に含めないもの」に入れ、理由を「根拠」に足した（[#8](https://github.com/codeforjapan/code4security/issues/8)、2026-10-30 の打ち合わせ）
-- `agent/` を Markdown の手順だけにし、plugin・skill・MCP サーバーを「v1 に含めないもの」に入れた（[#11](https://github.com/codeforjapan/code4security/issues/11)、2026-10-30 の打ち合わせ）
+- `agent/` を対策ごとの Markdown にし、plugin・skill・MCP サーバーを「v1 に含めないもの」に入れた（[#11](https://github.com/codeforjapan/code4security/issues/11)、2026-10-30 の打ち合わせ）
