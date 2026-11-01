@@ -39,7 +39,7 @@ v1 に含めないもの:
 - CLI。設計も ADR に残さない
 - 診断エンジン（Strix・CAI などの、AI によるペネトレーションテスト）。v1 は基本の守りを入れるまでにする
 - 見つかったものを仕分けて直していく運用（トリアージ）。今の checker が見つけたものを Issue にする動きはそのまま残し、v1 では手を加えない
-- OWASP・IPA などとの網羅した対応表。ただし、項目ごとに「なぜ必要か」を人が辿れるよう、参照先へのリンクは付ける（[#21](https://github.com/codeforjapan/code4security/issues/21)）
+- OWASP・IPA などとの対応表。代わりに、対策ごとに書く Markdown の中に、参照先（OWASP・IPA などの該当箇所）へのリンクを入れ、「なぜ必要か」を人が辿れるようにする（[#21](https://github.com/codeforjapan/code4security/issues/21)）
 - 他人の OSS を見て回る取り組みと、修正への報酬
 
 GitHub 以外（Slack・Google Workspace・Notion・独自ドメインなど）の項目も v1 に入れる。CfJ の運営に必要なので CfJ のメンバーが担当し、Issue にはするがコミュニティには依頼しない（`cfj-internal` ラベル）。
@@ -90,4 +90,4 @@ GitHub 以外（Slack・Google Workspace・Notion・独自ドメインなど）�
 ## 修正履歴（2026-11-01）
 
 - v1 をコーディングエージェント前提にし、Claude Code・Codex・Cursor・GitHub Copilot で最後まで試すことを「決定」に、その理由を「根拠」に足した（[#5](https://github.com/codeforjapan/code4security/issues/5)、2026-10-30 の打ち合わせ）
-- CLI（設計も残さない）・診断エンジン・トリアージ・OWASP / IPA との網羅した対応表を「v1 に含めないもの」に入れ、理由を「根拠」に足した（[#8](https://github.com/codeforjapan/code4security/issues/8)、2026-10-30 の打ち合わせ）
+- CLI（設計も残さない）・診断エンジン・トリアージ・OWASP / IPA との対応表を「v1 に含めないもの」に入れ、理由を「根拠」に足した（[#8](https://github.com/codeforjapan/code4security/issues/8)、2026-10-30 の打ち合わせ）
