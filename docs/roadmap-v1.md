@@ -72,3 +72,31 @@ docs/      ADR・導入手順書
 - 決めたことは ADR に残す（書き方は [AGENTS.md](../AGENTS.md)）。Slack で決まった結論も、リポジトリに戻す
 - 推奨を変える PR（ツールの差し替え・優先度の変更）と、守るべきパス（ADR 0008）の変更は、コアメンバーのレビューを必須にする。リンクの修正や版の更新などの機械的な変更は、確認が通ればマージしてよい
 - 項目の `evidence.checked` が古くなったものは、定期的に Issue にする
+
+## 遅れたときに落とす順番
+
+v1 の当日に、参加者が自分のプロジェクトで最後まで進められること（[ADR 0003](adr/0003-v1-scope.md)）に効かないものから落とす（[#13](https://github.com/codeforjapan/code4security/issues/13)）。
+
+### 落とす順番（上から先に落とす）
+
+1. COULD の対策の Markdown（[#21](https://github.com/codeforjapan/code4security/issues/21)）
+2. level 1 以外の項目の `verify`・`setup`
+3. GitHub 以外の項目。CfJ の中で進め、v1 の公開とは切り離す
+4. SHOULD の対策の Markdown（#21）
+5. エージェントでの確認。Claude Code ともう 1 つに減らし、README と導入手順書には試したものだけを書く（[#5](https://github.com/codeforjapan/code4security/issues/5)）
+6. 脅威モデルを作る手順（ADR 0003 の流れの 2）。点検と設定を先に出し、v1 のあとに足す
+
+### 落とせないもの
+
+- Claude Code で、点検から、設定して確かめるまでを最後まで通せること
+- MUST の対策の Markdown（#21）。#21 が決まるまでは、少なくとも次の 2 つ
+  - API キーやパスワードをコミットしない（コミットのときの確認と、GitHub の secret scanning）
+  - 使っているライブラリの既知の脆弱性を知る（Dependabot）
+- level 1 の項目の `verify`
+- 導入手順書。コーディングエージェントが要ることを最初に書く
+- 配る Markdown の守り。main への変更にコアメンバーのレビューを必須にし、v1 のタグを保護する（[ADR 0008](adr/0008-repo-defense.md)）
+
+### 判断日
+
+- 11/7（Phase 1 の 1 週目の終わり）と、11/21（Phase 1 の終わり）
+- 判断日に進み具合を見て、落とすと決めたものは、この節に日付と理由を書き足す
