@@ -11,7 +11,7 @@
 
 ## 決定の記録
 
-- 議論した場所: [#7](https://github.com/codeforjapan/code4security/issues/7)（打ち合わせの結論は [yu23ki14 さんのコメント](https://github.com/codeforjapan/code4security/issues/7#issuecomment-6256807089)）
+- 議論した場所: [#7](https://github.com/codeforjapan/code4security/issues/7)（打ち合わせの結論は [yu23ki14 さんのコメント](https://github.com/codeforjapan/code4security/issues/7#issuecomment-6256807089)）。checker の action の形は [#12](https://github.com/codeforjapan/code4security/issues/12)（[たたき台](https://github.com/codeforjapan/code4security/issues/12#issuecomment-6486508891) に 10/31 まで異論なし）
 - 決定の場: 未定（この ADR を直す PR のレビュー）
 - 承認者: 未定
 - 承認日: 未定
@@ -43,12 +43,14 @@ guide・MCP サーバー・checker を、最終的にすべて TypeScript（Node
 - 移している途中に新しく足す検知は、TypeScript で書く
 - v1（12/12）までに移し終えることは求めない。v1 の checker は Python のままでよい
 - gitleaks・zizmor などの外部ツールは、今と同じく版とハッシュを固定して呼ぶ（言語の選択とは関係しない）
+- TypeScript 版の checker の action は、composite action にする。ステップで Node.js を入れ（`actions/setup-node` を SHA で固定する）、lockfile から `npm ci` で依存を入れてから、`.ts` を型の除去で直接動かす。ビルドした `dist` はコミットしない（[#12](https://github.com/codeforjapan/code4security/issues/12)）。v1 で配る action は、今の Python 版の composite action のまま
+- 型の除去では、型を消すだけで済む書き方しか使えない。enum・実行時のコードを持つ namespace・コンストラクタの引数でのプロパティ宣言は使わず、`tsconfig.json` の `paths` の別名も使わない。import には `.ts` の拡張子を書き、型だけの import は `import type` にする。`tsconfig.json` で `erasableSyntaxOnly` と `verbatimModuleSyntax` を有効にし、型の確認で弾く
 
 ## 根拠
 
 - **スキーマを 1 つにできる**: Zod の定義を、guide の確認、MCP サーバーの入出力、checker のすべてで直接使える。JSON Schema を経由して別の言語の型と合わせ続ける必要がない
 - **plugin で配りやすい**: Claude Code は、plugin に lockfile があれば Node.js の依存を自動で入れる。Python では、利用者の PC に `uv` などを入れてもらう必要がある。ほかのエージェントにも `npx` で版を固定して渡せる
-- **checker を JavaScript の action にできる**: 利用者の Actions で Python の環境を用意する手順が要らなくなる（action の形は [#12](https://github.com/codeforjapan/code4security/issues/12) で決める）
+- **checker の action も、読めるソースのまま配れる**: composite action にすれば、利用者が SHA で固定する中身は、レビューしたソースそのものになる。[ADR 0008](0008-repo-defense.md) の「action の変更はコアメンバーのレビューを必須にする」が、そのまま効く。ビルドの手順も増えない。今の Python 版も composite action なので、利用者から見た形は変わらない
 - **コントリビューター**: シビックテックや個人開発で Web を作っている人には、TypeScript を書ける人が多い。Viewer を作り直すときも同じ言語で書ける
 - **時期**: 一度に書き直すと、取り込みと v1 の準備が書き直しを待つことになる。Python のまま取り込んで小さく移せば、取り込みも v1 も止めずに進められる
 
@@ -67,6 +69,8 @@ guide・MCP サーバー・checker を、最終的にすべて TypeScript（Node
   - 緩和策: Python を残すのは checker だけにし、移し終えたら外す。新しく足す検知は TypeScript で書き、Python の部分を増やさない
 - npm の依存パッケージが、サプライチェーンの侵入口になる
   - 緩和策: 依存は最小限にし、lockfile を固定する。新しい版はすぐに入れず、Dependabot の cooldown を使う（[ADR 0008](0008-repo-defense.md)）
+- checker の action は、実行のたびに npm から依存を入れるので、利用者側の実行が少し遅くなる
+  - 緩和策: checker は週に 1 回の定期実行なので、数十秒延びても困らない。依存を絞れば、入れる時間も短くなる
 - セキュリティの分野では Python を書く人が多く、その人たちが入りにくくなる
   - 緩和策: 項目データ（YAML）とテンプレの PR には、言語の知識が要らない。コードを書く部分は、全体のごく一部にとどめる
 
@@ -75,12 +79,13 @@ guide・MCP サーバー・checker を、最終的にすべて TypeScript（Node
 - **Python にそろえる**: checker はそのまま使え、スキーマは Pydantic で定義して JSON Schema を書き出せる。一方で、plugin の MCP サーバーを動かすために利用者の PC に Python の実行環境が要る。Viewer は結局 JavaScript になり、2 つの言語が残る
 - **今のまま 2 つの言語を使う**: 書き直しの費用はかからない。一方で、`verify` を実行する処理を 2 つの言語で持つか、MCP サーバーから Python を呼んで利用者の PC に Python を求めることになる。スキーマも JSON Schema を経由して合わせ続ける必要がある
 - **Go などで 1 つの実行ファイルにする**: 利用者の環境に依存しない。一方で、Claude Code の plugin は実行ファイルを自動では入れず、OS ごとのビルドと配布が要る。コントリビューターも少なくなる
+- **checker を JavaScript の action にし、ビルドした `dist` をコミットする**: 依存を入れる手順がなく、実行が速い。GitHub Docs が勧める形でもある。一方で、利用者が固定する中身が、まとめた読みにくい 1 ファイルになる。ソースから作り直したものと一致するかを CI で確かめる仕組みも要り、作るものが増える
 
 ## 今後の方向性
 
 - 移す作業の切り方（検知ごとに 1 つの PR にする、など）と担当は、取り込み（[#18](https://github.com/codeforjapan/code4security/issues/18)）のあとに決める
 - `verify` を実行するパッケージの置き場所と、パッケージの管理（pnpm の workspace など）を決める
-- action の形（ビルドした `dist` をコミットするか）は、TypeScript 版の checker を action にするときに決める（[#12](https://github.com/codeforjapan/code4security/issues/12)）
+- TypeScript 版の checker を最初に action にするとき、最小の composite action を、別のリポジトリから SHA 指定で呼べることを確かめる
 - 見直すきっかけ: 2 つの言語が並ぶ期間が長引き、保守の負担が大きくなったとき
 
 ### 意見を聞きたいこと
@@ -97,3 +102,6 @@ guide・MCP サーバー・checker を、最終的にすべて TypeScript（Node
 - [ADR 0006: スキーマ定義](0006-schema-definition.md)
 - [ADR 0007: checker の起動ルート](0007-checker-entry-points.md)
 - [#7: 実装の言語を TypeScript にそろえるかを決める](https://github.com/codeforjapan/code4security/issues/7)
+- [#12: checker の action の形を決める](https://github.com/codeforjapan/code4security/issues/12)
+- [GitHub Docs: JavaScript アクションを作成する](https://docs.github.com/ja/actions/tutorials/create-actions/create-a-javascript-action)
+- [Node.js: TypeScript の型の除去](https://nodejs.org/api/typescript.html)
